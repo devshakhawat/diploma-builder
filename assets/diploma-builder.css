@@ -1,0 +1,489 @@
+/* Diploma Builder Styles */
+#diploma-builder-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.diploma-builder-form {
+    flex: 1;
+    max-width: 500px;
+}
+
+.diploma-preview {
+    flex: 1;
+    max-width: 700px;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.form-section h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+/* Style Options */
+.style-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.style-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.style-option:hover {
+    border-color: #007cba;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.style-option input[type="radio"] {
+    margin-bottom: 10px;
+}
+
+.style-option img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.style-option span {
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+}
+
+.style-option input[type="radio"]:checked + img {
+    border: 3px solid #007cba;
+}
+
+/* Color Options */
+.color-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    min-width: 100px;
+}
+
+.color-option:hover {
+    border-color: #007cba;
+    transform: translateY(-2px);
+}
+
+.color-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    margin-bottom: 8px;
+}
+
+.color-option input[type="radio"]:checked ~ .color-preview {
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.2);
+}
+
+/* Emblem Selection */
+.emblem-type-selection {
+    margin-bottom: 20px;
+}
+
+.emblem-type-selection label {
+    display: inline-block;
+    margin-right: 20px;
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.emblem-type-selection label:hover {
+    border-color: #007cba;
+}
+
+.emblem-type-selection input[type="radio"]:checked + span {
+    background: #007cba;
+    color: white;
+}
+
+.emblem-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.emblem-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.emblem-option:hover {
+    border-color: #007cba;
+    transform: translateY(-2px);
+}
+
+.emblem-option img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.emblem-option input[type="radio"]:checked + img {
+    filter: drop-shadow(0 0 8px #007cba);
+}
+
+#state-emblem-select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background: white;
+}
+
+/* Text Fields */
+.text-fields {
+    display: grid;
+    gap: 20px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.field-group input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.field-group input:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+}
+
+/* Action Buttons */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: #007cba;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #005a87;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+/* Live Preview */
+.diploma-preview h3 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.diploma-canvas {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: relative;
+    aspect-ratio: 8.5/11;
+    overflow: hidden;
+}
+
+/* Diploma Templates */
+.diploma-template {
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    font-family: 'Times New Roman', serif;
+}
+
+.diploma-template.classic {
+    border: 15px solid #8B4513;
+    border-image: linear-gradient(45deg, #8B4513, #D2691E) 1;
+}
+
+.diploma-template.modern {
+    background: linear-gradient(135deg, transparent 0%, rgba(0,124,186,0.05) 100%);
+    border: 3px solid #007cba;
+}
+
+.diploma-template.formal {
+    border: 8px double #333;
+}
+
+.diploma-template.decorative {
+    border: 20px solid transparent;
+    border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23DAA520" width="100" height="100"/></svg>') 20;
+}
+
+.diploma-template.minimalist {
+    border: 1px solid #ccc;
+    background: #fafafa;
+}
+
+.diploma-header {
+    margin-bottom: 30px;
+}
+
+.diploma-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.diploma-subtitle {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.diploma-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.diploma-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+    max-width: 80%;
+}
+
+.school-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #007cba;
+    margin: 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.graduation-date {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #555;
+    margin: 10px 0;
+}
+
+.location {
+    font-size: 1em;
+    color: #666;
+    margin: 10px 0;
+}
+
+.diploma-emblem {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 20px;
+}
+
+.diploma-emblems {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 30px;
+}
+
+.diploma-emblems.single {
+    justify-content: center;
+}
+
+/* Loading Overlay */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.loading-spinner::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ddd;
+    border-top: 3px solid #007cba;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #diploma-builder-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .style-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .color-options {
+        justify-content: space-between;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .diploma-canvas {
+        max-width: 100%;
+    }
+    
+    .diploma-title {
+        font-size: 2em;
+    }
+    
+    .school-name {
+        font-size: 1.5em;
+    }
+}
+
+/* Print Styles */
+@media print {
+    #diploma-builder-container {
+        display: none;
+    }
+    
+    .diploma-canvas {
+        width: 8.5in;
+        height: 11in;
+        border: none;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+}

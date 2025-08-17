@@ -30,7 +30,9 @@ define('DIPLOMA_BUILDER_BASENAME', plugin_basename(__FILE__));
 // Autoloader for classes
 spl_autoload_register(function ($class) {
     if (strpos($class, 'DiplomaBuilder') === 0) {
-        $class_file = DIPLOMA_BUILDER_PATH . 'includes/class-' . strtolower(str_replace('_', '-', $class)) . '.php';
+        // Convert camelCase to snake_case for file naming
+        $class_name = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', substr($class, strlen('DiplomaBuilder'))));
+        $class_file = DIPLOMA_BUILDER_PATH . 'includes/class-diplomabuilder' . $class_name . '.php';
         if (file_exists($class_file)) {
             require_once $class_file;
         }

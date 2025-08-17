@@ -8,61 +8,34 @@ jQuery(document).ready(function($) {
         emblem_type: 'generic',
         emblem_value: 'graduation_cap',
         school_name: '',
+        student_name: '',
         graduation_date: '',
         city: '',
         state: ''
     };
     
-    // Diploma style templates
-    const diplomaTemplates = {
-        classic: {
-            name: 'Classic Traditional',
-            emblems: 1,
-            borderStyle: '15px solid #8B4513'
-        },
-        modern: {
-            name: 'Modern Elegant',
-            emblems: 2,
-            borderStyle: '3px solid #007cba'
-        },
-        formal: {
-            name: 'Formal Certificate',
-            emblems: 1,
-            borderStyle: '8px double #333'
-        },
-        decorative: {
-            name: 'Decorative Border',
-            emblems: 2,
-            borderStyle: '20px solid #DAA520'
-        },
-        minimalist: {
-            name: 'Minimalist Clean',
-            emblems: 1,
-            borderStyle: '1px solid #ccc'
-        }
-    };
-    
-    // Paper colors
-    const paperColors = {
-        white: '#ffffff',
-        ivory: '#f5f5dc',
-        light_blue: '#e6f3ff',
-        light_gray: '#f0f0f0'
-    };
-    
-    // Generic emblems
-    const genericEmblems = {
-        graduation_cap: 'Graduation Cap',
-        diploma_seal: 'Diploma Seal',
-        academic_torch: 'Academic Torch',
-        laurel_wreath: 'Laurel Wreath',
-        school_crest: 'School Crest'
-    };
-    
     // Initialize the diploma builder
     function init() {
         bindEvents();
+        initializeForm();
         updatePreview();
+        // Hide loading overlay on initialization
+        hideLoading();
+    }
+    
+    // Initialize form to show first step only
+    function initializeForm() {
+        // Hide all form sections except the first one
+        $('.form-section').hide();
+        $('.form-section[data-step="1"]').show();
+        
+        // Set initial button states
+        $('#prev-step').prop('disabled', true);
+        $('#next-step').show();
+        $('.form-actions').hide();
+        
+        // Initialize progress
+        updateProgressBar();
     }
     
     // Bind all event handlers
@@ -80,15 +53,17 @@ jQuery(document).ready(function($) {
         });
         
         // Emblem type selection
-        $('input[name="emblem_type"]').on('change', function() {
-            currentConfig.emblem_type = $(this).val();
+        $('.tab-button').on('click', function(e) {
+            e.preventDefault();
+            const tab = $(this).data('tab');
+            currentConfig.emblem_type = tab;
             toggleEmblemOptions();
             updateEmblemValue();
             updatePreview();
         });
         
         // Generic emblem selection
-        $('input[name="generic_emblem"]').on('change', function() {
+        $(document).on('change', 'input[name="emblem_value"][data-type="generic"]', function() {
             currentConfig.emblem_value = $(this).val();
             updatePreview();
         });
@@ -97,6 +72,16 @@ jQuery(document).ready(function($) {
         $('#state-emblem-select').on('change', function() {
             currentConfig.emblem_value = $(this).val();
             updatePreview();
+            
+            // Update state emblem preview
+            if ($(this).val()) {
+                const stateName = $(this).find('option:selected').text();
+                $('#state-emblem-name').text(stateName);
+                $('#state-emblem-code').text($(this).val());
+                $('#state-emblem-preview').show();
+            } else {
+                $('#state-emblem-preview').hide();
+            }
         });
         
         // Text field changes
@@ -106,28 +91,66 @@ jQuery(document).ready(function($) {
             updatePreview();
         });
         
-        // Save diploma
-        $('#save-diploma').on('click', saveDiploma);
+        // Navigation buttons
+        $('#prev-step').on('click', function() {
+            navigateSteps('prev');
+        });
         
-        // Download high-res diploma
+        $('#next-step').on('click', function() {
+            navigateSteps('next');
+        });
+        
+        // Action buttons
+        $('#save-diploma').on('click', saveDiploma);
         $('#download-diploma').on('click', downloadDiploma);
+        
+        // Form actions
+        $('#create-another').on('click', function() {
+            $('#success-modal').hide();
+            resetForm();
+        });
+        
+        $('#view-gallery').on('click', function() {
+            window.location.href = '/diploma-gallery';
+        });
+        
+        // Modal close
+        $('.modal-close').on('click', function() {
+            $('#success-modal').hide();
+        });
+        
+        // Zoom controls
+        $('#zoom-in').on('click', function() {
+            zoomPreview(0.1);
+        });
+        
+        $('#zoom-out').on('click', function() {
+            zoomPreview(-0.1);
+        });
+        
+        $('#toggle-fullscreen').on('click', function() {
+            toggleFullscreen();
+        });
     }
     
     // Toggle emblem options based on type
     function toggleEmblemOptions() {
+        $('.tab-button').removeClass('active');
+        $('.emblem-tab-content').removeClass('active');
+        
         if (currentConfig.emblem_type === 'generic') {
-            $('#generic-emblems').show();
-            $('#state-emblems').hide();
+            $('.tab-button[data-tab="generic"]').addClass('active');
+            $('#generic-emblems').addClass('active');
         } else {
-            $('#generic-emblems').hide();
-            $('#state-emblems').show();
+            $('.tab-button[data-tab="state"]').addClass('active');
+            $('#state-emblems').addClass('active');
         }
     }
     
     // Update emblem value when type changes
     function updateEmblemValue() {
         if (currentConfig.emblem_type === 'generic') {
-            currentConfig.emblem_value = $('input[name="generic_emblem"]:checked').val() || 'graduation_cap';
+            currentConfig.emblem_value = $('input[name="emblem_value"][data-type="generic"]:checked').val() || 'graduation_cap';
         } else {
             currentConfig.emblem_value = $('#state-emblem-select').val() || '';
         }
@@ -135,40 +158,40 @@ jQuery(document).ready(function($) {
     
     // Update the live preview
     function updatePreview() {
-        const template = diplomaTemplates[currentConfig.diploma_style];
-        const paperColor = paperColors[currentConfig.paper_color];
+        const paperColors = {
+            white: '#ffffff',
+            ivory: '#f5f5dc',
+            light_blue: '#e6f3ff',
+            light_gray: '#f0f0f0'
+        };
         
-        let diplomaHTML = generateDiplomaHTML(template, paperColor);
+        const paperColor = paperColors[currentConfig.paper_color] || '#ffffff';
+        
+        let diplomaHTML = generateDiplomaHTML(paperColor);
         $('#diploma-canvas').html(diplomaHTML);
     }
     
     // Generate diploma HTML
-    function generateDiplomaHTML(template, paperColor) {
+    function generateDiplomaHTML(paperColor) {
         const schoolName = currentConfig.school_name || '[School Name]';
+        const studentName = currentConfig.student_name || '[Student Name]';
         const graduationDate = currentConfig.graduation_date || '[Date of Graduation]';
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[State]';
         
-        let emblemHTML = '';
-        if (currentConfig.emblem_value) {
-            const emblemSrc = getEmblemSrc();
-            if (template.emblems === 1) {
-                emblemHTML = `<div class="diploma-emblems single"><img src="${emblemSrc}" alt="Emblem" class="diploma-emblem"></div>`;
-            } else {
-                emblemHTML = `<div class="diploma-emblems"><img src="${emblemSrc}" alt="Emblem" class="diploma-emblem"><img src="${emblemSrc}" alt="Emblem" class="diploma-emblem"></div>`;
-            }
-        }
+        // Get emblem info
+        const emblemInfo = getEmblemInfo();
         
         return `
             <div class="diploma-template ${currentConfig.diploma_style}" style="background-color: ${paperColor};">
-                ${emblemHTML}
+                ${emblemInfo.html}
                 <div class="diploma-header">
                     <div class="diploma-title">High School Diploma</div>
                     <div class="diploma-subtitle">This certifies that</div>
                 </div>
                 <div class="diploma-body">
                     <div class="diploma-text">
-                        <strong>[Student Name]</strong>
+                        <strong>${studentName}</strong>
                     </div>
                     <div class="diploma-text">
                         has satisfactorily completed the prescribed course of study at
@@ -184,14 +207,176 @@ jQuery(document).ready(function($) {
         `;
     }
     
+    // Get emblem information
+    function getEmblemInfo() {
+        const diplomaStyles = {
+            classic: { emblems: 1 },
+            modern: { emblems: 2 },
+            formal: { emblems: 1 },
+            decorative: { emblems: 2 },
+            minimalist: { emblems: 1 }
+        };
+        
+        const template = diplomaStyles[currentConfig.diploma_style] || diplomaStyles.classic;
+        
+        // Special handling for preview emblem
+        if (currentConfig.emblem_type === 'generic' && currentConfig.emblem_value === 'school_preview') {
+            // For preview emblem, we show a special placeholder
+            let emblemHTML = '';
+            if (template.emblems === 1) {
+                emblemHTML = `
+                    <div class="diploma-emblems single">
+                        <div class="preview-emblem-placeholder" style="width:100px;height:100px;background:#f0f8ff;border:2px dashed #3498db;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:#3498db;">
+                            <div>👁️</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                emblemHTML = `
+                    <div class="diploma-emblems">
+                        <div class="preview-emblem-placeholder" style="width:100px;height:100px;background:#f0f8ff;border:2px dashed #3498db;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:#3498db;">
+                            <div>👁️</div>
+                        </div>
+                        <div class="preview-emblem-placeholder" style="width:100px;height:100px;background:#f0f8ff;border:2px dashed #3498db;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:#3498db;">
+                            <div>👁️</div>
+                        </div>
+                    </div>
+                `;
+            }
+            return { html: emblemHTML, count: template.emblems };
+        }
+        
+        if (!currentConfig.emblem_value) {
+            return { html: '', count: 0 };
+        }
+        
+        const emblemSrc = getEmblemSrc();
+        let emblemHTML = '';
+        
+        if (template.emblems === 1) {
+            emblemHTML = `
+                <div class="diploma-emblems single">
+                    <img src="${emblemSrc}" alt="Emblem" class="diploma-emblem" 
+                         onerror="this.parentNode.innerHTML='<div class=\\'emblem-placeholder\\'><div>${currentConfig.emblem_value.substring(0, 3)}</div></div>'">
+                </div>
+            `;
+        } else {
+            emblemHTML = `
+                <div class="diploma-emblems">
+                    <img src="${emblemSrc}" alt="Emblem" class="diploma-emblem" 
+                         onerror="this.parentNode.innerHTML='<div class=\\'emblem-placeholder\\'><div>${currentConfig.emblem_value.substring(0, 3)}</div></div>'">
+                    <img src="${emblemSrc}" alt="Emblem" class="diploma-emblem" 
+                         onerror="this.parentNode.innerHTML='<div class=\\'emblem-placeholder\\'><div>${currentConfig.emblem_value.substring(0, 3)}</div></div>'">
+                </div>
+            `;
+        }
+        
+        return { html: emblemHTML, count: template.emblems };
+    }
+    
     // Get emblem source URL
     function getEmblemSrc() {
-        if (currentConfig.emblem_type === 'generic') {
-            return `${diploma_ajax.plugin_url}assets/emblems/generic/${currentConfig.emblem_value}.png`;
-        } else if (currentConfig.emblem_type === 'state' && currentConfig.emblem_value) {
-            return `${diploma_ajax.plugin_url}assets/emblems/states/${currentConfig.emblem_value}.png`;
+        // Special handling for preview emblem
+        if (currentConfig.emblem_type === 'generic' && currentConfig.emblem_value === 'school_preview') {
+            // For preview emblem, we'll show a special placeholder
+            return '';
         }
-        return `${diploma_ajax.plugin_url}assets/emblems/generic/graduation_cap.png`;
+        
+        if (currentConfig.emblem_type === 'generic') {
+            return `${diploma_ajax.plugin_url}assets/emblems/generic/${currentConfig.emblem_value}.svg`;
+        } else if (currentConfig.emblem_type === 'state' && currentConfig.emblem_value) {
+            return `${diploma_ajax.plugin_url}assets/emblems/states/${currentConfig.emblem_value}.svg`;
+        }
+        return `${diploma_ajax.plugin_url}assets/emblems/generic/graduation_cap.svg`;
+    }
+    
+    // Navigate between steps
+    function navigateSteps(direction) {
+        const currentStep = $('.form-section:visible').data('step');
+        let nextStep;
+        
+        if (direction === 'next') {
+            nextStep = currentStep + 1;
+            if (nextStep > 4) nextStep = 4;
+        } else {
+            nextStep = currentStep - 1;
+            if (nextStep < 1) nextStep = 1;
+        }
+        
+        // Hide all sections and show the next one
+        $('.form-section').hide();
+        $(`.form-section[data-step="${nextStep}"]`).show();
+        
+        // Update navigation buttons
+        $('#prev-step').prop('disabled', nextStep === 1);
+        $('#next-step').toggle(nextStep < 4);
+        $('.form-actions').toggle(nextStep === 4);
+        
+        // Update progress bar
+        updateProgressBar();
+    }
+    
+    // Update progress bar
+    function updateProgressBar() {
+        const visibleStep = $('.form-section:visible').data('step') || 1;
+        const progress = (visibleStep / 4) * 100;
+        $('.progress-fill').css('width', `${progress}%`);
+        
+        // Update step indicators
+        $('.step').removeClass('active');
+        for (let i = 1; i <= visibleStep; i++) {
+            $(`.step[data-step="${i}"]`).addClass('active');
+        }
+    }
+    
+    // Zoom preview
+    function zoomPreview(delta) {
+        const canvas = $('.diploma-canvas');
+        const currentZoom = parseFloat(canvas.data('zoom') || 1);
+        const newZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
+        
+        canvas.css('transform', `scale(${newZoom})`);
+        canvas.data('zoom', newZoom);
+        $('#zoom-level').text(`${Math.round(newZoom * 100)}%`);
+    }
+    
+    // Toggle fullscreen
+    function toggleFullscreen() {
+        const container = $('#diploma-builder-container');
+        const preview = $('.diploma-preview-container');
+        
+        container.toggleClass('fullscreen-mode');
+        
+        if (container.hasClass('fullscreen-mode')) {
+            // Enter fullscreen mode
+            container.css({
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 9999,
+                padding: '20px',
+                backgroundColor: 'rgba(0,0,0,0.95)'
+            });
+            
+            preview.css({
+                flex: '0 0 100%',
+                maxWidth: '100%',
+                maxHeight: '100%',
+                backgroundColor: '#fff',
+                padding: '30px'
+            });
+            
+            $('.diploma-builder-form').hide();
+            $('#toggle-fullscreen').text('❐');
+        } else {
+            // Exit fullscreen mode
+            container.removeAttr('style');
+            preview.removeAttr('style');
+            $('.diploma-builder-form').show();
+            $('#toggle-fullscreen').text('⛶');
+        }
     }
     
     // Save diploma configuration
@@ -216,6 +401,8 @@ jQuery(document).ready(function($) {
                 hideLoading();
                 if (response.success) {
                     showMessage('Diploma saved successfully!', 'success');
+                    $('#success-message').text(response.data.message);
+                    $('#success-modal').show();
                 } else {
                     showMessage('Error saving diploma: ' + response.data, 'error');
                 }
@@ -325,19 +512,7 @@ jQuery(document).ready(function($) {
         
         const messageClass = type === 'success' ? 'success' : 'error';
         const messageHTML = `
-            <div class="diploma-message ${messageClass}" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                border-radius: 5px;
-                color: white;
-                font-weight: 600;
-                z-index: 10000;
-                max-width: 300px;
-                background: ${type === 'success' ? '#28a745' : '#dc3545'};
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            ">
+            <div class="diploma-message ${messageClass}">
                 ${message}
             </div>
         `;
@@ -352,95 +527,54 @@ jQuery(document).ready(function($) {
         }, 5000);
     }
     
-    // Add click-to-dismiss functionality for messages
-    $(document).on('click', '.diploma-message', function() {
-        $(this).fadeOut(300, function() {
-            $(this).remove();
-        });
-    });
-    
-    // Handle state emblem loading
-    $('#state-emblem-select').on('change', function() {
-        const selectedState = $(this).val();
-        if (selectedState) {
-            // In a real implementation, you would have actual state emblems
-            // For demo purposes, we'll use placeholder logic
-            currentConfig.emblem_value = selectedState;
-            updatePreview();
-        }
-    });
-    
-    // Add keyboard shortcuts
-    $(document).on('keydown', function(e) {
-        // Ctrl+S to save
-        if (e.ctrlKey && e.which === 83) {
-            e.preventDefault();
-            saveDiploma();
-        }
+    // Reset form
+    function resetForm() {
+        // Reset configuration
+        currentConfig = {
+            diploma_style: 'classic',
+            paper_color: 'white',
+            emblem_type: 'generic',
+            emblem_value: 'graduation_cap',
+            school_name: '',
+            student_name: '',
+            graduation_date: '',
+            city: '',
+            state: ''
+        };
         
-        // Ctrl+D to download
-        if (e.ctrlKey && e.which === 68) {
-            e.preventDefault();
-            downloadDiploma();
-        }
-    });
-    
-    // Auto-save functionality (optional)
-    let autoSaveTimeout;
-    function setupAutoSave() {
-        $('.text-fields input').on('input', function() {
-            clearTimeout(autoSaveTimeout);
-            autoSaveTimeout = setTimeout(function() {
-                // Auto-save configuration to localStorage
-                if (typeof(Storage) !== "undefined") {
-                    localStorage.setItem('diploma_config', JSON.stringify(currentConfig));
-                }
-            }, 2000); // Save 2 seconds after user stops typing
-        });
-    }
-    
-    // Load saved configuration
-    function loadSavedConfig() {
-        if (typeof(Storage) !== "undefined") {
-            const saved = localStorage.getItem('diploma_config');
-            if (saved) {
-                try {
-                    const savedConfig = JSON.parse(saved);
-                    // Merge saved config with current config
-                    currentConfig = { ...currentConfig, ...savedConfig };
-                    
-                    // Update form fields
-                    updateFormFromConfig();
-                    updatePreview();
-                } catch (e) {
-                    console.log('Error loading saved configuration:', e);
-                }
-            }
-        }
-    }
-    
-    // Update form fields from configuration
-    function updateFormFromConfig() {
-        $(`input[name="diploma_style"][value="${currentConfig.diploma_style}"]`).prop('checked', true);
-        $(`input[name="paper_color"][value="${currentConfig.paper_color}"]`).prop('checked', true);
-        $(`input[name="emblem_type"][value="${currentConfig.emblem_type}"]`).prop('checked', true);
+        // Reset form fields
+        $('input[name="diploma_style"][value="classic"]').prop('checked', true);
+        $('input[name="paper_color"][value="white"]').prop('checked', true);
+        $('input[name="emblem_value"][data-type="generic"][value="graduation_cap"]').prop('checked', true);
+        $('input[name="emblem_value"][data-type="state"]').prop('checked', false);
         
-        if (currentConfig.emblem_type === 'generic') {
-            $(`input[name="generic_emblem"][value="${currentConfig.emblem_value}"]`).prop('checked', true);
-        } else {
-            $('#state-emblem-select').val(currentConfig.emblem_value);
-        }
+        $('#school_name').val('');
+        $('#student_name').val('');
+        $('#graduation_date').val('');
+        $('#city').val('');
+        $('#state').val('');
+        $('#state-emblem-select').val('');
         
-        $('#school_name').val(currentConfig.school_name);
-        $('#graduation_date').val(currentConfig.graduation_date);
-        $('#city').val(currentConfig.city);
-        $('#state').val(currentConfig.state);
+        // Reset UI
+        $('.form-section').hide();
+        $('.form-section[data-step="1"]').show();
+        $('#prev-step').prop('disabled', true);
+        $('#next-step').show();
+        $('.form-actions').hide();
         
-        toggleEmblemOptions();
+        // Reset emblem tabs
+        $('.tab-button').removeClass('active');
+        $('.emblem-tab-content').removeClass('active');
+        $('.tab-button[data-tab="generic"]').addClass('active');
+        $('#generic-emblems').addClass('active');
+        
+        // Reset progress
+        updateProgressBar();
+        
+        // Update preview
+        updatePreview();
     }
     
     // Initialize everything when document is ready
     init();
-    setupAutoSave();
-    loadSavedConfig();
 });

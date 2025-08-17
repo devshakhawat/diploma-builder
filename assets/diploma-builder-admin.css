@@ -1,0 +1,150 @@
+/* Diploma Builder Admin Styles */
+
+.diploma-builder-admin .diploma-builder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #ccd0d4;
+}
+
+.diploma-builder-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    min-width: 120px;
+}
+
+.stat-card h3 {
+    margin: 0 0 5px 0;
+    font-size: 24px;
+    color: #007cba;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.diploma-builder-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.diplomas th,
+.diplomas td {
+    vertical-align: top;
+}
+
+.diplomas .column-school {
+    width: 20%;
+}
+
+.diplomas .column-user,
+.diplomas .column-date,
+.diplomas .column-style {
+    width: 10%;
+}
+
+.diplomas .column-location {
+    width: 15%;
+}
+
+.diplomas .column-downloads,
+.diplomas .column-created {
+    width: 8%;
+}
+
+.diplomas .column-actions {
+    width: 15%;
+}
+
+.diplomas .actions .button {
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Settings Page */
+.diploma-builder-settings .form-table th {
+    width: 200px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .diploma-builder-admin .diploma-builder-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .diploma-builder-stats {
+        flex-wrap: wrap;
+    }
+    
+    .stat-card {
+        min-width: 100px;
+    }
+    
+    .diplomas .column-location,
+    .diplomas .column-style,
+    .diplomas .column-downloads {
+        display: none;
+    }
+}

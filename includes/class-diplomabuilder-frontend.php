@@ -104,17 +104,17 @@ class DiplomaBuilder_Frontend {
                                 <?php foreach ($diploma_styles as $key => $style): ?>
                                     <label class="style-option" for="style_<?php echo $key; ?>">
                                         <input type="radio" name="diploma_style" value="<?php echo $key; ?>" id="style_<?php echo $key; ?>" <?php echo $key === 'classic' ? 'checked' : ''; ?>>
-                                        <!-- <div class="style-preview">
-                                            <img src="<?php //echo DIPLOMA_BUILDER_URL . 'assets/previews/' . $key . '.svg'; ?>" alt="<?php //echo esc_attr($style['name']); ?>">
+                                        <div class="style-preview">
+                                            <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/previews/' . $key . '.jpg'; ?>" alt="<?php echo esc_attr($style['name']); ?>">
                                             <div class="style-overlay">
                                                 <span class="checkmark">✓</span>
                                             </div>
-                                        </div> -->
-                                        <div class="style-info">
-                                            <h4><?php echo esc_html($style['name']); ?></h4>
-                                            <p><?php echo esc_html($style['description']); ?></p>
-                                            <span class="emblem-count"><?php printf(__('%d emblem position(s)', 'diploma-builder'), $style['emblems']); ?></span>
                                         </div>
+                                        <!-- <div class="style-info">
+                                            <h4><?php // echo esc_html($style['name']); ?></h4>
+                                            <p><?php // echo esc_html($style['description']); ?></p>
+                                            <span class="emblem-count"><?php // printf(__('%d emblem position(s)', 'diploma-builder'), $style['emblems']); ?></span>
+                                        </div> -->
                                     </label>
                                 <?php endforeach; ?>
                             </div>
@@ -157,51 +157,6 @@ class DiplomaBuilder_Frontend {
                                 </button>
                             </div>
                             
-                            <div class="emblem-content">
-                                <div id="generic-emblems" class="emblem-tab-content active">
-                                    <div class="emblem-options">
-                                        <?php foreach ($generic_emblems as $key => $emblem): ?>
-                                            <label class="emblem-option" for="emblem_<?php echo $key; ?>">
-                                                <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $key === 'graduation_cap' ? 'checked' : ''; ?>>
-                                                <div class="emblem-preview">
-                                                    <?php if ($key === 'school_preview'): ?>
-                                                        <div class="preview-placeholder" style="width:60px;height:60px;background:#f0f8ff;border:1px solid #3498db;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#3498db;">
-                                                            <div>👁️</div>
-                                                        </div>
-                                                    <?php else: ?>
-                                                        <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.svg'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" onerror="this.parentNode.innerHTML='<div class=\'emblem-placeholder\' style=\'width:60px;height:60px;background:#f0f0f0;border:1px solid #ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#666;\'><div><?php echo esc_html(substr($key, 0, 3)); ?></div></div>'">
-                                                    <?php endif; ?>
-                                                    <div class="emblem-overlay">
-                                                        <span class="checkmark">✓</span>
-                                                    </div>
-                                                </div>
-                                                <div class="emblem-info">
-                                                    <h4><?php echo esc_html($emblem['name']); ?></h4>
-                                                    <p><?php echo esc_html($emblem['description']); ?></p>
-                                                </div>
-                                            </label>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                                
-                                <div id="state-emblems" class="emblem-tab-content">
-                                    <div class="state-selector">
-                                        <label for="state-emblem-select"><?php //_e('Select Your State:', 'diploma-builder'); ?></label>
-                                        <select name="emblem_value" id="state-emblem-select" data-type="state">
-                                            <option value=""><?php //_e('Choose a state...', 'diploma-builder'); ?></option>
-                                            <?php //foreach ($us_states as $code => $name): ?>
-                                                <option value="<?php //echo $code; ?>"><?php //echo esc_html($name); ?></option>
-                                            <?php //endforeach; ?>
-                                        </select>
-                                        <div id="state-emblem-preview" class="state-preview" style="display: none;">
-                                            <div class="state-emblem-placeholder" style="width: 80px; height: 80px; margin: 0 auto 10px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #666;">
-                                                <div id="state-emblem-code"></div>
-                                            </div>
-                                            <p id="state-emblem-name"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     
                         <!-- Step 4: Custom Text -->
@@ -429,31 +384,31 @@ class DiplomaBuilder_Frontend {
         return array(
             'classic' => array(
                 'name' => __('Classic Traditional', 'diploma-builder'),
-                'description' => __('Traditional diploma with elegant borders and classic typography.', 'diploma-builder'),
+                'description' => __('.', 'diploma-builder'),
                 'emblems' => 1,
                 'template' => 'classic'
             ),
             'modern' => array(
                 'name' => __('Modern Elegant', 'diploma-builder'),
-                'description' => __('Contemporary design with clean lines and modern styling.', 'diploma-builder'),
+                'description' => __('.', 'diploma-builder'),
                 'emblems' => 2,
                 'template' => 'modern'
             ),
             'formal' => array(
                 'name' => __('Formal Certificate', 'diploma-builder'),
-                'description' => __('Professional certificate style with formal presentation.', 'diploma-builder'),
+                'description' => __('', 'diploma-builder'),
                 'emblems' => 1,
                 'template' => 'formal'
             ),
             'decorative' => array(
                 'name' => __('Decorative Border', 'diploma-builder'),
-                'description' => __('Ornate design with decorative elements and rich details.', 'diploma-builder'),
+                'description' => __('', 'diploma-builder'),
                 'emblems' => 2,
                 'template' => 'decorative'
             ),
             'minimalist' => array(
                 'name' => __('Minimalist Clean', 'diploma-builder'),
-                'description' => __('Simple, clean design focusing on content and readability.', 'diploma-builder'),
+                'description' => __('', 'diploma-builder'),
                 'emblems' => 1,
                 'template' => 'minimalist'
             )

@@ -40,55 +40,96 @@ jQuery(document).ready(function($) {
     
     // Bind all event handlers
     function bindEvents() {
-        // Diploma style selection
+        // Enhanced diploma style selection (radio buttons)
         $('input[name="diploma_style"]').on('change', function() {
             currentConfig.diploma_style = $(this).val();
             updatePreview();
+            updateReviewSummary();
+        });
+        
+        // Template filter buttons
+        $('.filter-btn').on('click', function() {
+            const filter = $(this).data('filter');
+            $('.filter-btn').removeClass('active');
+            $(this).addClass('active');
+            filterTemplates(filter);
         });
         
         // Paper color selection
         $('input[name="paper_color"]').on('change', function() {
             currentConfig.paper_color = $(this).val();
             updatePreview();
+            updateReviewSummary();
         });
         
-        // Emblem type selection
-        $('.tab-button').on('click', function(e) {
-            e.preventDefault();
+        // Enhanced emblem selection
+        $('.emblem-tab-btn').on('click', function() {
             const tab = $(this).data('tab');
             currentConfig.emblem_type = tab;
-            toggleEmblemOptions();
+            toggleEmblemTabs(tab);
             updateEmblemValue();
             updatePreview();
         });
         
         // Generic emblem selection
-        $(document).on('change', 'input[name="emblem_value"][data-type="generic"]', function() {
+        $('input[name="emblem_value"][data-type="generic"]').on('change', function() {
             currentConfig.emblem_value = $(this).val();
             updatePreview();
         });
         
         // State emblem selection
         $('#state-emblem-select').on('change', function() {
-            currentConfig.emblem_value = $(this).val();
+            const stateCode = $(this).val();
+            currentConfig.emblem_value = stateCode;
+            updateStateEmblemPreview(stateCode);
             updatePreview();
-            
-            // Update state emblem preview
-            if ($(this).val()) {
-                const stateName = $(this).find('option:selected').text();
-                $('#state-emblem-name').text(stateName);
-                $('#state-emblem-code').text($(this).val());
-                $('#state-emblem-preview').show();
-            } else {
-                $('#state-emblem-preview').hide();
-            }
         });
         
-        // Text field changes
-        $('.text-fields input').on('input', function() {
+        // Text field changes with real-time validation
+        $('#student_name, #school_name, #city, #graduation_date').on('input', function() {
             const fieldName = $(this).attr('name');
             currentConfig[fieldName] = $(this).val();
+            validateField($(this));
             updatePreview();
+            updateReviewSummary();
+        });
+        
+        // State dropdown
+        $('#state').on('change', function() {
+            currentConfig.state = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+        
+        // Export buttons
+        $('#export-pdf').on('click', function() {
+            exportDiploma('pdf');
+        });
+        
+        $('#export-png').on('click', function() {
+            exportDiploma('png');
+        });
+        
+        $('#export-jpg').on('click', function() {
+            exportDiploma('jpg');
+        });
+        
+        // Share buttons
+        $('#share-facebook').on('click', function() {
+            shareOnSocialMedia('facebook');
+        });
+        
+        $('#share-twitter').on('click', function() {
+            shareOnSocialMedia('twitter');
+        });
+        
+        $('#share-linkedin').on('click', function() {
+            shareOnSocialMedia('linkedin');
+        });
+        
+        $('#copy-link').on('click', function() {
+            copyDiplomaLink();
         });
         
         // Navigation buttons
@@ -133,18 +174,27 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // Toggle emblem options based on type
-    function toggleEmblemOptions() {
-        $('.tab-button').removeClass('active');
+    // Enhanced template filtering
+    function filterTemplates(filter) {
+        $('.template-card').show();
+        
+        if (filter !== 'all') {
+            $('.template-card').each(function() {
+                const templateType = $(this).find('input').val();
+                if (templateType !== filter && !templateType.includes(filter)) {
+                    $(this).hide();
+                }
+            });
+        }
+    }
+    
+    // Toggle emblem tabs
+    function toggleEmblemTabs(activeTab) {
+        $('.emblem-tab-btn').removeClass('active');
         $('.emblem-tab-content').removeClass('active');
         
-        if (currentConfig.emblem_type === 'generic') {
-            $('.tab-button[data-tab="generic"]').addClass('active');
-            $('#generic-emblems').addClass('active');
-        } else {
-            $('.tab-button[data-tab="state"]').addClass('active');
-            $('#state-emblems').addClass('active');
-        }
+        $(`.emblem-tab-btn[data-tab="${activeTab}"]`).addClass('active');
+        $(`#${activeTab}-emblems`).addClass('active');
     }
     
     // Update emblem value when type changes
@@ -153,6 +203,213 @@ jQuery(document).ready(function($) {
             currentConfig.emblem_value = $('input[name="emblem_value"][data-type="generic"]:checked').val() || 'graduation_cap';
         } else {
             currentConfig.emblem_value = $('#state-emblem-select').val() || '';
+        }
+    }
+    
+    // Update state emblem preview
+    function updateStateEmblemPreview(stateCode) {
+        if (stateCode) {
+            const stateName = $(`#state-emblem-select option[value="${stateCode}"]`).text();
+            const emblemUrl = `${diploma_ajax.plugin_url}assets/emblems/states/${stateCode}.svg`;
+            
+            $('#state-emblem-img').attr('src', emblemUrl).attr('alt', stateName);
+            $('#state-emblem-name').text(stateName);
+            $('#state-emblem-preview').show();
+        } else {
+            $('#state-emblem-preview').hide();
+        }
+    }
+    
+    // Real-time form validation
+    function validateField($field) {
+        const value = $field.val().trim();
+        const isRequired = $field.prop('required');
+        
+        // Remove existing validation classes
+        $field.removeClass('field-valid field-invalid');
+        
+        if (isRequired && !value) {
+            $field.addClass('field-invalid');
+            showFieldError($field, 'This field is required');
+        } else if (value) {
+            $field.addClass('field-valid');
+            hideFieldError($field);
+            
+            // Specific validation rules
+            const fieldName = $field.attr('name');
+            if (fieldName === 'student_name' && value.length < 2) {
+                $field.removeClass('field-valid').addClass('field-invalid');
+                showFieldError($field, 'Name must be at least 2 characters');
+            } else if (fieldName === 'school_name' && value.length < 3) {
+                $field.removeClass('field-valid').addClass('field-invalid');
+                showFieldError($field, 'School name must be at least 3 characters');
+            }
+        } else {
+            hideFieldError($field);
+        }
+    }
+    
+    // Show field error
+    function showFieldError($field, message) {
+        const $fieldGroup = $field.closest('.field-group');
+        let $errorMsg = $fieldGroup.find('.field-error');
+        
+        if ($errorMsg.length === 0) {
+            $errorMsg = $('<div class="field-error"></div>');
+            $fieldGroup.append($errorMsg);
+        }
+        
+        $errorMsg.text(message).show();
+    }
+    
+    // Hide field error
+    function hideFieldError($field) {
+        const $fieldGroup = $field.closest('.field-group');
+        $fieldGroup.find('.field-error').hide();
+    }
+    
+    // Enhanced review summary update
+    function updateReviewSummary() {
+        $('#review-student-name').text(currentConfig.student_name || '[Student Name]');
+        $('#review-school-name').text(currentConfig.school_name || '[School Name]');
+        $('#review-graduation-date').text(currentConfig.graduation_date || '[Graduation Date]');
+        
+        const city = currentConfig.city || '[City]';
+        const state = currentConfig.state || '[State]';
+        $('#review-location').text(`${city}, ${state}`);
+        
+        // Update style and paper info
+        const styleName = $(`input[name="diploma_style"]:checked`).closest('.template-card').find('h5').text() || '[Style]';
+        const paperName = $(`input[name="paper_color"]:checked`).closest('.color-option').find('.color-name').text() || '[Paper]';
+        
+        $('#review-diploma-style').text(styleName);
+        $('#review-paper-color').text(paperName);
+    }
+    
+    // Export diploma in different formats
+    function exportDiploma(format) {
+        if (!validateForm()) {
+            return;
+        }
+        
+        showLoading();
+        
+        // Use html2canvas to capture the diploma
+        const options = {
+            scale: format === 'pdf' ? 4 : 3,
+            backgroundColor: null,
+            width: 1275, // 8.5" * 150 DPI
+            height: 1650, // 11" * 150 DPI
+            useCORS: true,
+            allowTaint: false
+        };
+        
+        html2canvas(document.getElementById('diploma-canvas'), options).then(function(canvas) {
+            const link = document.createElement('a');
+            const timestamp = Date.now();
+            const schoolName = currentConfig.school_name.replace(/[^a-z0-9]/gi, '_');
+            
+            if (format === 'pdf') {
+                // For PDF, we'd need a PDF library like jsPDF
+                const imgData = canvas.toDataURL('image/png', 1.0);
+                link.download = `diploma_${schoolName}_${timestamp}.png`;
+                link.href = imgData;
+            } else if (format === 'png') {
+                link.download = `diploma_${schoolName}_${timestamp}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+            } else if (format === 'jpg') {
+                link.download = `diploma_${schoolName}_${timestamp}.jpg`;
+                link.href = canvas.toDataURL('image/jpeg', 0.9);
+            }
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            hideLoading();
+            showMessage(`Diploma exported as ${format.toUpperCase()} successfully!`, 'success');
+            
+            // Track export
+            trackEvent('diploma_export', { format: format });
+            
+        }).catch(function(error) {
+            hideLoading();
+            console.error('Error exporting diploma:', error);
+            showMessage('Error exporting diploma. Please try again.', 'error');
+        });
+    }
+    
+    // Share on social media
+    function shareOnSocialMedia(platform) {
+        const diplomaUrl = window.location.href;
+        const text = `Check out my custom diploma from ${currentConfig.school_name}!`;
+        let shareUrl = '';
+        
+        switch (platform) {
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(diplomaUrl)}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(diplomaUrl)}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(diplomaUrl)}`;
+                break;
+        }
+        
+        if (shareUrl) {
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            trackEvent('diploma_share', { platform: platform });
+        }
+    }
+    
+    // Copy diploma link
+    function copyDiplomaLink() {
+        const diplomaUrl = window.location.href;
+        
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(diplomaUrl).then(function() {
+                showMessage('Diploma link copied to clipboard!', 'success');
+                trackEvent('diploma_link_copy');
+            }).catch(function() {
+                fallbackCopyTextToClipboard(diplomaUrl);
+            });
+        } else {
+            fallbackCopyTextToClipboard(diplomaUrl);
+        }
+    }
+    
+    // Fallback copy function
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            showMessage('Diploma link copied to clipboard!', 'success');
+            trackEvent('diploma_link_copy');
+        } catch (err) {
+            showMessage('Unable to copy link. Please copy manually.', 'error');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+    
+    // Track events for analytics
+    function trackEvent(eventName, properties = {}) {
+        // This would integrate with your analytics service
+        console.log('Event tracked:', eventName, properties);
+        
+        // Example: Google Analytics 4
+        if (typeof gtag !== 'undefined') {
+            gtag('event', eventName, properties);
         }
     }
     
@@ -543,17 +800,14 @@ jQuery(document).ready(function($) {
         };
         
         // Reset form fields
-        $('input[name="diploma_style"][value="classic"]').prop('checked', true);
+        $('#diploma_style_select').val('classic');
         $('input[name="paper_color"][value="white"]').prop('checked', true);
-        $('input[name="emblem_value"][data-type="generic"][value="graduation_cap"]').prop('checked', true);
-        $('input[name="emblem_value"][data-type="state"]').prop('checked', false);
         
         $('#school_name').val('');
         $('#student_name').val('');
         $('#graduation_date').val('');
         $('#city').val('');
         $('#state').val('');
-        $('#state-emblem-select').val('');
         
         // Reset UI
         $('.form-section').hide();
@@ -562,17 +816,12 @@ jQuery(document).ready(function($) {
         $('#next-step').show();
         $('.form-actions').hide();
         
-        // Reset emblem tabs
-        $('.tab-button').removeClass('active');
-        $('.emblem-tab-content').removeClass('active');
-        $('.tab-button[data-tab="generic"]').addClass('active');
-        $('#generic-emblems').addClass('active');
-        
         // Reset progress
         updateProgressBar();
         
-        // Update preview
+        // Update preview and summary
         updatePreview();
+        updateReviewSummary();
     }
     
     // Initialize everything when document is ready

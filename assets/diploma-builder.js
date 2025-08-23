@@ -446,12 +446,15 @@ jQuery(document).ready(function($) {
         
         const paperColor = paperColors[currentConfig.paper_color] || '#ffffff';
         
-        let diplomaHTML = generateDiplomaHTML(paperColor);
+        // Update the background color of the diploma canvas directly
+        $('#diploma-canvas').css('background-color', paperColor);
+        
+        let diplomaHTML = generateDiplomaHTML();
         $('#diploma-canvas').html(diplomaHTML);
     }
     
     // Generate diploma HTML
-    function generateDiplomaHTML(paperColor) {
+    function generateDiplomaHTML() {
         const schoolName = currentConfig.school_name || '[School Name]';
         const studentName = currentConfig.student_name || '[Student Name]';
         const graduationDate = currentConfig.graduation_date || '[Date of Graduation]';
@@ -462,7 +465,7 @@ jQuery(document).ready(function($) {
         const emblemInfo = getEmblemInfo();
         
         return `
-            <div class="diploma-template ${currentConfig.diploma_style}" style="background-color: ${paperColor};">
+            <div class="diploma-template ${currentConfig.diploma_style}">
                 ${emblemInfo.html}
                 <div class="diploma-header">
                     <div class="diploma-title">High School Diploma</div>

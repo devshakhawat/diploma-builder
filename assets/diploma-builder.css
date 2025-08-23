@@ -921,23 +921,23 @@
 }
 
 .diploma-template.classic {
-    background: linear-gradient(135deg, #f9f3e9 0%, #fff 100%);
+    background: transparent;
 }
 
 .diploma-template.modern {
-    background: linear-gradient(135deg, #f0f8ff 0%, #fff 100%);
+    background: transparent;
 }
 
 .diploma-template.formal {
-    background: #fff;
+    background: transparent;
 }
 
 .diploma-template.decorative {
-    background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
+    background: transparent;
 }
 
 .diploma-template.minimalist {
-    background: #fafafa;
+    background: transparent;
 }
 
 .diploma-header {

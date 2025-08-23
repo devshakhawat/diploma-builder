@@ -1,6 +1,9 @@
 jQuery(document).ready(function($) {
     'use strict';
     
+    // Hide modal on page load
+    $('.modal').hide();
+    
     // Handle diploma deletion
     $(document).on('click', '.delete-diploma', function(e) {
         e.preventDefault();
@@ -85,6 +88,10 @@ jQuery(document).ready(function($) {
         
         const diplomaId = $(this).data('diploma-id');
         
+        // Show loading indicator
+        $('#diploma-preview-content').html('<div class="loading">Loading...</div>');
+        $('#diploma-preview-modal').show();
+        
         $.ajax({
             url: diploma_admin_ajax.ajax_url,
             type: 'POST',
@@ -96,19 +103,18 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 if (response.success) {
                     $('#diploma-preview-content').html(response.data.html);
-                    $('#diploma-preview-modal').fadeIn(300);
                 } else {
-                    showMessage(response.data, 'error');
+                    $('#diploma-preview-content').html('<div class="error">Error: ' + response.data + '</div>');
                 }
             },
             error: function() {
-                showMessage(diploma_builder_admin.preview_error, 'error');
+                $('#diploma-preview-content').html('<div class="error">' + diploma_builder_admin.preview_error + '</div>');
             }
         });
     });
     
     // Close modal
-    $('.modal-close, .modal').on('click', function(e) {
+    $(document).on('click', '.modal-close, .modal', function(e) {
         if (e.target === this) {
             $('.modal').fadeOut(300);
         }
@@ -120,7 +126,7 @@ jQuery(document).ready(function($) {
     });
     
     // Handle select all
-    $('#cb-select-all-1').on('change', function() {
+    $(document).on('change', '#cb-select-all-1', function() {
         $('input[name="diploma_ids[]"]').prop('checked', $(this).prop('checked'));
     });
     
@@ -156,15 +162,4 @@ jQuery(document).ready(function($) {
         });
     });
     
-    // Initialize localization strings
-    if (typeof diploma_builder_admin === 'undefined') {
-        window.diploma_builder_admin = {
-            delete_confirm: 'Are you sure you want to delete this diploma?',
-            delete_error: 'Error deleting diploma. Please try again.',
-            bulk_delete_confirm: 'Are you sure you want to delete %d diplomas?',
-            bulk_delete_error: 'Error deleting diplomas. Please try again.',
-            select_diplomas: 'Please select at least one diploma to delete.',
-            preview_error: 'Error loading diploma preview. Please try again.'
-        };
-    }
 });

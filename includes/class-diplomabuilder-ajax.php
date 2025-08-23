@@ -377,7 +377,7 @@ class DiplomaBuilder_Ajax {
      * Verify nonce for security
      */
     private function verify_nonce() {
-        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'diploma_builder_nonce')) {
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'diploma_builder_admin_nonce')) {
             throw new Exception(__('Security check failed.', 'diploma-builder'));
         }
     }

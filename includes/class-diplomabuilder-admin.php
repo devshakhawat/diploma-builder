@@ -69,6 +69,15 @@ class DiplomaBuilder_Admin {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('diploma_builder_admin_nonce')
         ));
+        
+        wp_localize_script('diploma-builder-admin', 'diploma_builder_admin', array(
+            'delete_confirm' => __('Are you sure you want to delete this diploma?', 'diploma-builder'),
+            'delete_error' => __('Error deleting diploma. Please try again.', 'diploma-builder'),
+            'bulk_delete_confirm' => __('Are you sure you want to delete %d diplomas?', 'diploma-builder'),
+            'bulk_delete_error' => __('Error deleting diplomas. Please try again.', 'diploma-builder'),
+            'select_diplomas' => __('Please select at least one diploma to delete.', 'diploma-builder'),
+            'preview_error' => __('Error loading diploma preview. Please try again.', 'diploma-builder')
+        ));
     }
     
     public function register_settings() {

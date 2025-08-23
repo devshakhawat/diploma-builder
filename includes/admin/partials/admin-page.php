@@ -131,12 +131,12 @@
                             <?php echo esc_html(date('M j, Y', strtotime($diploma->created_at))); ?>
                         </td>
                         <td class="actions column-actions">
-                            <a href="#" class="button view-diploma" data-diploma-id="<?php echo esc_attr($diploma->id); ?>">
+                            <button type="button" class="button view-diploma" data-diploma-id="<?php echo esc_attr($diploma->id); ?>">
                                 <?php _e('View', 'diploma-builder'); ?>
-                            </a>
-                            <a href="#" class="button delete-diploma" data-diploma-id="<?php echo esc_attr($diploma->id); ?>">
+                            </button>
+                            <button type="button" class="button delete-diploma" data-diploma-id="<?php echo esc_attr($diploma->id); ?>">
                                 <?php _e('Delete', 'diploma-builder'); ?>
-                            </a>
+                            </button>
                         </td>
                     </tr>
                 <?php endforeach; ?>

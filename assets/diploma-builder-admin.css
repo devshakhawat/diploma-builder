@@ -83,7 +83,7 @@
     height: 100%;
     background: rgba(0,0,0,0.7);
     z-index: 99999;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -95,6 +95,7 @@
     max-width: 90%;
     max-height: 90%;
     overflow: auto;
+    width: 800px;
 }
 
 .modal-header {
@@ -118,8 +119,32 @@
     color: #999;
 }
 
+.modal-close:hover {
+    color: #333;
+}
+
 .modal-body {
     padding: 20px;
+}
+
+.modal-body .diploma-template {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Loading and error states */
+.modal-body .loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.modal-body .error {
+    text-align: center;
+    padding: 40px;
+    color: #d63638;
+    background: #ffeaea;
+    border-radius: 4px;
 }
 
 /* Settings Page */

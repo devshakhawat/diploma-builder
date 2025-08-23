@@ -132,14 +132,14 @@ class DiplomaBuilder_Frontend {
                                                     <div class="template-check">✓</div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="template-info">
-                                                <h5><?php //echo esc_html($style['name']); ?></h5>
-                                                <p><?php //echo esc_html($style['description']); ?></p>
-                                                <div class="template-features">
+                                            <div class="template-info">
+                                                <h5><?php echo esc_html($style['name']); ?></h5>
+                                                <p><?php echo esc_html($style['description']); ?></p>
+                                                <!-- <div class="template-features">
                                                     <span class="feature-badge"><?php //printf(__('%d Emblem(s)', 'diploma-builder'), $style['emblems']); ?></span>
                                                     <span class="feature-badge popular" <?php //echo $key === 'classic' ? 'style="display:inline-block"' : 'style="display:none"'; ?>><?php //_e('Popular', 'diploma-builder'); ?></span>
-                                                </div>
-                                            </div> -->
+                                                </div> -->
+                                            </div>
                                         </label>
                                     <?php endforeach; ?>
                                 </div>
@@ -457,13 +457,13 @@ class DiplomaBuilder_Frontend {
                             <!-- Dynamic diploma content will be inserted here -->
                         </div>
                     </div>
-                    <div class="preview-info">
-                        <p class="preview-note"><?php _e('This is a live preview. All changes update instantly.', 'diploma-builder'); ?></p>
+                    <!-- <div class="preview-info">
+                        <p class="preview-note"><?php // _e('This is a live preview. All changes update instantly.', 'diploma-builder'); ?></p>
                         <div class="preview-specs">
-                            <span><?php _e('Print Size:', 'diploma-builder'); ?> 8.5" × 11"</span>
-                            <span><?php _e('Resolution:', 'diploma-builder'); ?> 300 DPI</span>
+                            <span><?php //_e('Print Size:', 'diploma-builder'); ?> 8.5" × 11"</span>
+                            <span><?php //_e('Resolution:', 'diploma-builder'); ?> 300 DPI</span>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 
             </div>

@@ -18,7 +18,7 @@ class DiplomaBuilder_Assets {
         global $post;
         
         // Only load assets on pages that use the shortcode
-        if (is_a($post, 'WP_Post') && (has_shortcode($post->post_content, 'diploma_builder') || has_shortcode($post->post_content, 'diploma_gallery'))) {
+        if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'diploma_builder')) {
             // CSS
             wp_enqueue_style(
                 'diploma-builder',

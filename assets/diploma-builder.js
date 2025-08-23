@@ -151,10 +151,6 @@ jQuery(document).ready(function($) {
             resetForm();
         });
         
-        $('#view-gallery').on('click', function() {
-            window.location.href = '/diploma-gallery';
-        });
-        
         // Modal close
         $('.modal-close').on('click', function() {
             $('#success-modal').hide();

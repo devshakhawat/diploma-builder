@@ -11,7 +11,6 @@ class DiplomaBuilder_Frontend {
     
     public function __construct() {
         add_shortcode('diploma_builder', array($this, 'diploma_builder_shortcode'));
-        add_shortcode('diploma_gallery', array($this, 'diploma_gallery_shortcode'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_head', array($this, 'add_meta_tags'));
     }
@@ -61,19 +60,6 @@ class DiplomaBuilder_Frontend {
         
         ob_start();
         $this->render_diploma_builder($atts);
-        return ob_get_clean();
-    }
-    
-    public function diploma_gallery_shortcode($atts) {
-        $atts = shortcode_atts(array(
-            'limit' => 12,
-            'columns' => 3,
-            'show_user_only' => 'false',
-            'show_public_only' => 'true'
-        ), $atts, 'diploma_gallery');
-        
-        ob_start();
-        $this->render_diploma_gallery($atts);
         return ob_get_clean();
     }
     
@@ -468,12 +454,12 @@ class DiplomaBuilder_Frontend {
                 
             </div>
             
-            <?php if ($atts['show_gallery'] === 'true'): ?>
-                <div class="diploma-gallery-section">
-                    <h3><?php _e('Recent Diplomas', 'diploma-builder'); ?></h3>
-                    <?php $this->render_diploma_gallery(array('limit' => 6, 'columns' => 3)); ?>
+            </div>
+                    
                 </div>
-            <?php endif; ?>
+                
+            </div>
+            
         </div>
         
         <!-- Loading Overlay -->
@@ -502,7 +488,6 @@ class DiplomaBuilder_Frontend {
                     <p id="success-message"></p>
                     <div class="success-actions">
                         <button type="button" id="create-another" class="btn btn-secondary"><?php _e('Create Another', 'diploma-builder'); ?></button>
-                        <button type="button" id="view-gallery" class="btn btn-primary"><?php _e('View Gallery', 'diploma-builder'); ?></button>
                     </div>
                 </div>
             </div>
@@ -541,62 +526,6 @@ class DiplomaBuilder_Frontend {
                 </div>
             </div>
         </div> -->
-        <?php
-    }
-    
-    private function render_diploma_gallery($atts) {
-        $limit = intval($atts['limit']);
-        $columns = intval($atts['columns']);
-        $show_user_only = $atts['show_user_only'] === 'true';
-        $show_public_only = $atts['show_public_only'] === 'true';
-        
-        // Get diplomas based on settings
-        if ($show_user_only && is_user_logged_in()) {
-            $diplomas = DiplomaBuilder_Database::get_user_diplomas(get_current_user_id(), $limit);
-        } else {
-            $diplomas = DiplomaBuilder_Database::get_all_diplomas($limit);
-            if ($show_public_only) {
-                $diplomas = array_filter($diplomas, function($diploma) {
-                    return $diploma->is_public;
-                });
-            }
-        }
-        
-        if (empty($diplomas)) {
-            echo '<p class="no-diplomas">' . __('No diplomas to display yet.', 'diploma-builder') . '</p>';
-            return;
-        }
-        
-        ?>
-        <div class="diploma-gallery" data-columns="<?php echo $columns; ?>">
-            <?php foreach ($diplomas as $diploma): ?>
-                <div class="diploma-card">
-                    <div class="diploma-thumbnail">
-                        <?php if ($diploma->image_path && file_exists($diploma->image_path)): ?>
-                            <img src="<?php echo wp_get_attachment_url($diploma->image_path); ?>" alt="<?php echo esc_attr($diploma->school_name); ?>">
-                        <?php else: ?>
-                            <div class="diploma-placeholder">
-                                <span class="placeholder-icon">🎓</span>
-                            </div>
-                        <?php endif; ?>
-                        <div class="diploma-overlay">
-                            <button type="button" class="btn-view-diploma" data-diploma-id="<?php echo $diploma->id; ?>">
-                                <?php _e('View', 'diploma-builder'); ?>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="diploma-info">
-                        <h4><?php echo esc_html($diploma->school_name); ?></h4>
-                        <p class="diploma-date"><?php echo esc_html($diploma->graduation_date); ?></p>
-                        <p class="diploma-location"><?php echo esc_html($diploma->city . ', ' . $diploma->state); ?></p>
-                        <div class="diploma-meta">
-                            <span class="diploma-style"><?php echo esc_html(ucwords(str_replace('_', ' ', $diploma->diploma_style))); ?></span>
-                            <span class="diploma-downloads"><?php printf(__('%d downloads', 'diploma-builder'), $diploma->download_count); ?></span>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
         <?php
     }
     

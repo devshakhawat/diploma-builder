@@ -8,6 +8,7 @@
     padding: 0;
     background: #f8f9fa;
     min-height: 100vh;
+    transition: all 0.3s ease;
 }
 
 /* Main Header */
@@ -802,6 +803,7 @@
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
 }
 
 .preview-title {
@@ -828,25 +830,46 @@
 }
 
 .btn-icon-small {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: 1px solid #d1d5db;
     background: #fff;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
+    font-size: 1rem;
+    transition: all 0.3s ease;
     font-weight: 600;
     color: #6b7280;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-icon-small:hover {
     background: #f9fafb;
     border-color: #3b82f6;
     color: #3b82f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+}
+
+.btn-icon-small:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#toggle-fullscreen {
+    background: #f0f9ff;
+    border-color: #bae6fd;
+    color: #0ea5e9;
+    font-size: 1.1rem;
+}
+
+#toggle-fullscreen:hover {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+    color: #0284c7;
 }
 
 #zoom-level {
@@ -867,6 +890,7 @@
     padding: 2rem;
     overflow: hidden;
     border: 1px solid #e5e7eb;
+    position: relative;
 }
 
 .diploma-canvas {
@@ -880,6 +904,20 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#diploma-builder-container.fullscreen-mode .diploma-preview {
+    padding: 2rem;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#diploma-builder-container.fullscreen-mode .diploma-canvas {
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .preview-info {
@@ -2002,6 +2040,27 @@
 
 /* Responsive Enhancements */
 @media (max-width: 768px) {
+    #diploma-builder-container.fullscreen-mode {
+        padding: 0;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .diploma-preview-container {
+        padding: 15px;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .preview-header {
+        padding: 10px 0;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .diploma-preview {
+        padding: 1rem;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .diploma-canvas {
+        max-width: 100%;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
     .template-gallery {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
@@ -2026,6 +2085,24 @@
 }
 
 @media (max-width: 480px) {
+    #diploma-builder-container.fullscreen-mode .diploma-preview-container {
+        padding: 10px;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .preview-controls {
+        gap: 0.25rem;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .btn-icon-small {
+        width: 30px;
+        height: 30px;
+        font-size: 0.875rem;
+    }
+    
+    #diploma-builder-container.fullscreen-mode .preview-header h3 {
+        font-size: 1.125rem;
+    }
+    
     .template-gallery {
         grid-template-columns: 1fr;
     }
@@ -2043,17 +2120,65 @@
 /* Fullscreen Mode */
 #diploma-builder-container.fullscreen-mode {
     background: rgba(0, 0, 0, 0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
 }
 
 #diploma-builder-container.fullscreen-mode .diploma-preview-container {
     flex: 0 0 100%;
+    width: 100%;
     max-width: 100%;
+    height: 100%;
+    max-height: 100%;
     background: #fff;
     padding: 30px;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#diploma-builder-container.fullscreen-mode .diploma-preview {
+    flex: 1;
+    padding: 2rem;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#diploma-builder-container.fullscreen-mode .diploma-canvas {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 #diploma-builder-container.fullscreen-mode .diploma-builder-form {
     display: none;
+}
+
+#diploma-builder-container.fullscreen-mode .preview-header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1000;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* Print Styles */

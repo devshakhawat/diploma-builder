@@ -69,7 +69,7 @@ class DiplomaBuilder_Frontend {
         $generic_emblems = $this->get_generic_emblems();
         $us_states = $this->get_us_states();
         ?>
-        <div id="diploma-builder-container" style="max-width: <?php echo esc_attr($atts['max_width']); ?>">
+        <div id="diploma-builder-container" style="max-width: <?php //echo esc_attr($atts['max_width']); ?>" >
             <!-- Main Header -->
             <div class="diploma-builder-header">
                 <div class="header-content">

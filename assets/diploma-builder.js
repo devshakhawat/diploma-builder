@@ -625,39 +625,20 @@ jQuery(document).ready(function($) {
     // Toggle fullscreen
     function toggleFullscreen() {
         const container = $('#diploma-builder-container');
-        const preview = $('.diploma-preview-container');
+        const body = $('body');
         
         container.toggleClass('fullscreen-mode');
         
         if (container.hasClass('fullscreen-mode')) {
             // Enter fullscreen mode
-            container.css({
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: 9999,
-                padding: '20px',
-                backgroundColor: 'rgba(0,0,0,0.95)'
-            });
-            
-            preview.css({
-                flex: '0 0 100%',
-                maxWidth: '100%',
-                maxHeight: '100%',
-                backgroundColor: '#fff',
-                padding: '30px'
-            });
-            
-            $('.diploma-builder-form').hide();
-            $('#toggle-fullscreen').text('❐');
+            body.css('overflow', 'hidden'); // Prevent background scrolling
+            $('#toggle-fullscreen').html('✕'); // Change icon to close
+            $('#toggle-fullscreen').attr('title', 'Exit Fullscreen');
         } else {
             // Exit fullscreen mode
-            container.removeAttr('style');
-            preview.removeAttr('style');
-            $('.diploma-builder-form').show();
-            $('#toggle-fullscreen').text('⛶');
+            body.css('overflow', 'auto'); // Restore scrolling
+            $('#toggle-fullscreen').html('⛶'); // Change icon to fullscreen
+            $('#toggle-fullscreen').attr('title', 'Toggle Fullscreen');
         }
     }
     

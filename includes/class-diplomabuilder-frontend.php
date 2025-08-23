@@ -120,7 +120,7 @@ class DiplomaBuilder_Frontend {
                                             </div>
                                             <div class="template-info">
                                                 <h5><?php echo esc_html($style['name']); ?></h5>
-                                                <p><?php echo esc_html($style['description']); ?></p>
+                                                <!-- <p><?php //echo esc_html($style['description']); ?></p> -->
                                                 <!-- <div class="template-features">
                                                     <span class="feature-badge"><?php //printf(__('%d Emblem(s)', 'diploma-builder'), $style['emblems']); ?></span>
                                                     <span class="feature-badge popular" <?php //echo $key === 'classic' ? 'style="display:inline-block"' : 'style="display:none"'; ?>><?php //_e('Popular', 'diploma-builder'); ?></span>
@@ -394,14 +394,22 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                 </div> -->
 
+                                
+
                                 <div class="form-actions" style="display: none;">
-                                    <button type="button" id="save-diploma" class="btn btn-success">
+                                    <button type="button" id="save-diploma" <?php
+
+                                if( ! is_user_logged_in() ) {
+                                    echo 'disabled';
+                                }
+
+                                ?> class="btn btn-success">
                                         <span class="btn-icon">💾</span>
                                         <?php _e('Save Diploma', 'diploma-builder'); ?>
                                     </button>
                                     <button type="button" id="download-diploma" class="btn btn-primary">
                                         <span class="btn-icon">📥</span>
-                                        <?php _e('Download High-Res', 'diploma-builder'); ?>
+                                        <?php _e('Download', 'diploma-builder'); ?>
                                     </button>
                                 </div>
                             </div>

@@ -37,9 +37,17 @@ class DiplomaBuilder_Assets {
             );
             
             wp_enqueue_script(
+                'jspdf',
+                'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+                array(),
+                '2.5.1',
+                true
+            );
+            
+            wp_enqueue_script(
                 'diploma-builder',
                 DIPLOMA_BUILDER_URL . 'assets/diploma-builder.js',
-                array('jquery', 'html2canvas'),
+                array('jquery', 'html2canvas', 'jspdf'),
                 DIPLOMA_BUILDER_VERSION,
                 true
             );

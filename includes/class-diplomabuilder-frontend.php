@@ -118,8 +118,8 @@ class DiplomaBuilder_Frontend {
                             </div>
                             
                             <div class="section-content">
-                                <!-- <div class="section-icon">📋</div>
-                                <h4><?php //_e('Choose Your Diploma Style', 'diploma-builder'); ?></h4> -->
+                                <div class="section-icon">📋</div>
+                                <h4><?php _e('Choose Your Diploma Style', 'diploma-builder'); ?></h4>
                                 
                                 <!-- Enhanced Template Gallery -->
                                 <div class="template-gallery">
@@ -127,7 +127,7 @@ class DiplomaBuilder_Frontend {
                                         <label class="template-card" for="style_<?php echo $key; ?>">
                                             <input type="radio" name="diploma_style" value="<?php echo $key; ?>" id="style_<?php echo $key; ?>" <?php echo $key === 'classic' ? 'checked' : ''; ?>>
                                             <div class="template-preview">
-                                                <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/previews/' . $key . '.jpg'; ?>" alt="<?php echo esc_attr($style['name']); ?>" loading="lazy">
+                                                <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/previews/' . $key . '.png'; ?>" alt="<?php echo esc_attr($style['name']); ?>" loading="lazy">
                                                 <div class="template-overlay">
                                                     <div class="template-check">✓</div>
                                                 </div>
@@ -172,7 +172,7 @@ class DiplomaBuilder_Frontend {
                                         <label class="color-option" for="color_<?php echo $key; ?>">
                                             <input type="radio" name="paper_color" value="<?php echo $key; ?>" id="color_<?php echo $key; ?>" <?php echo $key === 'white' ? 'checked' : ''; ?>>
                                             <div class="color-preview" style="background-color: <?php echo $color['hex']; ?>">
-                                                <span class="color-checkmark">✓</span>
+                                                <!-- <span class="color-checkmark">✓</span> -->
                                             </div>
                                             <span class="color-name"><?php echo esc_html($color['name']); ?></span>
                                         </label>
@@ -212,10 +212,10 @@ class DiplomaBuilder_Frontend {
                                             <label class="emblem-option" for="emblem_<?php echo $key; ?>">
                                                 <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $key === 'graduation_cap' ? 'checked' : ''; ?>>
                                                 <div class="emblem-preview">
-                                                    <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.jpg'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
-                                                    <div class="emblem-overlay">
+                                                    <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.png'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
+                                                    <!-- <div class="emblem-overlay">
                                                         <div class="emblem-check">✓</div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="emblem-info">
                                                     <h6><?php echo esc_html($emblem['name']); ?></h6>
@@ -386,54 +386,55 @@ class DiplomaBuilder_Frontend {
                                 </div>
                                 
                                 <!-- Sharing Options -->
-                                <div class="sharing-options">
-                                    <h5><?php _e('Share Your Diploma', 'diploma-builder'); ?></h5>
+                                <!-- <div class="sharing-options">
+                                    <h5><?php // _e('this section', 'diploma-builder'); ?></h5>
                                     <div class="share-buttons">
                                         <button type="button" class="share-btn" id="share-facebook">
                                             <div class="share-icon" style="background: #1877f2;">📘</div>
-                                            <span><?php _e('Facebook', 'diploma-builder'); ?></span>
+                                            <span><?php //_e('Facebook', 'diploma-builder'); ?></span>
                                         </button>
                                         <button type="button" class="share-btn" id="share-twitter">
                                             <div class="share-icon" style="background: #1da1f2;">🐦</div>
-                                            <span><?php _e('Twitter', 'diploma-builder'); ?></span>
+                                            <span><?php //_e('Twitter', 'diploma-builder'); ?></span>
                                         </button>
                                         <button type="button" class="share-btn" id="share-linkedin">
                                             <div class="share-icon" style="background: #0077b5;">💼</div>
-                                            <span><?php _e('LinkedIn', 'diploma-builder'); ?></span>
+                                            <span><?php //_e('LinkedIn', 'diploma-builder'); ?></span>
                                         </button>
                                         <button type="button" class="share-btn" id="copy-link">
                                             <div class="share-icon" style="background: #6b7280;">🔗</div>
-                                            <span><?php _e('Copy Link', 'diploma-builder'); ?></span>
+                                            <span><?php //_e('Copy Link', 'diploma-builder'); ?></span>
                                         </button>
                                     </div>
+                                </div> -->
+
+                                <div class="form-actions" style="display: none;">
+                                    <button type="button" id="save-diploma" class="btn btn-success">
+                                        <span class="btn-icon">💾</span>
+                                        <?php _e('Save Diploma', 'diploma-builder'); ?>
+                                    </button>
+                                    <button type="button" id="download-diploma" class="btn btn-primary">
+                                        <span class="btn-icon">📥</span>
+                                        <?php _e('Download High-Res', 'diploma-builder'); ?>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    
-                    <!-- Navigation and Action Buttons -->
-                    <div class="form-navigation">
-                        <div class="nav-buttons">
-                            <button type="button" id="prev-step" class="btn btn-secondary" disabled>
-                                <span class="btn-icon">‹</span>
-                                <?php _e('Previous', 'diploma-builder'); ?>
-                            </button>
-                            <button type="button" id="next-step" class="btn btn-primary">
-                                <?php _e('Next', 'diploma-builder'); ?>
-                                <span class="btn-icon">›</span>
-                            </button>
-                        </div>
                         
-                        <div class="form-actions" style="display: none;">
-                            <button type="button" id="save-diploma" class="btn btn-success">
-                                <span class="btn-icon">💾</span>
-                                <?php _e('Save Diploma', 'diploma-builder'); ?>
-                            </button>
-                            <button type="button" id="download-diploma" class="btn btn-primary">
-                                <span class="btn-icon">📥</span>
-                                <?php _e('Download High-Res', 'diploma-builder'); ?>
-                            </button>
+                        <!-- Navigation and Action Buttons -->
+                        <div class="form-navigation">
+                            <div class="nav-buttons">
+                                <button type="button" id="prev-step" class="btn btn-secondary" disabled>
+                                    <span class="btn-icon">‹</span>
+                                    <?php _e('Previous', 'diploma-builder'); ?>
+                                </button>
+                                <button type="button" id="next-step" class="btn btn-primary">
+                                    <?php _e('Next', 'diploma-builder'); ?>
+                                    <span class="btn-icon">›</span>
+                                </button>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -657,7 +658,11 @@ class DiplomaBuilder_Frontend {
                 'name' => __('Academic Torch', 'diploma-builder'),
                 'description' => __('Torch of knowledge and learning', 'diploma-builder')
             ),
-            'school_preview' => array(
+            'school_crest' => array(
+                'name' => __('Preview', 'diploma-builder'),
+                'description' => __('Live preview of your diploma', 'diploma-builder')
+            ),
+            'laurel_wreath' => array(
                 'name' => __('Preview', 'diploma-builder'),
                 'description' => __('Live preview of your diploma', 'diploma-builder')
             )

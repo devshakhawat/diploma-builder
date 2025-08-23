@@ -424,8 +424,8 @@
 }
 
 .color-preview {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     border: 3px solid #fff;
     margin-bottom: 10px;
@@ -547,8 +547,8 @@
 .emblem-option input[type="radio"]:checked + .emblem-preview::after {
     content: "✓";
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: 50%;
+    right: 50%;
     background: #3498db;
     color: white;
     width: 24px;
@@ -1641,16 +1641,6 @@
     gap: 1rem;
 }
 
-.emblem-option {
-    display: block;
-    cursor: pointer;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    background: #fff;
-}
-
 .emblem-option:hover {
     border-color: #3b82f6;
     transform: translateY(-2px);
@@ -1671,7 +1661,6 @@
 
 .emblem-preview {
     position: relative;
-    height: 80px;
     overflow: hidden;
     border-bottom: 1px solid #e5e7eb;
 }

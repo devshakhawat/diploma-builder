@@ -459,6 +459,12 @@ class DiplomaBuilder_Ajax {
         $city = esc_html($diploma->city);
         $state = esc_html($diploma->state);
         
+        // Add watermark for non-logged-in users
+        $watermark_html = '';
+        if (!is_user_logged_in()) {
+            $watermark_html = '<div class="diploma-preview-watermark">PREVIEW</div>';
+        }
+        
         // Get emblem URL
         $emblem_html = '';
         if ($diploma->emblem_value) {
@@ -498,6 +504,7 @@ class DiplomaBuilder_Ajax {
         return '
             <div class="diploma-template ' . esc_attr($diploma->diploma_style) . '" style="background-color: ' . $paper_color . ';">
                 ' . $emblem_html . '
+                ' . $watermark_html . '
                 <div class="diploma-header">
                     <div class="diploma-title">High School Diploma</div>
                     <div class="diploma-subtitle">This certifies that</div>

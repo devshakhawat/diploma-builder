@@ -56,7 +56,8 @@ class DiplomaBuilder_Assets {
             wp_localize_script('diploma-builder', 'diploma_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('diploma_builder_nonce'),
-                'plugin_url' => DIPLOMA_BUILDER_URL
+                'plugin_url' => DIPLOMA_BUILDER_URL,
+                'is_user_logged_in' => is_user_logged_in() ? 1 : 0
             ));
         }
     }

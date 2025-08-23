@@ -290,6 +290,13 @@ jQuery(document).ready(function($) {
         
         showLoading();
         
+        // Temporarily add watermark for non-logged-in users
+        let watermark = null;
+        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') {
+            watermark = $('<div class="diploma-preview-watermark">PREVIEW</div>');
+            $('#diploma-canvas').append(watermark);
+        }
+        
         // Use html2canvas to capture the diploma
         const options = {
             scale: format === 'pdf' ? 4 : 3,
@@ -301,6 +308,11 @@ jQuery(document).ready(function($) {
         };
         
         html2canvas(document.getElementById('diploma-canvas'), options).then(function(canvas) {
+            // Remove temporary watermark
+            if (watermark) {
+                watermark.remove();
+            }
+            
             const timestamp = Date.now();
             const schoolName = currentConfig.school_name.replace(/[^a-z0-9]/gi, '_');
             
@@ -355,6 +367,11 @@ jQuery(document).ready(function($) {
             trackEvent('diploma_export', { format: format });
             
         }).catch(function(error) {
+            // Remove temporary watermark
+            if (watermark) {
+                watermark.remove();
+            }
+            
             hideLoading();
             console.error('Error exporting diploma:', error);
             showMessage('Error exporting diploma. Please try again.', 'error');
@@ -464,9 +481,14 @@ jQuery(document).ready(function($) {
         // Get emblem info
         const emblemInfo = getEmblemInfo();
         
+        // Add watermark for non-logged-in users
+        const watermarkHTML = (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') ?
+            '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
+        
         return `
             <div class="diploma-template ${currentConfig.diploma_style}">
                 ${emblemInfo.html}
+                ${watermarkHTML}
                 <div class="diploma-header">
                     <div class="diploma-title">High School Diploma</div>
                     <div class="diploma-subtitle">This certifies that</div>
@@ -685,6 +707,13 @@ jQuery(document).ready(function($) {
         
         showLoading();
         
+        // Temporarily add watermark for non-logged-in users
+        let watermark = null;
+        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') {
+            watermark = $('<div class="diploma-preview-watermark">PREVIEW</div>');
+            $('#diploma-canvas').append(watermark);
+        }
+        
         // Use html2canvas to capture the diploma
         html2canvas(document.getElementById('diploma-canvas'), {
             scale: 3, // High resolution
@@ -694,6 +723,11 @@ jQuery(document).ready(function($) {
             useCORS: true,
             allowTaint: false
         }).then(function(canvas) {
+            // Remove temporary watermark
+            if (watermark) {
+                watermark.remove();
+            }
+            
             // Create download link
             const link = document.createElement('a');
             link.download = `diploma_${currentConfig.school_name.replace(/[^a-z0-9]/gi, '_')}_${Date.now()}.png`;
@@ -710,6 +744,11 @@ jQuery(document).ready(function($) {
             // Also save to server
             saveImageToServer(canvas.toDataURL('image/png', 1.0));
         }).catch(function(error) {
+            // Remove temporary watermark
+            if (watermark) {
+                watermark.remove();
+            }
+            
             hideLoading();
             console.error('Error generating diploma:', error);
             showMessage('Error generating diploma. Please try again.', 'error');

@@ -343,34 +343,6 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                 </div>
                                 
-                                <!-- Enhanced Export Options -->
-                                <div class="export-options">
-                                    <h5><?php _e('Export Options', 'diploma-builder'); ?></h5>
-                                    <div class="export-grid">
-                                        <button type="button" class="export-btn" id="export-pdf">
-                                            <div class="export-icon">📄</div>
-                                            <div class="export-info">
-                                                <strong><?php _e('PDF Document', 'diploma-builder'); ?></strong>
-                                                <small><?php _e('High-quality print ready', 'diploma-builder'); ?></small>
-                                            </div>
-                                        </button>
-                                        <button type="button" class="export-btn" id="export-png">
-                                            <div class="export-icon">🖼️</div>
-                                            <div class="export-info">
-                                                <strong><?php _e('PNG Image', 'diploma-builder'); ?></strong>
-                                                <small><?php _e('Transparent background', 'diploma-builder'); ?></small>
-                                            </div>
-                                        </button>
-                                        <button type="button" class="export-btn" id="export-jpg">
-                                            <div class="export-icon">📸</div>
-                                            <div class="export-info">
-                                                <strong><?php _e('JPG Image', 'diploma-builder'); ?></strong>
-                                                <small><?php _e('Smaller file size', 'diploma-builder'); ?></small>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                
                                 <!-- Purchase Options -->
                                 <div class="purchase-options">
                                     <h5><?php _e('Purchase Options', 'diploma-builder'); ?></h5>

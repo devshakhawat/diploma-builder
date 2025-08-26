@@ -107,19 +107,6 @@ jQuery(document).ready(function($) {
             updateReviewSummary();
         });
         
-        // Export buttons
-        $('#export-pdf').on('click', function() {
-            exportDiploma('pdf');
-        });
-        
-        $('#export-png').on('click', function() {
-            exportDiploma('png');
-        });
-        
-        $('#export-jpg').on('click', function() {
-            exportDiploma('jpg');
-        });
-        
         // Purchase buttons
         $('.purchase-btn').on('click', function() {
             const productId = $(this).data('product-id');
@@ -291,102 +278,6 @@ jQuery(document).ready(function($) {
         
         $('#review-diploma-style').text(styleName);
         $('#review-paper-color').text(paperName);
-    }
-    
-    // Export diploma in different formats
-    function exportDiploma(format) {
-        if (!validateForm()) {
-            return;
-        }
-        
-        showLoading();
-        
-        // Temporarily add watermark for non-logged-in users
-        let watermark = null;
-        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') {
-            watermark = $('<div class="diploma-preview-watermark">PREVIEW</div>');
-            $('#diploma-canvas').append(watermark);
-        }
-        
-        // Use html2canvas to capture the diploma
-        const options = {
-            scale: format === 'pdf' ? 4 : 3,
-            backgroundColor: null,
-            width: 1275, // 8.5" * 300 DPI / 2
-            height: 1650, // 11" * 300 DPI / 2
-            useCORS: true,
-            allowTaint: false
-        };
-        
-        html2canvas(document.getElementById('diploma-canvas'), options).then(function(canvas) {
-            // Remove temporary watermark
-            if (watermark) {
-                watermark.remove();
-            }
-            
-            const timestamp = Date.now();
-            const schoolName = currentConfig.school_name.replace(/[^a-z0-9]/gi, '_');
-            
-            if (format === 'pdf') {
-                // For PDF export, we need to use jsPDF
-                // Check if jsPDF is available
-                if (typeof window.jspdf !== 'undefined' && typeof window.jspdf.jsPDF !== 'undefined') {
-                    const { jsPDF } = window.jspdf;
-                    const imgData = canvas.toDataURL('image/png', 1.0);
-                    const pdf = new jsPDF('p', 'pt', 'letter'); // 8.5 x 11 inches = letter size
-                    
-                    // Calculate dimensions for PDF (612 x 792 points for letter size)
-                    const imgProps = pdf.getImageProperties(imgData);
-                    const pdfWidth = pdf.internal.pageSize.getWidth();
-                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                    
-                    // Add image to PDF
-                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                    
-                    // Save the PDF
-                    pdf.save(`diploma_${schoolName}_${timestamp}.pdf`);
-                } else {
-                    // Fallback to PNG if jsPDF is not available
-                    const link = document.createElement('a');
-                    link.download = `diploma_${schoolName}_${timestamp}.png`;
-                    link.href = canvas.toDataURL('image/png', 1.0);
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    showMessage('PDF library not loaded. Diploma exported as PNG instead.', 'warning');
-                }
-            } else if (format === 'png') {
-                const link = document.createElement('a');
-                link.download = `diploma_${schoolName}_${timestamp}.png`;
-                link.href = canvas.toDataURL('image/png', 1.0);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } else if (format === 'jpg') {
-                const link = document.createElement('a');
-                link.download = `diploma_${schoolName}_${timestamp}.jpg`;
-                link.href = canvas.toDataURL('image/jpeg', 0.9);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-            
-            hideLoading();
-            showMessage(`Diploma exported as ${format.toUpperCase()} successfully!`, 'success');
-            
-            // Track export
-            trackEvent('diploma_export', { format: format });
-            
-        }).catch(function(error) {
-            // Remove temporary watermark
-            if (watermark) {
-                watermark.remove();
-            }
-            
-            hideLoading();
-            console.error('Error exporting diploma:', error);
-            showMessage('Error exporting diploma. Please try again.', 'error');
-        });
     }
     
     // Purchase diploma

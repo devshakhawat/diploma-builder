@@ -606,7 +606,7 @@ jQuery(document).ready(function($) {
         
         if (direction === 'next') {
             nextStep = currentStep + 1;
-            if (nextStep > 4) nextStep = 4;
+            if (nextStep > 5) nextStep = 5;
         } else {
             nextStep = currentStep - 1;
             if (nextStep < 1) nextStep = 1;
@@ -629,8 +629,8 @@ jQuery(document).ready(function($) {
         
         // Update navigation buttons
         $('#prev-step').prop('disabled', nextStep === 1);
-        $('#next-step').toggle(nextStep < 4);
-        $('.form-actions').toggle(nextStep === 4);
+        $('#next-step').toggle(nextStep < 5);
+        $('.form-actions').toggle(nextStep === 5);
         
         // Update progress bar
         updateProgressBar();
@@ -639,7 +639,7 @@ jQuery(document).ready(function($) {
     // Update progress bar
     function updateProgressBar() {
         const visibleStep = $('.form-section:visible').data('step') || 1;
-        const progress = (visibleStep / 4) * 100;
+        const progress = (visibleStep / 5) * 100;
         $('.progress-fill').css('width', `${progress}%`);
         
         // Update step indicators

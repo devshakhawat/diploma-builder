@@ -57,7 +57,11 @@ class DiplomaBuilder_Assets {
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('diploma_builder_nonce'),
                 'plugin_url' => DIPLOMA_BUILDER_URL,
-                'is_user_logged_in' => is_user_logged_in() ? 1 : 0
+                'is_user_logged_in' => is_user_logged_in() ? 1 : 0,
+                'checkout_url' => function_exists('wc_get_cart_url') ? wc_get_checkout_url() : site_url('/checkout'),
+                'digital_product_id' => get_option('diploma_digital_product_id', 0),
+                'printed_product_id' => get_option('diploma_printed_product_id', 0),
+                'premium_product_id' => get_option('diploma_premium_product_id', 0)
             ));
         }
     }

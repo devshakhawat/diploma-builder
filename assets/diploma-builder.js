@@ -120,6 +120,12 @@ jQuery(document).ready(function($) {
             exportDiploma('jpg');
         });
         
+        // Purchase buttons
+        $('.purchase-btn').on('click', function() {
+            const productId = $(this).data('product-id');
+            purchaseDiploma(productId);
+        });
+        
         // Share buttons
         $('#share-facebook').on('click', function() {
             shareOnSocialMedia('facebook');
@@ -380,6 +386,75 @@ jQuery(document).ready(function($) {
             hideLoading();
             console.error('Error exporting diploma:', error);
             showMessage('Error exporting diploma. Please try again.', 'error');
+        });
+    }
+    
+    // Purchase diploma
+    function purchaseDiploma(productId) {
+        if (!validateForm()) {
+            return;
+        }
+        
+        showLoading();
+        
+        // Save the diploma configuration first
+        const data = {
+            action: 'save_diploma',
+            nonce: diploma_ajax.nonce,
+            ...currentConfig
+        };
+        
+        $.ajax({
+            url: diploma_ajax.ajax_url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                if (response.success) {
+                    // Redirect to WooCommerce checkout with the selected product
+                    let productIdToUse;
+                    switch(productId) {
+                        case 'digital':
+                            productIdToUse = diploma_ajax.digital_product_id || 0;
+                            break;
+                        case 'printed':
+                            productIdToUse = diploma_ajax.printed_product_id || 0;
+                            break;
+                        case 'premium':
+                            productIdToUse = diploma_ajax.premium_product_id || 0;
+                            break;
+                        default:
+                            productIdToUse = diploma_ajax.digital_product_id || 0;
+                    }
+                    
+                    if (productIdToUse) {
+                        // Add diploma data to session or pass as URL parameters
+                        const diplomaData = {
+                            diploma_style: currentConfig.diploma_style,
+                            paper_color: currentConfig.paper_color,
+                            emblem_type: currentConfig.emblem_type,
+                            emblem_value: currentConfig.emblem_value,
+                            school_name: currentConfig.school_name,
+                            student_name: currentConfig.student_name,
+                            graduation_date: currentConfig.graduation_date,
+                            city: currentConfig.city,
+                            state: currentConfig.state
+                        };
+                        
+                        // Redirect to WooCommerce checkout
+                        window.location.href = diploma_ajax.checkout_url + '?add-to-cart=' + productIdToUse + '&diploma_data=' + encodeURIComponent(JSON.stringify(diplomaData));
+                    } else {
+                        hideLoading();
+                        showMessage('Product not configured. Please contact site administrator.', 'error');
+                    }
+                } else {
+                    hideLoading();
+                    showMessage('Error saving diploma: ' + response.data, 'error');
+                }
+            },
+            error: function() {
+                hideLoading();
+                showMessage('Error saving diploma. Please try again.', 'error');
+            }
         });
     }
     

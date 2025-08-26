@@ -371,6 +371,61 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                 </div>
                                 
+                                <!-- Purchase Options -->
+                                <div class="purchase-options">
+                                    <h5><?php _e('Purchase Options', 'diploma-builder'); ?></h5>
+                                    <div class="purchase-grid">
+                                        <div class="purchase-option">
+                                            <div class="purchase-header">
+                                                <div class="purchase-icon">💰</div>
+                                                <h6><?php _e('Digital Download', 'diploma-builder'); ?></h6>
+                                            </div>
+                                            <div class="purchase-price">
+                                                <span class="price-amount">$4.99</span>
+                                                <span class="price-description"><?php _e('Instant download', 'diploma-builder'); ?></span>
+                                            </div>
+                                            <button type="button" class="btn btn-primary purchase-btn" data-product-id="digital">
+                                                <span class="btn-icon">📥</span>
+                                                <?php _e('Buy Now', 'diploma-builder'); ?>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="purchase-option">
+                                            <div class="purchase-header">
+                                                <div class="purchase-icon">📦</div>
+                                                <h6><?php _e('Printed & Shipped', 'diploma-builder'); ?></h6>
+                                            </div>
+                                            <div class="purchase-price">
+                                                <span class="price-amount">$12.99</span>
+                                                <span class="price-description"><?php _e('7-10 business days', 'diploma-builder'); ?></span>
+                                            </div>
+                                            <button type="button" class="btn btn-primary purchase-btn" data-product-id="printed">
+                                                <span class="btn-icon">📦</span>
+                                                <?php _e('Buy Now', 'diploma-builder'); ?>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="purchase-option featured">
+                                            <div class="purchase-header">
+                                                <div class="purchase-icon">🏆</div>
+                                                <h6><?php _e('Premium Package', 'diploma-builder'); ?></h6>
+                                            </div>
+                                            <div class="purchase-price">
+                                                <span class="price-amount">$19.99</span>
+                                                <span class="price-description"><?php _e('Printed + Digital', 'diploma-builder'); ?></span>
+                                            </div>
+                                            <button type="button" class="btn btn-success purchase-btn" data-product-id="premium">
+                                                <span class="btn-icon">⭐</span>
+                                                <?php _e('Buy Now', 'diploma-builder'); ?>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="purchase-note">
+                                        <p><?php _e('All purchases include high-resolution files and are processed through our secure checkout.', 'diploma-builder'); ?></p>
+                                    </div>
+                                </div>
+                                
                                 <!-- Sharing Options -->
                                 <!-- <div class="sharing-options">
                                     <h5><?php // _e('this section', 'diploma-builder'); ?></h5>

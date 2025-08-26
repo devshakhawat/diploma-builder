@@ -152,6 +152,9 @@ class DiplomaBuilder {
         add_option('diploma_allow_guests', 1);
         add_option('diploma_default_paper', 'white');
         add_option('diploma_max_per_user', 10);
+        add_option('diploma_digital_product_id', 0);
+        add_option('diploma_printed_product_id', 0);
+        add_option('diploma_premium_product_id', 0);
     }
     
     private function cleanup_temp_files() {

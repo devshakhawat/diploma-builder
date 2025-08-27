@@ -43,7 +43,16 @@ All required features have been implemented:
 7. **Save & Output**:
    - Store editable configuration in database
    - Generate high-resolution print-ready PNG files
-   - Download functionality for generated diplomas
+
+8. **E-commerce Integration**:
+   - Purchase options for digital download, printed version, or premium package
+   - WooCommerce integration for checkout process
+
+9. **Admin Dashboard**:
+   - Diploma management interface
+   - Statistics dashboard
+   - Export functionality (CSV)
+   - Settings configuration
 
 ## User Flow
 
@@ -53,43 +62,52 @@ All required features have been implemented:
    - Generic: Choose from 5 options
    - OR State Emblem: Select state from dropdown → emblem loads automatically
 4. **Enter Custom Text**:
-   - School Name
-   - Date of Graduation
-   - City
-   - State
+   - Student Name (optional)
+   - School Name (required)
+   - Date of Graduation (required)
+   - City (required)
+   - State (required)
 5. **Live Preview**: Updates instantly with all changes
 6. **Review and Edit**: Make adjustments as needed
-7. **Save Configuration**: Store diploma for future access
-8. **Generate Print-Ready File**: Download high-resolution diploma
+7. **Purchase Options**: Choose from digital download, printed version, or premium package
+8. **Save Configuration**: Store diploma for future access
+9. **Generate Print-Ready File**: Download high-resolution diploma
 
 ## Technology Stack
 
 - **Backend**: PHP (WordPress plugin architecture)
 - **Frontend**: HTML, CSS, JavaScript (jQuery)
 - **Database**: WordPress database with custom tables
-- **Libraries**: html2canvas for image generation
-- **Assets**: SVG-based placeholder images for all emblems and previews
+- **Libraries**: 
+  - html2canvas for image generation
+  - jsPDF for PDF generation
+- **Assets**: PNG-based images for emblems and previews
 
 ## File Structure
 
 ```
 diploma-builder/
 ├── diploma-builder.php          # Main plugin file
+├── QWEN.md                      # Project documentation
 ├── assets/
 │   ├── diploma-builder.css      # Frontend styling
 │   ├── diploma-builder.js       # Frontend JavaScript functionality
 │   ├── diploma-builder-admin.css # Admin styling
 │   ├── diploma-builder-admin.js # Admin JavaScript functionality
 │   ├── emblems/
-│   │   ├── generic/             # Generic emblem SVG files
+│   │   ├── generic/             # Generic emblem PNG files
 │   │   └── states/              # State emblem SVG files
-│   └── previews/                # Diploma style preview SVG files
+│   └── previews/                # Diploma style preview PNG files
 └── includes/
     ├── class-diploma-builder-ajax.php     # AJAX handling
     ├── class-diploma-builder-frontend.php # Frontend functionality
     ├── class-diploma-builder-admin.php    # Admin functionality
     ├── class-diplomabuilder-assets.php    # Asset management
-    └── class-diplomabuilder-database.php  # Database operations
+    ├── class-diplomabuilder-database.php  # Database operations
+    └── admin/
+        ├── partials/
+        │   ├── admin-page.php   # Admin dashboard template
+        │   └── settings-page.php # Admin settings template
 ```
 
 ## Plugin Architecture
@@ -104,13 +122,14 @@ diploma-builder/
 - Database table creation and management
 - Diploma CRUD operations
 - Statistics and cleanup functions
+- User quota management
 
 ### Frontend (class-diploma-builder-frontend.php)
 - Shortcode implementation (`[diploma_builder]`, `[diploma_gallery]`)
 - Form rendering and user interface
-- Asset enqueueing (CSS/JS)
 - Template data (styles, colors, emblems)
-- Fixed JavaScript escaping issues
+- Asset enqueueing (CSS/JS)
+- Gallery rendering functionality
 
 ### AJAX Handler (class-diploma-builder-ajax.php)
 - Save diploma configurations
@@ -118,7 +137,6 @@ diploma-builder/
 - Load diploma previews
 - State emblem loading
 - Admin-only actions (delete, export, stats)
-- Fixed JavaScript escaping issues in onerror attributes
 
 ### Admin (class-diploma-builder-admin.php)
 - WordPress admin menu integration
@@ -130,10 +148,14 @@ diploma-builder/
 - Frontend and admin asset enqueueing
 - Localization script setup
 
+### Admin Partials
+- Admin dashboard template
+- Settings page template
+
 ### Frontend Assets
 - **CSS**: Responsive styling for the builder interface and diploma templates
 - **JS**: Interactive form handling, live preview updates, AJAX communication
-- **Images**: SVG emblem graphics and style previews
+- **Images**: PNG emblem graphics and style previews
 - **Error Handling**: Graceful fallback for missing images
 
 ## Database Structure
@@ -180,6 +202,11 @@ Parameters:
 - Statistics dashboard
 - Settings configuration (guest access, limits, defaults)
 
+## Settings Configuration
+- Allow Guest Diplomas: Enable/disable diploma creation for non-logged-in users
+- Maximum Diplomas per User: Set quota for logged-in users (0 for unlimited)
+- Default Paper Color: Select default paper color for new diplomas
+
 ## Security Considerations
 - Nonce verification for all AJAX requests
 - User capability checks for admin actions
@@ -187,16 +214,20 @@ Parameters:
 - Direct access prevention in all PHP files
 
 ## Performance Considerations
-- SVG-based assets for small file sizes
+- PNG-based assets for consistent rendering
 - Efficient database queries with proper indexing
-- Caching of frequently accessed data
 - Cleanup of old temporary files
 
-## Recent Fixes
-- Fixed JavaScript escaping issues in onerror attributes
-- Fixed autoloader naming convention
-- Improved error handling for missing images
-- Verified all PHP files have correct syntax
+## Recent Implementation Details
+- Implemented 5-step form workflow with progress tracking
+- Added fullscreen preview mode with zoom controls
+- Integrated e-commerce functionality with WooCommerce
+- Enhanced form validation with real-time feedback
+- Improved responsive design for mobile devices
+- Added watermark for preview diplomas
+- Implemented guided tour functionality
+- Added social sharing options
+- Enhanced error handling and user feedback
 
 ## Future Enhancements
 - Additional diploma templates
@@ -205,3 +236,6 @@ Parameters:
 - Multi-language support
 - Social sharing features
 - Email delivery options
+- Custom emblem uploads
+- Diploma sharing/public links
+- Advanced styling options

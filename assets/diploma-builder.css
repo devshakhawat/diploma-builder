@@ -2371,6 +2371,13 @@
         -1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
+.state-emblem-image {
+    img {
+        height: 100px;
+        width: 100px;
+    }
+}
+
 /* Mobile responsive watermark */
 @media (max-width: 768px) {
     .diploma-preview-watermark {

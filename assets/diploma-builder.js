@@ -204,7 +204,7 @@ jQuery(document).ready(function($) {
     function updateStateEmblemPreview(stateCode) {
         if (stateCode) {
             const stateName = $(`#state-emblem-select option[value="${stateCode}"]`).text();
-            const emblemUrl = `${diploma_ajax.plugin_url}assets/emblems/states/${stateCode}.svg`;
+            const emblemUrl = `${diploma_ajax.plugin_url}assets/emblems/states/${stateCode}.png`;
             
             $('#state-emblem-img').attr('src', emblemUrl).attr('alt', stateName);
             $('#state-emblem-name').text(stateName);
@@ -558,9 +558,9 @@ jQuery(document).ready(function($) {
         }
         
         if (currentConfig.emblem_type === 'generic') {
-            return `${diploma_ajax.plugin_url}assets/emblems/generic/${currentConfig.emblem_value}.jpg`;
+            return `${diploma_ajax.plugin_url}assets/emblems/generic/${currentConfig.emblem_value}.png`;
         } else if (currentConfig.emblem_type === 'state' && currentConfig.emblem_value) {
-            return `${diploma_ajax.plugin_url}assets/emblems/states/${currentConfig.emblem_value}.jpg`;
+            return `${diploma_ajax.plugin_url}assets/emblems/states/${currentConfig.emblem_value}.png`;
         }
         return `${diploma_ajax.plugin_url}assets/emblems/generic/graduation_cap.jpg`;
     }

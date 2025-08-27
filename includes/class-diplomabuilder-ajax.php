@@ -212,13 +212,13 @@ class DiplomaBuilder_Ajax {
             
             // Check for SVG first, then PNG
             $emblem_path_svg = DIPLOMA_BUILDER_PATH . 'assets/emblems/states/' . $state_code . '.svg';
-            $emblem_path_png = DIPLOMA_BUILDER_PATH . 'assets/emblems/states/' . $state_code . '.jpg';
+            $emblem_path_png = DIPLOMA_BUILDER_PATH . 'assets/emblems/states/' . $state_code . '.png';
             
             if (file_exists($emblem_path_svg)) {
                 $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $state_code . '.svg';
                 $emblem_exists = true;
             } elseif (file_exists($emblem_path_png)) {
-                $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $state_code . '.jpg';
+                $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $state_code . '.png';
                 $emblem_exists = true;
             } else {
                 $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $state_code . '.svg';
@@ -471,24 +471,24 @@ class DiplomaBuilder_Ajax {
             if ($diploma->emblem_type === 'generic') {
                 // Check for SVG first, then PNG
                 $emblem_path_svg = DIPLOMA_BUILDER_PATH . 'assets/emblems/generic/' . $diploma->emblem_value . '.svg';
-                $emblem_path_png = DIPLOMA_BUILDER_PATH . 'assets/emblems/generic/' . $diploma->emblem_value . '.jpg';
+                $emblem_path_png = DIPLOMA_BUILDER_PATH . 'assets/emblems/generic/' . $diploma->emblem_value . '.png';
                 
                 if (file_exists($emblem_path_svg)) {
                     $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $diploma->emblem_value . '.svg';
                 } elseif (file_exists($emblem_path_png)) {
-                    $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $diploma->emblem_value . '.jpg';
+                    $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $diploma->emblem_value . '.png';
                 } else {
                     $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $diploma->emblem_value . '.svg';
                 }
             } else {
                 // Check for SVG first, then PNG
                 $emblem_path_svg = DIPLOMA_BUILDER_PATH . 'assets/emblems/states/' . $diploma->emblem_value . '.svg';
-                $emblem_path_png = DIPLOMA_BUILDER_PATH . 'assets/emblems/states/' . $diploma->emblem_value . '.jpg';
+                $emblem_path_png = DIPLOMA_BUILDER_PATH . 'assets/emblems/states/' . $diploma->emblem_value . '.png';
                 
                 if (file_exists($emblem_path_svg)) {
                     $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $diploma->emblem_value . '.svg';
                 } elseif (file_exists($emblem_path_png)) {
-                    $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $diploma->emblem_value . '.jpg';
+                    $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $diploma->emblem_value . '.png';
                 } else {
                     $emblem_url = DIPLOMA_BUILDER_URL . 'assets/emblems/states/' . $diploma->emblem_value . '.svg';
                 }

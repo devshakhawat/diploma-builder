@@ -439,6 +439,12 @@ class DiplomaBuilder_Frontend {
                                         <?php _e('Download', 'diploma-builder'); ?>
                                     </button>
                                 </div>
+                                
+                                <?php if (!is_user_logged_in() || !$this->current_user_can_purchase_diploma()): ?>
+                                <div class="preview-notice">
+                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
+                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         
@@ -661,5 +667,34 @@ class DiplomaBuilder_Frontend {
             'WA' => __('Washington', 'diploma-builder'), 'WV' => __('West Virginia', 'diploma-builder'),
             'WI' => __('Wisconsin', 'diploma-builder'), 'WY' => __('Wyoming', 'diploma-builder')
         );
+    }
+    
+    /**
+     * Check if current user can purchase a diploma
+     */
+    private function current_user_can_purchase_diploma() {
+        // If user is not logged in, they can't purchase
+        if (!is_user_logged_in()) {
+            return false;
+        }
+        
+        // Check if user has purchased any diploma product
+        $user_id = get_current_user_id();
+        $digital_product_id = get_option('diploma_digital_product_id', 0);
+        $printed_product_id = get_option('diploma_printed_product_id', 0);
+        $premium_product_id = get_option('diploma_premium_product_id', 0);
+        
+        if (function_exists('wc_customer_bought_product')) {
+            $current_user = wp_get_current_user();
+            $customer_email = $current_user->user_email;
+            
+            if (($digital_product_id && wc_customer_bought_product($customer_email, $user_id, $digital_product_id)) ||
+                ($printed_product_id && wc_customer_bought_product($customer_email, $user_id, $printed_product_id)) ||
+                ($premium_product_id && wc_customer_bought_product($customer_email, $user_id, $premium_product_id))) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

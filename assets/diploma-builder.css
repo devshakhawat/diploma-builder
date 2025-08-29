@@ -1043,7 +1043,7 @@
     margin: 15px 0;
 }
 
-.diploma-emblems {
+/* .diploma-emblems {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -1053,7 +1053,7 @@
 
 .diploma-emblems.single {
     justify-content: center;
-}
+} */
 
 .diploma-emblem {
     width: 100px;
@@ -1594,7 +1594,7 @@
 
 .template-preview {
     position: relative;
-    height: 120px;
+    height: 320px;
     overflow: hidden;
     border-bottom: 1px solid #e5e7eb;
 }
@@ -2533,7 +2533,7 @@ body {
 }
 
 /* Diploma Emblems */
-.diploma-emblems {
+.seal {
     flex: 0 0 120px;
     display: flex;
     justify-content: center;

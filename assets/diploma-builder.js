@@ -482,8 +482,7 @@ jQuery(document).ready(function($) {
         // `;
 
         return `    <div class="diploma-container">
-        <div class="diploma">
-            ${emblemInfo.html}
+        <div class="diploma">            
             ${watermarkHTML}
             <div class="header">
                 <svg viewBox="0 0 600 120" class="arched-header">
@@ -500,16 +499,8 @@ jQuery(document).ready(function($) {
 
             <!-- Location and Seal -->
             <div class="location-seal-section">
-                <div class="location-left">${city}</div>
-                <div class="seal">
-                    <div class="seal-circle">
-                        <div class="seal-inner">
-                            <div class="seal-text">THE STATE OF</div>
-                            <div class="seal-center">WI</div>
-                            <div class="seal-text-bottom">WISCONSIN</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="location-left">${city}</div>               
+                    ${emblemInfo.html}                
                 <div class="location-right">Wisconsin</div>
             </div>
 

@@ -500,35 +500,9 @@ class DiplomaBuilder_Ajax {
                 $emblem_html = '<div class="diploma-emblems"><img src="' . $emblem_url . '" alt="Emblem" class="diploma-emblem" onerror="this.parentNode.innerHTML=\'&lt;div class=&quot;emblem-placeholder&quot; style=&quot;width:80px;height:80px;margin:20px;background:#f0f0f0;border:1px solid #ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;&quot;&gt;&lt;div&gt;' . esc_attr(substr($diploma->emblem_value, 0, 3)) . '&lt;/div&gt;&lt;/div&gt;\';"><img src="' . $emblem_url . '" alt="Emblem" class="diploma-emblem" onerror="this.parentNode.innerHTML=\'&lt;div class=&quot;emblem-placeholder&quot; style=&quot;width:80px;height:80px;margin:20px;background:#f0f0f0;border:1px solid #ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;&quot;&gt;&lt;div&gt;' . esc_attr(substr($diploma->emblem_value, 0, 3)) . '&lt;/div&gt;&lt;/div&gt;\';"></div>';
             }
         }
-        
-        // return '
-        //     <div class="diploma-template ' . esc_attr($diploma->diploma_style) . '" style="background-color: ' . $paper_color . ';">
-        //         ' . $emblem_html . '
-        //         ' . $watermark_html . '
-        //         <div class="diploma-header">
-        //             <div class="diploma-title">Your High School</div>
-        //             <div class="diploma-subtitle">This certifies that</div>
-        //         </div>
-        //         <div class="diploma-body">
-        //             <div class="diploma-text">
-        //                 <strong>' . $student_name . '</strong>
-        //             </div>
-        //             <div class="diploma-text">
-        //                 has satisfactorily completed the prescribed course of study at
-        //             </div>
-        //             <div class="school-name">' . $school_name . '</div>
-        //             <div class="diploma-text">
-        //                 and is therefore entitled to this diploma
-        //             </div>
-        //             <div class="graduation-date">Dated this ' . $graduation_date . '</div>
-        //             <div class="location">' . $city . ', ' . $state . '</div>
-        //         </div>
-        //     </div>
-        // ';
 
         $diploma_html = '
-                        <div class="diploma-container" style="background-color: ' . $paper_color . ';">
-                            ' . $emblem_html . '
+                        <div class="diploma-container" style="background-color: ' . $paper_color . ';">                            
                             ' . $watermark_html . '
                             <div class="diploma">
                                 <div class="header">
@@ -545,16 +519,8 @@ class DiplomaBuilder_Ajax {
                                 </div>
 
                                 <div class="location-seal-section">
-                                    <div class="location-left">Stevens Point</div>
-                                    <div class="seal">
-                                        <div class="seal-circle">
-                                            <div class="seal-inner">
-                                                <div class="seal-text">THE STATE OF</div>
-                                                <div class="seal-center">WI</div>
-                                                <div class="seal-text-bottom">WISCONSIN</div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="location-left">Stevens Point</div>                                    
+                                        ' . $emblem_html . '
                                     <div class="location-right">Wisconsin</div>
                                 </div>
 

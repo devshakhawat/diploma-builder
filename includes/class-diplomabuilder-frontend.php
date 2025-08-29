@@ -572,24 +572,24 @@ class DiplomaBuilder_Frontend {
                 'emblems' => 1,
                 'template' => 'classic'
             ),
-            'modern' => array(
-                'name' => __('Modern Elegant', 'diploma-builder'),
-                'description' => __('.', 'diploma-builder'),
-                'emblems' => 2,
-                'template' => 'modern'
-            ),
+            // 'modern' => array(
+            //     'name' => __('Modern Elegant', 'diploma-builder'),
+            //     'description' => __('.', 'diploma-builder'),
+            //     'emblems' => 1,
+            //     'template' => 'modern'
+            // ),
             'formal' => array(
                 'name' => __('Formal Certificate', 'diploma-builder'),
                 'description' => __('', 'diploma-builder'),
                 'emblems' => 1,
                 'template' => 'formal'
             ),
-            'decorative' => array(
-                'name' => __('Decorative Border', 'diploma-builder'),
-                'description' => __('', 'diploma-builder'),
-                'emblems' => 2,
-                'template' => 'decorative'
-            ),
+            // 'decorative' => array(
+            //     'name' => __('Decorative Border', 'diploma-builder'),
+            //     'description' => __('', 'diploma-builder'),
+            //     'emblems' =>2,
+            //     'template' => 'decorative'
+            // ),
             'minimalist' => array(
                 'name' => __('Minimalist Clean', 'diploma-builder'),
                 'description' => __('', 'diploma-builder'),

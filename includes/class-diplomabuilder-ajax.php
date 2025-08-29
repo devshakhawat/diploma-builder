@@ -510,8 +510,8 @@ class DiplomaBuilder_Ajax {
                                         <defs>
                                             <path id="curve" d="M50,100 Q300,10 550,100" />
                                         </defs>
-                                        <text font-family="UnifrakturMaguntia, cursive" font-size="56" fill="#2c1810">
-                                            <textPath href="#curve" startOffset="0%">
+                                        <text font-family="UnifrakturMaguntia, cursive" font-size="56" fill="#2c1810" text-anchor="middle">
+                                            <textPath href="#curve" startOffset="50%">
                                                 ' . $school_name . '
                                             </textPath>
                                         </text>

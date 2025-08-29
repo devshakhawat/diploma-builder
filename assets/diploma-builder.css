@@ -2420,6 +2420,15 @@ body {
     margin: 0 auto 20px auto;
 }
 
+/* Center the arc header text even with fewer characters */
+.arched-header text {
+    text-anchor: middle;
+}
+
+.arched-header textPath {
+    startOffset: 50%;
+}
+
 .diploma-container {
     max-width: 900px;
     width: 100%;

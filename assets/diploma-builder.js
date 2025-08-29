@@ -456,6 +456,12 @@ jQuery(document).ready(function($) {
         const watermarkHTML = (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') ?
             '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
         
+        // Dynamically adjust font size based on text length
+        let fontSize = 56; // Default font size
+        if (schoolName.length > 20) {
+            fontSize = Math.max(30, 56 - (schoolName.length - 20) * 1.5);
+        }
+        
         // return `
         //     <div class="diploma-template ${currentConfig.diploma_style}">
         //         ${emblemInfo.html}
@@ -489,7 +495,7 @@ jQuery(document).ready(function($) {
                     <defs>
                         <path id="curve" d="M50,100 Q300,10 550,100" />
                     </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="56" fill="#2c1810" text-anchor="middle">
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
                         <textPath href="#curve" startOffset="50%">
                             ${schoolName}
                         </textPath>

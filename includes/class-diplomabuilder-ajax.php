@@ -501,6 +501,12 @@ class DiplomaBuilder_Ajax {
             }
         }
 
+        // Dynamically adjust font size based on text length
+        $font_size = 56; // Default font size
+        if (strlen($school_name) > 20) {
+            $font_size = max(30, 56 - (strlen($school_name) - 20) * 1.5);
+        }
+
         $diploma_html = '
                         <div class="diploma-container" style="background-color: ' . $paper_color . ';">                            
                             ' . $watermark_html . '
@@ -510,7 +516,7 @@ class DiplomaBuilder_Ajax {
                                         <defs>
                                             <path id="curve" d="M50,100 Q300,10 550,100" />
                                         </defs>
-                                        <text font-family="UnifrakturMaguntia, cursive" font-size="56" fill="#2c1810" text-anchor="middle">
+                                        <text font-family="UnifrakturMaguntia, cursive" font-size="' . $font_size . '" fill="#2c1810" text-anchor="middle">
                                             <textPath href="#curve" startOffset="50%">
                                                 ' . $school_name . '
                                             </textPath>

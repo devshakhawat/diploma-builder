@@ -911,6 +911,7 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 #diploma-builder-container.fullscreen-mode .diploma-preview {
@@ -2322,6 +2323,7 @@
         page-break-inside: avoid;
         padding: 0;
         margin: 0;
+        box-sizing: border-box;
     }
     
     .diploma-container {
@@ -2826,4 +2828,9 @@ body {
     .signature-line {
         width: 200px;
     }
+}
+#diploma-canvas {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
 }

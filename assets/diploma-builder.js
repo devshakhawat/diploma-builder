@@ -768,41 +768,27 @@ jQuery(document).ready(function($) {
             $('#diploma-canvas').append(watermark);
         }
         
-        // Create a temporary full-page diploma for proper rendering
-        const tempContainer = $('<div id="temp-diploma-container" style="position: absolute; left: -9999px; top: -9999px; width: 8.5in; height: 11in; background: #f5f5f5;"></div>');
-        const diplomaContent = $('#diploma-canvas').html();
-        tempContainer.html(diplomaContent);
+        // Get the actual rendered dimensions of the diploma canvas
+        const canvasElement = document.getElementById('diploma-canvas');
+        const rect = canvasElement.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
         
-        // Apply proper styles to the temporary container
-        tempContainer.find('.diploma').css({
-            'width': '100%',
-            'height': '100%',
-            'min-height': 'auto',
-            'padding': '60px 80px',
-            'box-sizing': 'border-box',
-            'position': 'relative'
-        });
+        // Calculate scale factor for higher resolution (300 DPI)
+        const scaleFactor = 300 / 96; // 300 DPI / 96 DPI (standard screen)
         
-        tempContainer.find('.diploma-container').css({
-            'width': '100%',
-            'height': '100%',
-            'padding': '60px 80px',
-            'box-sizing': 'border-box'
-        });
-        
-        $('body').append(tempContainer);
-        
-        // Use html2canvas to capture the full-page diploma
-        html2canvas(document.getElementById('temp-diploma-container'), {
-            scale: 4, // Higher resolution for better quality
+        // Use html2canvas to capture the diploma with exact dimensions
+        html2canvas(canvasElement, {
+            scale: scaleFactor,
             backgroundColor: '#f5f5f5',
             useCORS: true,
             allowTaint: false,
-            logging: false
+            logging: false,
+            width: width,
+            height: height,
+            scrollX: 0,
+            scrollY: 0
         }).then(function(canvas) {
-            // Clean up temporary container
-            tempContainer.remove();
-            
             // Remove temporary watermark
             if (watermark) {
                 watermark.remove();
@@ -824,11 +810,6 @@ jQuery(document).ready(function($) {
             // Also save to server
             saveImageToServer(canvas.toDataURL('image/png', 1.0));
         }).catch(function(error) {
-            // Clean up temporary container
-            if (tempContainer) {
-                tempContainer.remove();
-            }
-            
             // Remove temporary watermark
             if (watermark) {
                 watermark.remove();

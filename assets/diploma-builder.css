@@ -1542,14 +1542,8 @@
 }
 
 /* Full-width preview for step 1 */
-.step-1-preview {
-    flex: 0 0 100%;
-    max-width: 100%;
-    margin-top: 2rem;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
+.step-1 .diploma-preview-container {
+    display: none;
 }
 
 .step-1 .preview-header {

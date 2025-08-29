@@ -275,7 +275,7 @@ class DiplomaBuilder_Database {
         global $wpdb;
         $table_name = $wpdb->prefix . 'diploma_configurations';
         
-        $max_diplomas = get_option('diploma_max_per_user', 10);
+        $max_diplomas = get_option('diploma_max_per_user', 20);
         $user_diploma_count = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE user_id = %d",
             intval($user_id)

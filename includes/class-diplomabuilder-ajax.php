@@ -501,30 +501,106 @@ class DiplomaBuilder_Ajax {
             }
         }
         
-        return '
-            <div class="diploma-template ' . esc_attr($diploma->diploma_style) . '" style="background-color: ' . $paper_color . ';">
-                ' . $emblem_html . '
-                ' . $watermark_html . '
-                <div class="diploma-header">
-                    <div class="diploma-title">High School Diploma</div>
-                    <div class="diploma-subtitle">This certifies that</div>
+        // return '
+        //     <div class="diploma-template ' . esc_attr($diploma->diploma_style) . '" style="background-color: ' . $paper_color . ';">
+        //         ' . $emblem_html . '
+        //         ' . $watermark_html . '
+        //         <div class="diploma-header">
+        //             <div class="diploma-title">Your High School</div>
+        //             <div class="diploma-subtitle">This certifies that</div>
+        //         </div>
+        //         <div class="diploma-body">
+        //             <div class="diploma-text">
+        //                 <strong>' . $student_name . '</strong>
+        //             </div>
+        //             <div class="diploma-text">
+        //                 has satisfactorily completed the prescribed course of study at
+        //             </div>
+        //             <div class="school-name">' . $school_name . '</div>
+        //             <div class="diploma-text">
+        //                 and is therefore entitled to this diploma
+        //             </div>
+        //             <div class="graduation-date">Dated this ' . $graduation_date . '</div>
+        //             <div class="location">' . $city . ', ' . $state . '</div>
+        //         </div>
+        //     </div>
+        // ';
+
+        return `    <div class="diploma-container">
+        <div class="diploma">
+            <!-- Header -->
+            <!-- ...existing code... -->
+            <div class="header">
+                <svg viewBox="0 0 600 120" class="arched-header">
+                    <defs>
+                        <path id="curve" d="M50,100 Q300,10 550,100" />
+                    </defs>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="56" fill="#2c1810">
+                        <textPath href="#curve" startOffset="0%">
+                            Your High School sdsfdasfdsfdafasdfsa fdfdsfsda
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+            <!-- ...existing code... -->
+
+            <!-- Location and Seal -->
+            <div class="location-seal-section">
+                <div class="location-left">Stevens Point</div>
+                <div class="seal">
+                    <div class="seal-circle">
+                        <div class="seal-inner">
+                            <div class="seal-text">THE STATE OF</div>
+                            <div class="seal-center">WI</div>
+                            <div class="seal-text-bottom">WISCONSIN</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="diploma-body">
-                    <div class="diploma-text">
-                        <strong>' . $student_name . '</strong>
+                <div class="location-right">Wisconsin</div>
+            </div>
+
+            <!-- Certificate Text -->
+            <div class="certificate-text">
+                <h2 class="certifies">This Certifies That</h2>
+            </div>
+
+            <!-- Student Name -->
+            <div class="student-name">
+                <h3>Your Name</h3>
+            </div>
+
+            <!-- Body Text -->
+            <div class="body-text">
+                <p>Has satisfactorily completed the Course of Study prescribed<br>
+                    for Graduation and is therefore entitled to this</p>
+            </div>
+
+            <!-- Diploma Title -->
+            <div class="diploma-title">
+                <h4>Diploma</h4>
+            </div>
+
+            <!-- Date and Location -->
+            <div class="date-location">
+                <p>Given at Stevens Point, Wisconsin, this twenty-eighth day of May, 1967.</p>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="bottom-section">
+                <div class="gold-seal">
+                    <div class="gold-seal-inner">
+                        <div class="seal-star">★</div>
+                        <div class="seal-border"></div>
                     </div>
-                    <div class="diploma-text">
-                        has satisfactorily completed the prescribed course of study at
-                    </div>
-                    <div class="school-name">' . $school_name . '</div>
-                    <div class="diploma-text">
-                        and is therefore entitled to this diploma
-                    </div>
-                    <div class="graduation-date">Dated this ' . $graduation_date . '</div>
-                    <div class="location">' . $city . ', ' . $state . '</div>
+                </div>
+
+                <div class="signature-section">
+                    <div class="signature-line"></div>
+                    <div class="principal-text">Principal</div>
                 </div>
             </div>
-        ';
+        </div>
+    </div>`;
     }
     
     /**

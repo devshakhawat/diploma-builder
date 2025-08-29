@@ -483,8 +483,8 @@ jQuery(document).ready(function($) {
 
         return `    <div class="diploma-container">
         <div class="diploma">
-            <!-- Header -->
-            <!-- ...existing code... -->
+            ${emblemInfo.html}
+            ${watermarkHTML}
             <div class="header">
                 <svg viewBox="0 0 600 120" class="arched-header">
                     <defs>
@@ -492,16 +492,15 @@ jQuery(document).ready(function($) {
                     </defs>
                     <text font-family="'UnifrakturMaguntia', cursive" font-size="56" fill="#2c1810">
                         <textPath href="#curve" startOffset="0%">
-                            Your High School sdsfdasfdsfdafasdfsa fdfdsfsda
+                            ${schoolName}
                         </textPath>
                     </text>
                 </svg>
             </div>
-            <!-- ...existing code... -->
 
             <!-- Location and Seal -->
             <div class="location-seal-section">
-                <div class="location-left">Stevens Point</div>
+                <div class="location-left">${city}</div>
                 <div class="seal">
                     <div class="seal-circle">
                         <div class="seal-inner">
@@ -521,7 +520,7 @@ jQuery(document).ready(function($) {
 
             <!-- Student Name -->
             <div class="student-name">
-                <h3>Your Name</h3>
+                <h3>${studentName}</h3>
             </div>
 
             <!-- Body Text -->
@@ -537,7 +536,7 @@ jQuery(document).ready(function($) {
 
             <!-- Date and Location -->
             <div class="date-location">
-                <p>Given at Stevens Point, Wisconsin, this twenty-eighth day of May, 1967.</p>
+                <p>Given at ${city}, ${state}, ${graduationDate}.</p>
             </div>
 
             <!-- Bottom Section -->

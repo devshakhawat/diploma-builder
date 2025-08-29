@@ -526,81 +526,80 @@ class DiplomaBuilder_Ajax {
         //     </div>
         // ';
 
-        return `    <div class="diploma-container">
-        <div class="diploma">
-            <!-- Header -->
-            <!-- ...existing code... -->
-            <div class="header">
-                <svg viewBox="0 0 600 120" class="arched-header">
-                    <defs>
-                        <path id="curve" d="M50,100 Q300,10 550,100" />
-                    </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="56" fill="#2c1810">
-                        <textPath href="#curve" startOffset="0%">
-                            Your High School sdsfdasfdsfdafasdfsa fdfdsfsda
-                        </textPath>
-                    </text>
-                </svg>
-            </div>
-            <!-- ...existing code... -->
+        $diploma_html = '
+                        <div class="diploma-container" style="background-color: ' . $paper_color . ';">
+                            ' . $emblem_html . '
+                            ' . $watermark_html . '
+                            <div class="diploma">
+                                <div class="header">
+                                    <svg viewBox="0 0 600 120" class="arched-header">
+                                        <defs>
+                                            <path id="curve" d="M50,100 Q300,10 550,100" />
+                                        </defs>
+                                        <text font-family="UnifrakturMaguntia, cursive" font-size="56" fill="#2c1810">
+                                            <textPath href="#curve" startOffset="0%">
+                                                ' . $school_name . '
+                                            </textPath>
+                                        </text>
+                                    </svg>
+                                </div>
 
-            <!-- Location and Seal -->
-            <div class="location-seal-section">
-                <div class="location-left">Stevens Point</div>
-                <div class="seal">
-                    <div class="seal-circle">
-                        <div class="seal-inner">
-                            <div class="seal-text">THE STATE OF</div>
-                            <div class="seal-center">WI</div>
-                            <div class="seal-text-bottom">WISCONSIN</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="location-right">Wisconsin</div>
-            </div>
+                                <div class="location-seal-section">
+                                    <div class="location-left">Stevens Point</div>
+                                    <div class="seal">
+                                        <div class="seal-circle">
+                                            <div class="seal-inner">
+                                                <div class="seal-text">THE STATE OF</div>
+                                                <div class="seal-center">WI</div>
+                                                <div class="seal-text-bottom">WISCONSIN</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="location-right">Wisconsin</div>
+                                </div>
 
-            <!-- Certificate Text -->
-            <div class="certificate-text">
-                <h2 class="certifies">This Certifies That</h2>
-            </div>
+                                <div class="certificate-text">
+                                    <h2 class="certifies">This Certifies That</h2>
+                                </div>
 
-            <!-- Student Name -->
-            <div class="student-name">
-                <h3>Your Name</h3>
-            </div>
+                                <div class="student-name">
+                                    <h3>' . $student_name . '</h3>
+                                </div>
 
-            <!-- Body Text -->
-            <div class="body-text">
-                <p>Has satisfactorily completed the Course of Study prescribed<br>
-                    for Graduation and is therefore entitled to this</p>
-            </div>
+                                <!-- Body Text -->
+                                <div class="body-text">
+                                    <p>Has satisfactorily completed the Course of Study prescribed<br>
+                                        for Graduation and is therefore entitled to this</p>
+                                </div>
 
-            <!-- Diploma Title -->
-            <div class="diploma-title">
-                <h4>Diploma</h4>
-            </div>
+                                <div class="diploma-title">
+                                    <h4>Diploma</h4>
+                                </div>
 
-            <!-- Date and Location -->
-            <div class="date-location">
-                <p>Given at Stevens Point, Wisconsin, this twenty-eighth day of May, 1967.</p>
-            </div>
+                                <!-- Date and Location -->
+                                <div class="date-location">
+                                    <p>Given at ' . $city . ', ' . $state . ', ' . $graduation_date . '.</p>
+                                </div>
 
-            <!-- Bottom Section -->
-            <div class="bottom-section">
-                <div class="gold-seal">
-                    <div class="gold-seal-inner">
-                        <div class="seal-star">★</div>
-                        <div class="seal-border"></div>
-                    </div>
-                </div>
+                                <!-- Bottom Section -->
+                                <div class="bottom-section">
+                                    <div class="gold-seal">
+                                        <div class="gold-seal-inner">
+                                            <div class="seal-star">★</div>
+                                            <div class="seal-border"></div>
+                                        </div>
+                                    </div>
 
-                <div class="signature-section">
-                    <div class="signature-line"></div>
-                    <div class="principal-text">Principal</div>
-                </div>
-            </div>
-        </div>
-    </div>`;
+                                    <div class="signature-section">
+                                        <div class="signature-line"></div>
+                                        <div class="principal-text">Principal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+
+
+        return $diploma_html;
     }
     
     /**

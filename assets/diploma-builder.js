@@ -495,28 +495,23 @@ jQuery(document).ready(function($) {
         //     </div>
         // `;
 
-        return `    <div class="diploma-container">
-        <div class="diploma">            
-            ${watermarkHTML}
+        let diplomaPreview = `<div class="diploma-container">
+        <div class="diploma">
+            <!-- Header -->
+            <!-- ...existing code... -->
             <div class="header">
                 <svg viewBox="0 0 600 120" class="arched-header">
                     <defs>
                         <path id="curve" d="M50,100 Q300,10 550,100" />
                     </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
-                        <textPath href="#curve" startOffset="50%">
-                            ${schoolName}
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="56" fill="#2c1810">
+                        <textPath href="#curve" startOffset="0%">
+                            Your High School Name
                         </textPath>
                     </text>
                 </svg>
             </div>
-
-            <!-- Location and Seal -->
-            <div class="location-seal-section">
-                <div class="location-left">${city}</div>               
-                    ${emblemInfo.html}                
-                <div class="location-right">Wisconsin</div>
-            </div>
+            <!-- ...existing code... -->
 
             <!-- Certificate Text -->
             <div class="certificate-text">
@@ -525,13 +520,12 @@ jQuery(document).ready(function($) {
 
             <!-- Student Name -->
             <div class="student-name">
-                <h3>${studentName}</h3>
+                <h3>Your Name</h3>
             </div>
 
             <!-- Body Text -->
             <div class="body-text">
-                <p>Has satisfactorily completed the Course of Study prescribed<br>
-                    for Graduation and is therefore entitled to this</p>
+                <p>has satisfactorily completed the Course of Study prescribed by the State Board of Education of the Commissioned School District of Livermore, California and is hereby awarded this High School Diploma.</p>
             </div>
 
             <!-- Diploma Title -->
@@ -541,26 +535,95 @@ jQuery(document).ready(function($) {
 
             <!-- Date and Location -->
             <div class="date-location">
-                <p>Given at ${city}, ${state}, ${graduationDate}.</p>
+                <p>Given at Stevens Point, Wisconsin, this twenty-eighth day of May, 1967.</p>
             </div>
 
-            <!-- Bottom Section -->
-            <div class="bottom-section">
-                <div class="gold-seal">
-                    <div class="gold-seal-inner">
-                        <div class="seal-star">★</div>
-                        <div class="seal-border"></div>
+            <!-- Location and Seal -->
+            <div class="location-seal-section">
+                <div class="location-left">Stevens Point</div>
+                <div class="seal">
+                    <div class="seal-circle">
+                        <div class="seal-inner">
+                            <div class="seal-text">THE STATE OF</div>
+                            <div class="seal-center">WI</div>
+                            <div class="seal-text-bottom">WISCONSIN</div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="signature-section">
-                    <div class="signature-line"></div>
-                    <div class="principal-text">Principal</div>
-                </div>
+                <div class="location-right">Wisconsin</div>
             </div>
+
         </div>
     </div>`;
-    }
+
+    return diplomaPreview;
+
+    //     return `    <div class="diploma-container">
+    //     <div class="diploma">            
+    //         ${watermarkHTML}
+    //         <div class="header">
+    //             <svg viewBox="0 0 600 120" class="arched-header">
+    //                 <defs>
+    //                     <path id="curve" d="M50,100 Q300,10 550,100" />
+    //                 </defs>
+    //                 <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+    //                     <textPath href="#curve" startOffset="50%">
+    //                         ${schoolName}
+    //                     </textPath>
+    //                 </text>
+    //             </svg>
+    //         </div>
+
+    //         <!-- Location and Seal -->
+    //         <div class="location-seal-section">
+    //             <div class="location-left">${city}</div>               
+    //                 ${emblemInfo.html}                
+    //             <div class="location-right">Wisconsin</div>
+    //         </div>
+
+    //         <!-- Certificate Text -->
+    //         <div class="certificate-text">
+    //             <h2 class="certifies">This Certifies That</h2>
+    //         </div>
+
+    //         <!-- Student Name -->
+    //         <div class="student-name">
+    //             <h3>${studentName}</h3>
+    //         </div>
+
+    //         <!-- Body Text -->
+    //         <div class="body-text">
+    //             <p>Has satisfactorily completed the Course of Study prescribed<br>
+    //                 for Graduation and is therefore entitled to this</p>
+    //         </div>
+
+    //         <!-- Diploma Title -->
+    //         <div class="diploma-title">
+    //             <h4>Diploma</h4>
+    //         </div>
+
+    //         <!-- Date and Location -->
+    //         <div class="date-location">
+    //             <p>Given at ${city}, ${state}, ${graduationDate}.</p>
+    //         </div>
+
+    //         <!-- Bottom Section -->
+    //         <div class="bottom-section">
+    //             <div class="gold-seal">
+    //                 <div class="gold-seal-inner">
+    //                     <div class="seal-star">★</div>
+    //                     <div class="seal-border"></div>
+    //                 </div>
+    //             </div>
+
+    //             <div class="signature-section">
+    //                 <div class="signature-line"></div>
+    //                 <div class="principal-text">Principal</div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // </div>`;
+    // }
     
     // Get emblem information
     function getEmblemInfo() {

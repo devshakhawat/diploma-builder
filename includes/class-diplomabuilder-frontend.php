@@ -596,12 +596,12 @@ class DiplomaBuilder_Frontend {
             //     'emblems' =>2,
             //     'template' => 'decorative'
             // ),
-            'minimalist' => array(
-                'name' => __('Minimalist Clean', 'diploma-builder'),
-                'description' => __('', 'diploma-builder'),
-                'emblems' => 1,
-                'template' => 'minimalist'
-            )
+            // 'minimalist' => array(
+            //     'name' => __('Minimalist Clean', 'diploma-builder'),
+            //     'description' => __('', 'diploma-builder'),
+            //     'emblems' => 1,
+            //     'template' => 'minimalist'
+            // )
         );
     }
     

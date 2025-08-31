@@ -362,35 +362,35 @@ class DiplomaBuilder_Frontend {
                                             </button>
                                         </div>
                                         
-                                        <div class="purchase-option">
+                                        <!-- <div class="purchase-option">
                                             <div class="purchase-header">
                                                 <div class="purchase-icon">📦</div>
-                                                <h6><?php _e('Printed & Shipped', 'diploma-builder'); ?></h6>
+                                                <h6><?php // _e('Printed & Shipped', 'diploma-builder'); ?></h6>
                                             </div>
                                             <div class="purchase-price">
                                                 <span class="price-amount">$12.99</span>
-                                                <span class="price-description"><?php _e('7-10 business days', 'diploma-builder'); ?></span>
+                                                 <span class="price-description"><?// _e('7-10 business days', 'diploma-builder'); ?></span>
                                             </div>
                                             <button type="button" class="btn btn-primary purchase-btn" data-product-id="printed">
                                                 <span class="btn-icon">📦</span>
-                                                <?php _e('Buy Now', 'diploma-builder'); ?>
+                                                <?php //_e('Buy Now', 'diploma-builder'); ?>
                                             </button>
                                         </div>
                                         
                                         <div class="purchase-option featured">
                                             <div class="purchase-header">
                                                 <div class="purchase-icon">🏆</div>
-                                                <h6><?php _e('Premium Package', 'diploma-builder'); ?></h6>
+                                                <h6><?php //_e('Premium Package', 'diploma-builder'); ?></h6>
                                             </div>
                                             <div class="purchase-price">
                                                 <span class="price-amount">$19.99</span>
-                                                <span class="price-description"><?php _e('Printed + Digital', 'diploma-builder'); ?></span>
+                                                <span class="price-description"><?php //_e('Printed + Digital', 'diploma-builder'); ?></span>
                                             </div>
                                             <button type="button" class="btn btn-success purchase-btn" data-product-id="premium">
                                                 <span class="btn-icon">⭐</span>
-                                                <?php _e('Buy Now', 'diploma-builder'); ?>
+                                                <?php // _e('Buy Now', 'diploma-builder'); ?>
                                             </button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     
                                     <div class="purchase-note">
@@ -423,22 +423,22 @@ class DiplomaBuilder_Frontend {
 
                                 
 
-                                <div class="form-actions" style="display: none;">
+                                <!-- <div class="form-actions" style="display: none;">
                                     <button type="button" id="save-diploma" <?php
 
-                                if( ! is_user_logged_in() ) {
-                                    echo 'disabled';
-                                }
+                                // if( ! is_user_logged_in() ) {
+                                //     echo 'disabled';
+                                // }
 
                                 ?> class="btn btn-success">
                                         <span class="btn-icon">💾</span>
-                                        <?php _e('Save Diploma', 'diploma-builder'); ?>
+                                        <?php //_e('Save Diploma', 'diploma-builder'); ?>
                                     </button>
                                     <button type="button" id="download-diploma" class="btn btn-primary">
                                         <span class="btn-icon">📥</span>
-                                        <?php _e('Download', 'diploma-builder'); ?>
+                                        <?php // _e('Download', 'diploma-builder'); ?>
                                     </button>
-                                </div>
+                                </div> -->
                                 
                                 <?php if (!is_user_logged_in() || !$this->current_user_can_purchase_diploma()): ?>
                                 <div class="preview-notice">

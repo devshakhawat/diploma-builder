@@ -564,8 +564,7 @@ class DiplomaBuilder_Ajax {
 
                                 <!-- Body Text -->
                                 <div class="body-text">
-                                    <p>Has satisfactorily completed the Course of Study prescribed<br>
-                                        for Graduation and is therefore entitled to this</p>
+                                    <p>has satisfactorily completed the Course of Study prescribed by the State Board of Education of the Commissioned School District of Livermore, California and is hereby awarded this High School</p>
                                 </div>
 
                                 <div class="diploma-title">

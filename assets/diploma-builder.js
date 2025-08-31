@@ -423,12 +423,6 @@ jQuery(document).ready(function($) {
         }
     }
     
-    // Check if user is a customer (has purchased a diploma product)
-    function isUserCustomer() {
-        // Check if the is_customer property exists and is true
-        return typeof diploma_ajax.is_customer !== 'undefined' && diploma_ajax.is_customer == 1;
-    }
-    
     // Update the live preview
     function updatePreview() {
         const paperColors = {
@@ -458,11 +452,9 @@ jQuery(document).ready(function($) {
         // Get emblem info
         const emblemInfo = getEmblemInfo();
         
-        // Add watermark for non-logged-in users or non-customers
-        let watermarkHTML = '';
-        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0' || !isUserCustomer()) {
-            watermarkHTML = '<div class="diploma-preview-watermark">PREVIEW</div>';
-        }
+        // Add watermark for non-logged-in users
+        const watermarkHTML = (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') ?
+            '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
         
         // Dynamically adjust font size based on text length
         let fontSize = 56; // Default font size
@@ -832,9 +824,9 @@ jQuery(document).ready(function($) {
         
         showLoading();
         
-        // Temporarily add watermark for non-logged-in users or non-customers
+        // Temporarily add watermark for non-logged-in users
         let watermark = null;
-        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0' || !isUserCustomer()) {
+        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') {
             watermark = $('<div class="diploma-preview-watermark">PREVIEW</div>');
             $('#diploma-canvas').append(watermark);
         }

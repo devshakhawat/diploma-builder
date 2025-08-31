@@ -323,7 +323,7 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                     <div class="summary-item">
                                         <strong><?php _e('School:', 'diploma-builder'); ?></strong>
-                                        <span id="review-school-name">[School Name]</span>
+                                        <span id="review-school-name">Your High School Name</span>
                                     </div>
                                     <div class="summary-item">
                                         <strong><?php _e('Date:', 'diploma-builder'); ?></strong>

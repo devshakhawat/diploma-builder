@@ -495,12 +495,6 @@ class DiplomaBuilder_Frontend {
                 
             </div>
             
-            </div>
-                    
-                </div>
-                
-            </div>
-            
         </div>
         
         <!-- Loading Overlay -->

@@ -360,86 +360,15 @@ class DiplomaBuilder_Frontend {
                                                 <span class="btn-icon">📥</span>
                                                 <?php _e('Buy Now', 'diploma-builder'); ?>
                                             </button>
-                                        </div>
-                                        
-                                        <!-- <div class="purchase-option">
-                                            <div class="purchase-header">
-                                                <div class="purchase-icon">📦</div>
-                                                <h6><?php // _e('Printed & Shipped', 'diploma-builder'); ?></h6>
-                                            </div>
-                                            <div class="purchase-price">
-                                                <span class="price-amount">$12.99</span>
-                                                 <span class="price-description"><?// _e('7-10 business days', 'diploma-builder'); ?></span>
-                                            </div>
-                                            <button type="button" class="btn btn-primary purchase-btn" data-product-id="printed">
-                                                <span class="btn-icon">📦</span>
-                                                <?php //_e('Buy Now', 'diploma-builder'); ?>
-                                            </button>
-                                        </div>
-                                        
-                                        <div class="purchase-option featured">
-                                            <div class="purchase-header">
-                                                <div class="purchase-icon">🏆</div>
-                                                <h6><?php //_e('Premium Package', 'diploma-builder'); ?></h6>
-                                            </div>
-                                            <div class="purchase-price">
-                                                <span class="price-amount">$19.99</span>
-                                                <span class="price-description"><?php //_e('Printed + Digital', 'diploma-builder'); ?></span>
-                                            </div>
-                                            <button type="button" class="btn btn-success purchase-btn" data-product-id="premium">
-                                                <span class="btn-icon">⭐</span>
-                                                <?php // _e('Buy Now', 'diploma-builder'); ?>
-                                            </button>
-                                        </div> -->
+                                        </div>                                       
+     
                                     </div>
                                     
                                     <div class="purchase-note">
                                         <p><?php _e('All purchases include high-resolution files and are processed through our secure checkout.', 'diploma-builder'); ?></p>
                                     </div>
-                                </div>
-                                
-                                <!-- Sharing Options -->
-                                <!-- <div class="sharing-options">
-                                    <h5><?php // _e('this section', 'diploma-builder'); ?></h5>
-                                    <div class="share-buttons">
-                                        <button type="button" class="share-btn" id="share-facebook">
-                                            <div class="share-icon" style="background: #1877f2;"></div>
-                                            <span><?php //_e('Facebook', 'diploma-builder'); ?></span>
-                                        </button>
-                                        <button type="button" class="share-btn" id="share-twitter">
-                                            <div class="share-icon" style="background: #1da1f2;">🐦</div>
-                                            <span><?php //_e('Twitter', 'diploma-builder'); ?></span>
-                                        </button>
-                                        <button type="button" class="share-btn" id="share-linkedin">
-                                            <div class="share-icon" style="background: #0077b5;">💼</div>
-                                            <span><?php //_e('LinkedIn', 'diploma-builder'); ?></span>
-                                        </button>
-                                        <button type="button" class="share-btn" id="copy-link">
-                                            <div class="share-icon" style="background: #6b7280;">🔗</div>
-                                            <span><?php //_e('Copy Link', 'diploma-builder'); ?></span>
-                                        </button>
-                                    </div>
-                                </div> -->
-
-                                
-
-                                <!-- <div class="form-actions" style="display: none;">
-                                    <button type="button" id="save-diploma" <?php
-
-                                // if( ! is_user_logged_in() ) {
-                                //     echo 'disabled';
-                                // }
-
-                                ?> class="btn btn-success">
-                                        <span class="btn-icon">💾</span>
-                                        <?php //_e('Save Diploma', 'diploma-builder'); ?>
-                                    </button>
-                                    <button type="button" id="download-diploma" class="btn btn-primary">
-                                        <span class="btn-icon">📥</span>
-                                        <?php // _e('Download', 'diploma-builder'); ?>
-                                    </button>
-                                </div> -->
-                                
+                                </div>                               
+                               
                                 <?php if (!is_user_logged_in() || !$this->current_user_can_purchase_diploma()): ?>
                                 <div class="preview-notice">
                                     <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
@@ -484,13 +413,6 @@ class DiplomaBuilder_Frontend {
                             <!-- Dynamic diploma content will be inserted here -->
                         </div>
                     </div>
-                    <!-- <div class="preview-info">
-                        <p class="preview-note"><?php // _e('This is a live preview. All changes update instantly.', 'diploma-builder'); ?></p>
-                        <div class="preview-specs">
-                            <span><?php //_e('Print Size:', 'diploma-builder'); ?> 8.5" × 11"</span>
-                            <span><?php //_e('Resolution:', 'diploma-builder'); ?> 300 DPI</span>
-                        </div>
-                    </div> -->
                 </div>
                 
             </div>

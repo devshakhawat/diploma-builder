@@ -47,6 +47,9 @@
     </form>
     
     <div class="tablenav top">
+        <div class="alignleft actions bulkactions">
+            <button type="button" class="button bulk-delete-diplomas"><?php _e('Delete Selected', 'diploma-builder'); ?></button>
+        </div>
         <div class="tablenav-pages">
             <span class="displaying-num"><?php printf(__('%s diplomas', 'diploma-builder'), number_format_i18n($total_diplomas)); ?></span>
             <?php if ($total_pages > 1): ?>

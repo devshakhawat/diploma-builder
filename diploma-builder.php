@@ -119,6 +119,7 @@ class DiplomaBuilder {
 		delete_option( 'diploma_allow_guests' );
 		delete_option( 'diploma_default_paper' );
 		delete_option( 'diploma_max_per_user' );
+		delete_option( 'diploma_single_product_id' );
 
 		// Remove upload directories
 		$upload_dir  = wp_upload_dir();
@@ -154,9 +155,7 @@ class DiplomaBuilder {
 		add_option( 'diploma_allow_guests', 1 );
 		add_option( 'diploma_default_paper', 'white' );
 		add_option( 'diploma_max_per_user', 10 );
-		add_option( 'diploma_digital_product_id', 0 );
-		add_option( 'diploma_printed_product_id', 0 );
-		add_option( 'diploma_premium_product_id', 0 );
+		add_option( 'diploma_single_product_id', 0 );
 	}
 
 	private function cleanup_temp_files() {

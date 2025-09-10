@@ -45,6 +45,17 @@
                     </fieldset>
                 </td>
             </tr>
+
+            <tr>
+                <th scope="row"><?php _e('Diploma Product ID', 'diploma-builder'); ?></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span><?php _e('Diploma Product ID', 'diploma-builder'); ?></span></legend>
+                        <input name="diploma_single_product_id" type="number" id="diploma_single_product_id" value="<?php echo esc_attr(get_option('diploma_single_product_id', 0)); ?>" class="small-text">
+                        <p class="description"><?php _e('Enter the WooCommerce Product ID for the diploma', 'diploma-builder'); ?></p>
+                    </fieldset>
+                </td>
+            </tr>
         </table>
         
         <?php submit_button(); ?>

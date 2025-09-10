@@ -84,6 +84,7 @@ class DiplomaBuilder_Admin {
         register_setting('diploma_builder_settings', 'diploma_allow_guests');
         register_setting('diploma_builder_settings', 'diploma_max_per_user');
         register_setting('diploma_builder_settings', 'diploma_default_paper');
+        register_setting('diploma_builder_settings', 'diploma_single_product_id');
     }
     
     public function admin_page() {

@@ -13,7 +13,17 @@ class DiplomaBuilder_Frontend {
         add_shortcode('diploma_builder', array($this, 'diploma_builder_shortcode'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_head', array($this, 'add_meta_tags'));
+        add_filter( 'woocommerce_add_to_cart_validation', array($this, 'limit_one_product_in_cart'), 10, 3 );
     }
+    
+     public function limit_one_product_in_cart( $passed, $product_id, $quantity ) {
+            if ( WC()->cart->get_cart_contents_count() > 0 ) {
+                // Clear existing cart
+                WC()->cart->empty_cart();
+                wc_add_notice( 'Only one product can be purchased at a time. We removed the previous item.', 'notice' );
+            }
+            return $passed;
+        }
     
     public function enqueue_scripts() {
         if ($this->should_load_assets()) {
@@ -353,12 +363,21 @@ class DiplomaBuilder_Frontend {
                                                 <h6><?php _e('Digital Download', 'diploma-builder'); ?></h6>
                                             </div>
                                             <div class="purchase-price">
-                                                <span class="price-amount">$4.99</span>
+                                                <span class="price-amount">
+                                                    <?php 
+                                                    $product_id = get_option('diploma_single_product_id', 0);
+                                                    $product    = wc_get_product( $product_id );
+                                                    $checkout_url = wc_get_checkout_url() . '?add-to-cart=' . $product_id . '&quantity=1';
+                                                    if($product) {
+                                                        echo '$'.$product->get_price();
+                                                    }
+                                                    ?>
+                                                </span>
                                                 <span class="price-description"><?php _e('Instant download', 'diploma-builder'); ?></span>
                                             </div>
                                             <button type="button" class="btn btn-primary purchase-btn" data-product-id="digital">
                                                 <span class="btn-icon">📥</span>
-                                                <?php _e('Buy Now', 'diploma-builder'); ?>
+                                                <a href="<?php echo esc_url($checkout_url); ?>"><?php _e('Buy Now', 'diploma-builder'); ?></a>
                                             </button>
                                         </div>                                       
      

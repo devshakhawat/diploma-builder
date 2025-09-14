@@ -495,7 +495,7 @@ class DiplomaBuilder_Frontend {
                 <p><?php _e('All purchases include high-resolution files and are processed through our secure checkout.', 'diploma-builder'); ?></p>
             </div>
         </div>
-        <?
+        <?php
         return ob_get_clean();
     }
     
@@ -599,3 +599,5 @@ class DiplomaBuilder_Frontend {
     }
     
 }
+
+?>

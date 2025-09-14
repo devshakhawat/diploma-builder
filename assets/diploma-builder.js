@@ -431,7 +431,12 @@ jQuery(document).ready(function($) {
         const emblemInfo = getEmblemInfo();
         
         // Add watermark for non-logged-in users
-        const watermarkHTML = (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0' || !isUserCustomer()) ?
+        // Only show watermark if user is not logged in AND not a customer AND not an admin
+        const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
+        const isCustomer = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
+        const isAdmin = diploma_ajax.is_admin && diploma_ajax.is_admin == '1';
+        
+        const watermarkHTML = (!isUserLoggedIn && !isCustomer && !isAdmin) ?
             '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
         
         // Split school name for arc header
@@ -747,8 +752,13 @@ jQuery(document).ready(function($) {
         showLoading();
         
         // Temporarily add watermark for non-logged-in users
+        // Only add watermark if user is not logged in AND not a customer
         let watermark = null;
-        if (!diploma_ajax.is_user_logged_in || diploma_ajax.is_user_logged_in == '0') {
+        const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
+        const isCustomer = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
+        const isAdmin = typeof diploma_ajax.is_admin !== 'undefined' && diploma_ajax.is_admin == '1';
+        
+        if (!isUserLoggedIn && !isCustomer && !isAdmin) {
             watermark = $('<div class="diploma-preview-watermark">PREVIEW</div>');
             $('#diploma-canvas').append(watermark);
         }

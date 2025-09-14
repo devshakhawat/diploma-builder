@@ -54,8 +54,13 @@ class DiplomaBuilder_Assets {
             
             // Check if user is a customer (has purchased a diploma product)
             $is_customer = false;
+            $is_admin = false;
             if (is_user_logged_in()) {
                 $user_id = get_current_user_id();
+                // Check if user is admin
+                if (current_user_can('manage_options')) {
+                    $is_admin = true;
+                }
                 // Check if user has purchased any of the diploma products
                 $digital_product_id = get_option('diploma_digital_product_id', 0);
                 $printed_product_id = get_option('diploma_printed_product_id', 0);
@@ -80,6 +85,7 @@ class DiplomaBuilder_Assets {
                 'plugin_url' => DIPLOMA_BUILDER_URL,
                 'is_user_logged_in' => is_user_logged_in() ? 1 : 0,
                 'is_customer' => $is_customer ? 1 : 0,
+                'is_admin' => $is_admin ? 1 : 0,
             ));
         }
     }

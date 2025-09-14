@@ -101,9 +101,7 @@ class DiplomaBuilder_Frontend {
                         <div class="form-header-icon">🏆</div>
                         <h2><?php _e('Customize Your Diploma', 'diploma-builder'); ?></h2>
                     </div>
-                    
-                    <?php $this->render_progress_bar(); ?>
-                    
+                                        
                     <div class="form-content">
                         <!-- Step 1: Diploma Style (Full Width) -->
                         <div class="form-section" data-step="1" style="display: block;">
@@ -354,41 +352,32 @@ class DiplomaBuilder_Frontend {
                                 </div>
                                 
                                 <!-- Purchase Options -->
-                                <div class="purchase-options">
-                                    <h5><?php _e('Purchase Options', 'diploma-builder'); ?></h5>
-                                    <div class="purchase-grid">
-                                        <div class="purchase-option">
-                                            <div class="purchase-header">
-                                                <div class="purchase-icon">💰</div>
-                                                <h6><?php _e('Digital Download', 'diploma-builder'); ?></h6>
-                                            </div>
-                                            <div class="purchase-price">
-                                                <span class="price-amount">
-                                                    <?php 
-                                                    $product_id = get_option('diploma_single_product_id', 0);
-                                                    $product    = wc_get_product( $product_id );
-                                                    $checkout_url = wc_get_checkout_url() . '?add-to-cart=' . $product_id . '&quantity=1';
-                                                    if($product) {
-                                                        echo '$'.$product->get_price();
-                                                    }
-                                                    ?>
-                                                </span>
-                                                <span class="price-description"><?php _e('Instant download', 'diploma-builder'); ?></span>
-                                            </div>
-                                            <button type="button" class="btn btn-primary purchase-btn" data-product-id="digital">
-                                                <span class="btn-icon">📥</span>
-                                                <a href="<?php echo esc_url($checkout_url); ?>"><?php _e('Buy Now', 'diploma-builder'); ?></a>
-                                            </button>
-                                        </div>                                       
-     
-                                    </div>
-                                    
-                                    <div class="purchase-note">
-                                        <p><?php _e('All purchases include high-resolution files and are processed through our secure checkout.', 'diploma-builder'); ?></p>
-                                    </div>
-                                </div>                               
+                                 <?php if ( is_user_logged_in() ) {
+                                        $user = wp_get_current_user();
+
+                                        // Check if user is NOT admin and NOT customer
+                                        if ( !in_array( 'administrator', (array) $user->roles ) && 
+                                            !in_array( 'customer', (array) $user->roles ) ) { 
+                                               echo $this->get_purchase_option();
+                                             }
+                                 } else if( ! is_user_logged_in() ) {
+                                    echo $this->get_purchase_option();
+                                 } ?>
+
+                                <div class="form-actions" style="display: none;">
+                                    <?php if (current_user_can('manage_options') ): ?>
+                                        <button type="button" id="download-diploma" class="btn btn-success">
+                                            <span class="btn-icon">📥</span>
+                                            <?php _e('Download Diploma', 'diploma-builder'); ?>
+                                        </button>
+                                    <?php endif; ?>
+                                    <!-- <button type="button" id="save-diploma" class="btn btn-primary">
+                                        <span class="btn-icon">💾</span>
+                                        <?php // _e('Save Diploma', 'diploma-builder'); ?>
+                                    </button> -->
+                                </div>                              
                                
-                                <?php if (!is_user_logged_in() || !$this->current_user_can_purchase_diploma()): ?>
+                                <?php if (!is_user_logged_in() ): ?>
                                 <div class="preview-notice">
                                     <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
                                 </div>
@@ -408,7 +397,6 @@ class DiplomaBuilder_Frontend {
                                     <span class="btn-icon">›</span>
                                 </button>
                             </div>
-                            
                             
                         </div>
                     </div>
@@ -470,39 +458,45 @@ class DiplomaBuilder_Frontend {
         </div>
         <?php
     }
-    
-    private function render_progress_bar() {
+
+    private function get_purchase_option() {
+        ob_start();
         ?>
-        <!-- <div class="progress-container">
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="form-progress">
-                    <div class="progress-fill"></div>
-                </div>
+        <div class="purchase-options">
+            <h5><?php _e('Purchase Options', 'diploma-builder'); ?></h5>
+            <div class="purchase-grid">
+                <div class="purchase-option">
+                    <div class="purchase-header">
+                        <div class="purchase-icon">💰</div>
+                        <h6><?php _e('Digital Download', 'diploma-builder'); ?></h6>
+                    </div>
+                    <div class="purchase-price">
+                        <span class="price-amount">
+                            <?php 
+                            $product_id = get_option('diploma_single_product_id', 0);
+                            $product    = wc_get_product( $product_id );
+                            $checkout_url = wc_get_checkout_url() . '?add-to-cart=' . $product_id . '&quantity=1';
+                            if($product) {
+                                echo $product->get_price();
+                            }
+                            ?>
+                        </span>
+                        <span class="price-description"><?php _e('Instant download', 'diploma-builder'); ?></span>
+                    </div>
+                    <button type="button" class="btn btn-primary purchase-btn" data-product-id="digital">
+                        <span class="btn-icon">📥</span>
+                        <a href="<?php echo esc_url($checkout_url); ?>"><?php _e('Buy Now', 'diploma-builder'); ?></a>
+                    </button>
+                </div>                                       
+
             </div>
-            <div class="progress-steps">
-                <div class="step active" data-step="1">
-                    <div class="step-circle">1</div>
-                    <div class="step-label"><?php // _e('Diploma Style', 'diploma-builder'); ?></div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label"><?php //_e('Paper Color', 'diploma-builder'); ?></div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-circle">3</div>
-                    <div class="step-label"><?php //_e('Emblem', 'diploma-builder'); ?></div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label"><?php //_e('Custom Text', 'diploma-builder'); ?></div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label"><?php //_e('Review & Download', 'diploma-builder'); ?></div>
-                </div>
+            
+            <div class="purchase-note">
+                <p><?php _e('All purchases include high-resolution files and are processed through our secure checkout.', 'diploma-builder'); ?></p>
             </div>
-        </div> -->
-        <?php
+        </div>
+        <?
+        return ob_get_clean();
     }
     
     private function get_diploma_styles() {
@@ -604,32 +598,4 @@ class DiplomaBuilder_Frontend {
         );
     }
     
-    /**
-     * Check if current user can purchase a diploma
-     */
-    private function current_user_can_purchase_diploma() {
-        // If user is not logged in, they can't purchase
-        if (!is_user_logged_in()) {
-            return false;
-        }
-        
-        // Check if user has purchased any diploma product
-        $user_id = get_current_user_id();
-        $digital_product_id = get_option('diploma_digital_product_id', 0);
-        $printed_product_id = get_option('diploma_printed_product_id', 0);
-        $premium_product_id = get_option('diploma_premium_product_id', 0);
-        
-        if (function_exists('wc_customer_bought_product')) {
-            $current_user = wp_get_current_user();
-            $customer_email = $current_user->user_email;
-            
-            if (($digital_product_id && wc_customer_bought_product($customer_email, $user_id, $digital_product_id)) ||
-                ($printed_product_id && wc_customer_bought_product($customer_email, $user_id, $printed_product_id)) ||
-                ($premium_product_id && wc_customer_bought_product($customer_email, $user_id, $premium_product_id))) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
 }

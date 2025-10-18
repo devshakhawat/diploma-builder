@@ -352,17 +352,7 @@ class DiplomaBuilder_Frontend {
                                 </div>
                                 
                                 <!-- Purchase Options -->
-                                 <?php if ( is_user_logged_in() ) {
-                                        $user = wp_get_current_user();
-
-                                        // Check if user is NOT admin and NOT customer
-                                        if ( !in_array( 'administrator', (array) $user->roles ) && 
-                                            !in_array( 'customer', (array) $user->roles ) ) { 
-                                               echo $this->get_purchase_option();
-                                             }
-                                 } else if( ! is_user_logged_in() ) {
-                                    echo $this->get_purchase_option();
-                                 } ?>
+                                 <?php  echo $this->get_purchase_option();  ?>
 
                                 <div class="form-actions" style="display: none;">
                                     <?php if (current_user_can('manage_options') ): ?>

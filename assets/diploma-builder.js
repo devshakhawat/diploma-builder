@@ -25,43 +25,26 @@ jQuery(document).ready(function($) {
     
     // Initialize form to show first step only
     function initializeForm() {
-        // Hide all form sections except the first one
-        $('.form-section').hide();
+        // Show the main form section
         $('.form-section[data-step="1"]').show();
-        
-        // Add step-1 class for full-width style selection
-        $('.diploma-builder-wrapper').addClass('step-1');
-        $('.diploma-builder-form').addClass('step-1-form');
-        $('.diploma-preview-container').addClass('step-1-preview');
-        
-        // Set initial button states
-        $('#prev-step').prop('disabled', true);
-        $('#next-step').show();
-        $('.form-actions').hide();
-        
-        // Initialize progress
-        updateProgressBar();
+
+        // Show action buttons
+        $('.form-actions').show();
     }
     
     // Bind all event handlers
     function bindEvents() {
-        // Enhanced diploma style selection (radio buttons)
-        $('input[name="diploma_style"]').on('change', function() {
+        // Diploma style selection (dropdown)
+        $('#diploma_style').on('change', function() {
             currentConfig.diploma_style = $(this).val();
             updatePreview();
             updateReviewSummary();
         });
         
-        // Template filter buttons
-        $('.filter-btn').on('click', function() {
-            const filter = $(this).data('filter');
-            $('.filter-btn').removeClass('active');
-            $(this).addClass('active');
-            filterTemplates(filter);
-        });
+        // Remove template filter functionality as we now use dropdown
         
-        // Paper color selection
-        $('input[name="paper_color"]').on('change', function() {
+        // Paper color selection (dropdown)
+        $('#paper_color').on('change', function() {
             currentConfig.paper_color = $(this).val();
             updatePreview();
             updateReviewSummary();
@@ -162,19 +145,7 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // Enhanced template filtering
-    function filterTemplates(filter) {
-        $('.template-card').show();
-        
-        if (filter !== 'all') {
-            $('.template-card').each(function() {
-                const templateType = $(this).find('input').val();
-                if (templateType !== filter && !templateType.includes(filter)) {
-                    $(this).hide();
-                }
-            });
-        }
-    }
+    // Template filtering removed - now using dropdown selection
     
     // Toggle emblem tabs
     function toggleEmblemTabs(activeTab) {
@@ -267,9 +238,9 @@ jQuery(document).ready(function($) {
         $('#review-location').text(`${city}, ${state}`);
         
         // Update style and paper info
-        const styleName = $(`input[name="diploma_style"]:checked`).closest('.template-card').find('h5').text() || '[Style]';
-        const paperName = $(`input[name="paper_color"]:checked`).closest('.color-option').find('.color-name').text() || '[Paper]';
-        
+        const styleName = $('#diploma_style option:selected').text() || '[Style]';
+        const paperName = $('#paper_color option:selected').text() || '[Paper]';
+
         $('#review-diploma-style').text(styleName);
         $('#review-paper-color').text(paperName);
     }
@@ -644,16 +615,7 @@ jQuery(document).ready(function($) {
         $('.form-section').hide();
         $(`.form-section[data-step="${nextStep}"]`).show();
         
-        // Update wrapper class for step 1
-        if (nextStep === 1) {
-            $('.diploma-builder-wrapper').addClass('step-1');
-            $('.diploma-builder-form').addClass('step-1-form');
-            $('.diploma-preview-container').addClass('step-1-preview');
-        } else {
-            $('.diploma-builder-wrapper').removeClass('step-1');
-            $('.diploma-builder-form').removeClass('step-1-form');
-            $('.diploma-preview-container').removeClass('step-1-preview');
-        }
+        // No special wrapper classes needed anymore
         
         // Update navigation buttons
         $('#prev-step').prop('disabled', nextStep === 1);
@@ -904,11 +866,11 @@ jQuery(document).ready(function($) {
             city: '',
             state: ''
         };
-        
+
         // Reset form fields
-        $('#diploma_style_select').val('classic');
-        $('input[name="paper_color"][value="white"]').prop('checked', true);
-        
+        $('#diploma_style').val('classic');
+        $('#paper_color').val('white');
+
         $('#school_name').val('');
         $('#student_name').val('');
         $('#graduation_date').val('');

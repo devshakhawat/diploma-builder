@@ -103,179 +103,32 @@ class DiplomaBuilder_Frontend {
                     </div>
                                         
                     <div class="form-content">
-                        <!-- Step 1: Diploma Style (Full Width) -->
+                        <!-- Single Form Section -->
                         <div class="form-section" data-step="1" style="display: block;">
                             <div class="section-header">
-                                <h3><?php _e('Step 1 of 5', 'diploma-builder'); ?></h3>
-                                <div class="section-title"><?php _e('Diploma Style', 'diploma-builder'); ?></div>
-                                <p class="section-description"><?php _e('Choose your diploma template', 'diploma-builder'); ?></p>
+                                <div class="section-title"><?php _e('Customize Your Diploma', 'diploma-builder'); ?></div>
+                                <p class="section-description"><?php _e('Fill in all details to create your diploma', 'diploma-builder'); ?></p>
                             </div>
-                            
+
                             <div class="section-content">
-                                <div class="section-icon">📋</div>
-                                <h4><?php _e('Choose Your Diploma Style', 'diploma-builder'); ?></h4>
-                                
-                                <!-- Enhanced Template Gallery -->
-                                <div class="template-gallery">
-                                    <?php foreach ($diploma_styles as $key => $style): ?>
-                                        <label class="template-card" for="style_<?php echo $key; ?>">
-                                            <input type="radio" name="diploma_style" value="<?php echo $key; ?>" id="style_<?php echo $key; ?>" <?php echo $key === 'classic' ? 'checked' : ''; ?>>
-                                            <div class="template-preview">
-                                                <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/previews/' . $key . '.png'; ?>" alt="<?php echo esc_attr($style['name']); ?>" loading="lazy">
-                                                <div class="template-overlay">
-                                                    <div class="template-check">✓</div>
-                                                </div>
-                                            </div>
-                                            <div class="template-info">
-                                                <h5><?php echo esc_html($style['name']); ?></h5>
-                                                <!-- <p><?php //echo esc_html($style['description']); ?></p> -->
-                                                <!-- <div class="template-features">
-                                                    <span class="feature-badge"><?php //printf(__('%d Emblem(s)', 'diploma-builder'), $style['emblems']); ?></span>
-                                                    <span class="feature-badge popular" <?php //echo $key === 'classic' ? 'style="display:inline-block"' : 'style="display:none"'; ?>><?php //_e('Popular', 'diploma-builder'); ?></span>
-                                                </div> -->
-                                            </div>
-                                        </label>
-                                    <?php endforeach; ?>
-                                </div>
-                                
-                                <!-- Template Filter Options -->
-                                <!-- <div class="template-filters">
-                                    <button type="button" class="filter-btn active" data-filter="all"><?php // _e('All Templates', 'diploma-builder'); ?></button>
-                                    <button type="button" class="filter-btn" data-filter="formal"><?php //_e('Formal', 'diploma-builder'); ?></button>
-                                    <button type="button" class="filter-btn" data-filter="modern"><?php //_e('Modern', 'diploma-builder'); ?></button>
-                                    <button type="button" class="filter-btn" data-filter="classic"><?php //_e('Traditional', 'diploma-builder'); ?></button>
-                                </div> -->
-                            </div>
-                        </div>
-                    
-                        <!-- Step 2: Paper Color -->
-                        <div class="form-section" data-step="2" style="display: none;">
-                            <div class="section-header">
-                                <h3><?php _e('Step 2 of 5', 'diploma-builder'); ?></h3>
-                                <div class="section-title"><?php _e('Paper Color', 'diploma-builder'); ?></div>
-                                <p class="section-description"><?php _e('Select your preferred paper color', 'diploma-builder'); ?></p>
-                            </div>
-                            
-                            <div class="section-content">
-                                <div class="section-icon">🎨</div>
-                                <h4><?php _e('Choose Paper Color', 'diploma-builder'); ?></h4>
-                                <p class="form-note"><?php _e('Select the background color for your diploma. This will affect the overall appearance and feel of your certificate.', 'diploma-builder'); ?></p>
-                                
-                                <div class="color-options">
-                                    <?php foreach ($paper_colors as $key => $color): ?>
-                                        <label class="color-option" for="color_<?php echo $key; ?>">
-                                            <input type="radio" name="paper_color" value="<?php echo $key; ?>" id="color_<?php echo $key; ?>" <?php echo $key === 'white' ? 'checked' : ''; ?>>
-                                            <div class="color-preview" style="background-color: <?php echo $color['hex']; ?>">
-                                                <!-- <span class="color-checkmark">✓</span> -->
-                                            </div>
-                                            <span class="color-name"><?php echo esc_html($color['name']); ?></span>
-                                        </label>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <!-- Step 3: Emblem Selection -->
-                        <div class="form-section" data-step="3" style="display: none;">
-                            <div class="section-header">
-                                <h3><?php _e('Step 3 of 5', 'diploma-builder'); ?></h3>
-                                <div class="section-title"><?php _e('Emblem Selection', 'diploma-builder'); ?></div>
-                                <p class="section-description"><?php _e('Choose an emblem for your diploma', 'diploma-builder'); ?></p>
-                            </div>
-                            
-                            <div class="section-content">
-                                <div class="section-icon">🏆</div>
-                                <h4><?php _e('Choose Your Emblem', 'diploma-builder'); ?></h4>
-                                <p class="form-note"><?php _e('Select an emblem that will appear on your diploma. You can choose from generic academic emblems or official state emblems.', 'diploma-builder'); ?></p>
-                                
-                                <div class="emblem-type-tabs">
-                                    <button type="button" class="emblem-tab-btn active" data-tab="generic">
-                                        <span class="tab-icon">🎓</span>
-                                        <?php _e('Generic Emblems', 'diploma-builder'); ?>
-                                    </button>
-                                    <button type="button" class="emblem-tab-btn" data-tab="state">
-                                        <span class="tab-icon">🏛️</span>
-                                        <?php _e('State Emblems', 'diploma-builder'); ?>
-                                    </button>
-                                </div>
-                                
-                                <!-- Generic Emblems -->
-                                <div class="emblem-tab-content active" id="generic-emblems">
-                                    <div class="emblem-grid">
-                                        <?php foreach ($generic_emblems as $key => $emblem): ?>
-                                            <label class="emblem-option" for="emblem_<?php echo $key; ?>">
-                                                <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $key === 'graduation_cap' ? 'checked' : ''; ?>>
-                                                <div class="emblem-preview">
-                                                    <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.png'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
-                                                    <!-- <div class="emblem-overlay">
-                                                        <div class="emblem-check">✓</div>
-                                                    </div> -->
-                                                </div>
-                                                <div class="emblem-info">
-                                                    <h6><?php echo esc_html($emblem['name']); ?></h6>
-                                                </div>
-                                            </label>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                                
-                                <!-- State Emblems -->
-                                <div class="emblem-tab-content" id="state-emblems">
-                                    <div class="state-selector">
-                                        <label for="state-emblem-select"><?php _e('Select State:', 'diploma-builder'); ?></label>
-                                        <select id="state-emblem-select" class="form-select">
-                                            <option value=""><?php _e('Choose a state...', 'diploma-builder'); ?></option>
-                                            <?php foreach ($us_states as $code => $name): ?>
-                                                <option value="<?php echo esc_attr($code); ?>"><?php echo esc_html($name); ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="state-emblem-preview" id="state-emblem-preview" style="display: none;">
-                                        <div class="state-emblem-image">
-                                            <img id="state-emblem-img" src="" alt="" loading="lazy">
-                                        </div>
-                                        <div class="state-emblem-info">
-                                            <h6 id="state-emblem-name"></h6>
-                                            <p><?php _e('Official state emblem', 'diploma-builder'); ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <!-- Step 4: Custom Text & Details -->
-                        <div class="form-section" data-step="4" style="display: none;">
-                            <div class="section-header">
-                                <h3><?php _e('Step 4 of 5', 'diploma-builder'); ?></h3>
-                                <div class="section-title"><?php _e('Custom Text', 'diploma-builder'); ?></div>
-                                <p class="section-description"><?php _e('Enter school and student details', 'diploma-builder'); ?></p>
-                            </div>
-                            
-                            <div class="section-content">
-                                <div class="section-icon">📝</div>
-                                <h4><?php _e('Custom Text & Details', 'diploma-builder'); ?></h4>
-                                <p class="form-note"><?php _e('Enter the custom text that will appear on your diploma. All fields marked with * are required.', 'diploma-builder'); ?></p>
-                                
                                 <!-- Student Information -->
                                 <div class="subsection">
                                     <div class="subsection-icon">👤</div>
-                                    <h5><?php _e('Student Information', 'diploma-builder'); ?></h5>
+                                    <h5><?php _e('Student Details', 'diploma-builder'); ?></h5>
                                     <div class="field-group">
                                         <label for="student_name"><?php _e('Student Name *', 'diploma-builder'); ?></label>
                                         <input type="text" id="student_name" name="student_name" placeholder="<?php _e('Enter student\'s full name', 'diploma-builder'); ?>" maxlength="100" required>
                                         <div class="field-hint"><?php _e('This name will appear prominently on the diploma', 'diploma-builder'); ?></div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- School Information -->
                                 <div class="subsection">
                                     <div class="subsection-icon">🏫</div>
                                     <h5><?php _e('School Information', 'diploma-builder'); ?></h5>
-                                    <div class="field-row">
-                                        <div class="field-group">
-                                            <label for="school_name"><?php _e('High School Name *', 'diploma-builder'); ?></label>
-                                            <input type="text" id="school_name" name="school_name" placeholder="<?php _e('e.g., Lincoln High School', 'diploma-builder'); ?>" maxlength="100" required>
-                                        </div>
+                                    <div class="field-group">
+                                        <label for="school_name"><?php _e('High School Name *', 'diploma-builder'); ?></label>
+                                        <input type="text" id="school_name" name="school_name" placeholder="<?php _e('e.g., Lincoln High School', 'diploma-builder'); ?>" maxlength="100" required>
                                     </div>
                                     <div class="field-row">
                                         <div class="field-group">
@@ -293,7 +146,7 @@ class DiplomaBuilder_Frontend {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Date of Graduation -->
                                 <div class="subsection">
                                     <div class="subsection-icon">📅</div>
@@ -304,14 +157,122 @@ class DiplomaBuilder_Frontend {
                                         <div class="field-hint"><?php _e('This date will appear on the diploma', 'diploma-builder'); ?></div>
                                     </div>
                                 </div>
-                                
+
+                                <!-- Diploma Style Selection -->
+                                <div class="subsection">
+                                    <div class="subsection-icon">📋</div>
+                                    <h5><?php _e('Diploma Style', 'diploma-builder'); ?></h5>
+                                    <div class="field-group">
+                                        <label for="diploma_style"><?php _e('Choose Style *', 'diploma-builder'); ?></label>
+                                        <select id="diploma_style" name="diploma_style" class="form-select" required>
+                                            <?php foreach ($diploma_styles as $key => $style): ?>
+                                                <option value="<?php echo esc_attr($key); ?>" <?php echo $key === 'classic' ? 'selected' : ''; ?>>
+                                                    <?php echo esc_html($style['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <div class="field-hint"><?php _e('Select the template style for your diploma', 'diploma-builder'); ?></div>
+                                    </div>
+                                </div>
+
+                                <!-- Paper Color Dropdown -->
+                                <div class="subsection">
+                                    <div class="subsection-icon">🎨</div>
+                                    <h5><?php _e('Paper Color', 'diploma-builder'); ?></h5>
+                                    <div class="field-group">
+                                        <label for="paper_color"><?php _e('Choose Paper Color *', 'diploma-builder'); ?></label>
+                                        <select id="paper_color" name="paper_color" class="form-select" required>
+                                            <?php foreach ($paper_colors as $key => $color): ?>
+                                                <option value="<?php echo esc_attr($key); ?>" <?php echo $key === 'white' ? 'selected' : ''; ?>>
+                                                    <?php echo esc_html($color['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <div class="field-hint"><?php _e('Select the background color for your diploma', 'diploma-builder'); ?></div>
+                                    </div>
+                                </div>
+
+                                <!-- Emblem Selection -->
+                                <div class="subsection">
+                                    <div class="subsection-icon">🏆</div>
+                                    <h5><?php _e('Choose Your Emblem', 'diploma-builder'); ?></h5>
+
+                                    <div class="emblem-type-tabs">
+                                        <button type="button" class="emblem-tab-btn active" data-tab="generic">
+                                            <span class="tab-icon">🎓</span>
+                                            <?php _e('Generic Emblems', 'diploma-builder'); ?>
+                                        </button>
+                                        <button type="button" class="emblem-tab-btn" data-tab="state">
+                                            <span class="tab-icon">🏛️</span>
+                                            <?php _e('State Emblems', 'diploma-builder'); ?>
+                                        </button>
+                                    </div>
+
+                                    <!-- Generic Emblems -->
+                                    <div class="emblem-tab-content active" id="generic-emblems">
+                                        <div class="emblem-grid">
+                                            <?php foreach ($generic_emblems as $key => $emblem): ?>
+                                                <label class="emblem-option" for="emblem_<?php echo $key; ?>">
+                                                    <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $key === 'graduation_cap' ? 'checked' : ''; ?>>
+                                                    <div class="emblem-preview">
+                                                        <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.png'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
+                                                    </div>
+                                                    <div class="emblem-info">
+                                                        <h6><?php echo esc_html($emblem['name']); ?></h6>
+                                                    </div>
+                                                </label>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+
+                                    <!-- State Emblems -->
+                                    <div class="emblem-tab-content" id="state-emblems">
+                                        <div class="state-selector">
+                                            <label for="state-emblem-select"><?php _e('Select State:', 'diploma-builder'); ?></label>
+                                            <select id="state-emblem-select" class="form-select">
+                                                <option value=""><?php _e('Choose a state...', 'diploma-builder'); ?></option>
+                                                <?php foreach ($us_states as $code => $name): ?>
+                                                    <option value="<?php echo esc_attr($code); ?>"><?php echo esc_html($name); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="state-emblem-preview" id="state-emblem-preview" style="display: none;">
+                                            <div class="state-emblem-image">
+                                                <img id="state-emblem-img" src="" alt="" loading="lazy">
+                                            </div>
+                                            <div class="state-emblem-info">
+                                                <h6 id="state-emblem-name"></h6>
+                                                <p><?php _e('Official state emblem', 'diploma-builder'); ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Purchase Options -->
+                                <?php echo $this->get_purchase_option(); ?>
+
+                                <div class="form-actions">
+                                    <?php if (current_user_can('manage_options') ): ?>
+                                        <button type="button" id="download-diploma" class="btn btn-success">
+                                            <span class="btn-icon">📥</span>
+                                            <?php _e('Download Diploma', 'diploma-builder'); ?>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+
+                                <?php if (!is_user_logged_in() ): ?>
+                                <div class="preview-notice">
+                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
+                                </div>
+                                <?php endif; ?>
+
                                 <div class="required-note">
                                     <p><?php _e('* Required fields', 'diploma-builder'); ?></p>
                                 </div>
                             </div>
                         </div>
-                    
-                        <!-- Step 5: Review & Download -->
+
+                        <!-- Review Section (hidden, kept for compatibility) -->
                         <div class="form-section" data-step="5" style="display: none;">
                             <div class="section-header">
                                 <h3><?php _e('Step 5 of 5', 'diploma-builder'); ?></h3>
@@ -373,21 +334,6 @@ class DiplomaBuilder_Frontend {
                                 </div>
                                 <?php endif; ?>
                             </div>
-                        </div>
-                        
-                        <!-- Navigation and Action Buttons -->
-                        <div class="form-navigation">
-                            <div class="nav-buttons">
-                                <button type="button" id="prev-step" class="btn btn-secondary" disabled>
-                                    <span class="btn-icon">‹</span>
-                                    <?php _e('Previous', 'diploma-builder'); ?>
-                                </button>
-                                <button type="button" id="next-step" class="btn btn-primary">
-                                    <?php _e('Next', 'diploma-builder'); ?>
-                                    <span class="btn-icon">›</span>
-                                </button>
-                            </div>
-                            
                         </div>
                     </div>
                 </div>

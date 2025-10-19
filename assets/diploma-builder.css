@@ -66,11 +66,11 @@
     align-items: flex-start;
 }
 
-/* Full-width style selection */
-.diploma-builder-wrapper.step-1 {
+/* Full-width style selection - REMOVED: No longer needed */
+/* .diploma-builder-wrapper.step-1 {
     max-width: 100%;
     padding: 0;
-}
+} */
 
 .diploma-builder-form {
     flex: 0 0 400px;
@@ -1492,16 +1492,16 @@
     }
 }
 
-/* Enhanced Template Gallery */
-.template-gallery {
+/* Enhanced Template Gallery - REMOVED: Now using dropdown */
+/* .template-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     margin: 2rem 0;
-}
+} */
 
-/* Full-width style selection for step 1 */
-.step-1 .diploma-builder-wrapper {
+/* Full-width style selection for step 1 - REMOVED: No longer needed */
+/* .step-1 .diploma-builder-wrapper {
     max-width: 100%;
     padding: 0;
 }
@@ -1544,7 +1544,6 @@
     padding: 1.5rem 0;
 }
 
-/* Full-width preview for step 1 */
 .step-1 .diploma-preview-container {
     display: none;
 }
@@ -1564,9 +1563,10 @@
     max-width: 800px;
     margin: 0 auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
+} */
 
-.template-card {
+/* Template card styles - REMOVED: Now using dropdown */
+/* .template-card {
     display: block;
     cursor: pointer;
     border: 2px solid #e5e7eb;
@@ -1593,9 +1593,10 @@
 
 .template-card input[type="radio"]:checked + .template-preview .template-overlay {
     opacity: 1;
-}
+} */
 
-.template-preview {
+/* Template preview, overlay, check, and info styles - REMOVED: Now using dropdown */
+/* .template-preview {
     position: relative;
     height: 320px;
     overflow: hidden;
@@ -1671,10 +1672,10 @@
 .feature-badge.popular {
     background: #fef3c7;
     color: #d97706;
-}
+} */
 
-/* Template Filters */
-.template-filters {
+/* Template Filters - REMOVED: Now using dropdown */
+/* .template-filters {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
@@ -1703,7 +1704,7 @@
     background: #3b82f6;
     border-color: #3b82f6;
     color: white;
-}
+} */
 
 /* Enhanced Emblem Selection */
 .emblem-type-tabs {
@@ -2191,10 +2192,10 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
     
-    .template-gallery {
+    /* .template-gallery {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
-    }
+    } */
     
     .emblem-grid {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -2208,10 +2209,10 @@
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .template-filters {
+    /* .template-filters {
         flex-direction: column;
         align-items: center;
-    }
+    } */
 }
 
 @media (max-width: 480px) {
@@ -2233,9 +2234,9 @@
         font-size: 1.125rem;
     }
     
-    .template-gallery {
+    /* .template-gallery {
         grid-template-columns: 1fr;
-    }
+    } */
     
     .share-buttons {
         grid-template-columns: 1fr;

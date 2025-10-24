@@ -11,8 +11,82 @@ jQuery(document).ready(function($) {
         student_name: '',
         graduation_date: '',
         city: '',
-        state: ''
+        state: '',
+        country: 'USA',
+        document_type: 'High School',
+        diploma_size: '8.5x11',
+        degree_type: ''
     };
+
+    // Diploma size options based on document type
+    const diplomaSizeOptions = {
+        'GED': [
+            { value: '8.5x11', label: '8.5" × 11" (Letter)' },
+            { value: '7.5x9.5', label: '7.5" × 9.5"' }
+        ],
+        'High School': [
+            { value: '8.5x11', label: '8.5" × 11" (Letter)' },
+            { value: '7.5x9.5', label: '7.5" × 9.5"' }
+        ],
+        'College': [
+            { value: '8.5x11', label: '8.5" × 11" (Letter)' },
+            { value: '11x14', label: '11" × 14"' }
+        ],
+        'University': [
+            { value: '8.5x11', label: '8.5" × 11" (Letter)' },
+            { value: '11x14', label: '11" × 14"' }
+        ]
+    };
+
+    // Update diploma size options based on document type
+    function updateDiplomaSizeOptions(documentType) {
+        const $sizeSelect = $('#diploma_size');
+        const currentSize = $sizeSelect.val();
+        const options = diplomaSizeOptions[documentType] || diplomaSizeOptions['High School'];
+
+        // Clear existing options except the first placeholder
+        $sizeSelect.find('option:not(:first)').remove();
+
+        // Add new options
+        options.forEach(function(option) {
+            $sizeSelect.append(`<option value="${option.value}">${option.label}</option>`);
+        });
+
+        // Try to maintain the current selection if it exists in new options
+        const isCurrentSizeAvailable = options.some(opt => opt.value === currentSize);
+        if (isCurrentSizeAvailable) {
+            $sizeSelect.val(currentSize);
+        } else {
+            // Select the first available option (Letter size)
+            $sizeSelect.val(options[0].value);
+            currentConfig.diploma_size = options[0].value;
+        }
+    }
+
+    // Handle country selection and enable/disable fields
+    function handleCountrySelection(selectedCountry) {
+        const schoolSubsection = $('#school-subsection');
+        const graduationSubsection = $('.subsection').has('#graduation_date');
+        const styleSubsection = $('.subsection').has('#diploma_style');
+        const paperSubsection = $('.subsection').has('#paper_color');
+        const emblemSubsection = $('.subsection').has('.emblem-type-tabs');
+
+        if (selectedCountry === 'USA') {
+            // Enable all fields for USA
+            schoolSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            graduationSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            styleSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            paperSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            emblemSubsection.removeClass('disabled-subsection').find('input, select, button').prop('disabled', false);
+        } else {
+            // Disable all fields for other countries
+            schoolSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
+            graduationSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
+            styleSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
+            paperSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
+            emblemSubsection.addClass('disabled-subsection').find('input, select, button').prop('disabled', true);
+        }
+    }
     
     // Initialize the diploma builder
     function init() {
@@ -21,6 +95,10 @@ jQuery(document).ready(function($) {
         updatePreview();
         // Hide loading overlay on initialization
         hideLoading();
+        // Initialize country selection state
+        handleCountrySelection('USA');
+        // Initialize diploma size options
+        updateDiplomaSizeOptions('High School');
     }
     
     // Initialize form to show first step only
@@ -81,7 +159,7 @@ jQuery(document).ready(function($) {
             updatePreview();
             updateReviewSummary();
         });
-        
+
         // State dropdown
         $('#state').on('change', function() {
             currentConfig.state = $(this).val();
@@ -89,7 +167,43 @@ jQuery(document).ready(function($) {
             updatePreview();
             updateReviewSummary();
         });
-        
+
+        // Country dropdown
+        $('#country').on('change', function() {
+            const selectedCountry = $(this).val();
+            currentConfig.country = selectedCountry;
+            validateField($(this));
+            handleCountrySelection(selectedCountry);
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Document type dropdown
+        $('#document_type').on('change', function() {
+            const documentType = $(this).val();
+            currentConfig.document_type = documentType;
+            validateField($(this));
+            updateDiplomaSizeOptions(documentType);
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Diploma size dropdown
+        $('#diploma_size').on('change', function() {
+            currentConfig.diploma_size = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Degree type dropdown
+        $('#degree_type').on('change', function() {
+            currentConfig.degree_type = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
         // Share buttons
         $('#share-facebook').on('click', function() {
             shareOnSocialMedia('facebook');
@@ -232,10 +346,11 @@ jQuery(document).ready(function($) {
         $('#review-student-name').text(currentConfig.student_name || '[Student Name]');
         $('#review-school-name').text(currentConfig.school_name || '[School Name]');
         $('#review-graduation-date').text(currentConfig.graduation_date || '[Graduation Date]');
-        
+
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[State]';
-        $('#review-location').text(`${city}, ${state}`);
+        const country = currentConfig.country || 'USA';
+        $('#review-location').text(`${city}, ${state}, ${country}`);
         
         // Update style and paper info
         const styleName = $('#diploma_style option:selected').text() || '[Style]';
@@ -397,6 +512,7 @@ jQuery(document).ready(function($) {
         const graduationDate = currentConfig.graduation_date || '[Date of Graduation]';
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[State]';
+        const country = currentConfig.country || 'USA';
         
         // Get emblem info
         const emblemInfo = getEmblemInfo();
@@ -495,14 +611,14 @@ jQuery(document).ready(function($) {
 
                 <!-- Date and Location -->
                 <div class="date-location">
-                    <p>Given at ${city}, ${state}, this ${graduationDate}.</p>
+                    <p>Given at ${city}, ${state}, ${country}, this ${graduationDate}.</p>
                 </div>
 
                 <!-- Location and Seal -->
                 <div class="location-seal-section">
-                    <div class="location-left">${city}</div>
+                    <div class="location-left">${city}, ${state}</div>
                     ${emblemInfo.html}
-                    <div class="location-right">${state}</div>
+                    <div class="location-right">${country}</div>
                 </div>
 
             </div>
@@ -802,21 +918,21 @@ jQuery(document).ready(function($) {
     
     // Validate form data
     function validateForm() {
-        const requiredFields = ['school_name', 'graduation_date', 'city', 'state'];
+        const requiredFields = ['school_name', 'graduation_date', 'city', 'state', 'country'];
         let isValid = true;
         let missingFields = [];
-        
+
         requiredFields.forEach(function(field) {
             if (!currentConfig[field] || currentConfig[field].trim() === '') {
                 isValid = false;
                 missingFields.push(field.replace('_', ' '));
             }
         });
-        
+
         if (!isValid) {
             showMessage(`Please fill in all required fields: ${missingFields.join(', ')}`, 'error');
         }
-        
+
         return isValid;
     }
     
@@ -864,7 +980,11 @@ jQuery(document).ready(function($) {
             student_name: '',
             graduation_date: '',
             city: '',
-            state: ''
+            state: '',
+            country: 'USA',
+            document_type: 'High School',
+            diploma_size: '8.5x11',
+            degree_type: ''
         };
 
         // Reset form fields
@@ -876,6 +996,11 @@ jQuery(document).ready(function($) {
         $('#graduation_date').val('');
         $('#city').val('');
         $('#state').val('');
+        $('#country').val('USA');
+        $('#document_type').val('High School');
+        updateDiplomaSizeOptions('High School');
+        $('#diploma_size').val('8.5x11');
+        $('#degree_type').val('');
         
         // Reset UI
         $('.form-section').hide();

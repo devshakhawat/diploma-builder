@@ -15,7 +15,9 @@ jQuery(document).ready(function($) {
         country: 'USA',
         document_type: 'High School',
         diploma_size: '8.5x11',
-        degree_type: ''
+        degree_type: '',
+        major: '',
+        concentration: ''
     };
 
     // Diploma size options based on document type
@@ -199,6 +201,22 @@ jQuery(document).ready(function($) {
         // Degree type dropdown
         $('#degree_type').on('change', function() {
             currentConfig.degree_type = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Major dropdown
+        $('#major').on('change', function() {
+            currentConfig.major = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Concentration text field
+        $('#concentration').on('input', function() {
+            currentConfig.concentration = $(this).val();
             validateField($(this));
             updatePreview();
             updateReviewSummary();
@@ -984,7 +1002,9 @@ jQuery(document).ready(function($) {
             country: 'USA',
             document_type: 'High School',
             diploma_size: '8.5x11',
-            degree_type: ''
+            degree_type: '',
+            major: '',
+            concentration: ''
         };
 
         // Reset form fields
@@ -1001,6 +1021,8 @@ jQuery(document).ready(function($) {
         updateDiplomaSizeOptions('High School');
         $('#diploma_size').val('8.5x11');
         $('#degree_type').val('');
+        $('#major').val('');
+        $('#concentration').val('');
         
         // Reset UI
         $('.form-section').hide();

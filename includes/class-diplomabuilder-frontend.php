@@ -122,9 +122,9 @@ class DiplomaBuilder_Frontend {
                                         <select id="country" name="country" class="form-select" required>
                                             <option value=""><?php _e('Select country', 'diploma-builder'); ?></option>
                                             <option value="USA" selected><?php _e('USA', 'diploma-builder'); ?></option>
-                                            <option value="UK"><?php _e('UK', 'diploma-builder'); ?></option>
-                                            <option value="Canada"><?php _e('Canada', 'diploma-builder'); ?></option>
-                                            <option value="International"><?php _e('International', 'diploma-builder'); ?></option>
+                                            <option value="UK" disabled><?php _e('UK', 'diploma-builder'); ?></option>
+                                            <option value="Canada" disabled><?php _e('Canada', 'diploma-builder'); ?></option>
+                                            <option value="International" disabled><?php _e('International', 'diploma-builder'); ?></option>
                                         </select>
                                         <div class="field-hint"><?php _e('Select your country to customize the diploma', 'diploma-builder'); ?></div>
                                     </div>
@@ -197,6 +197,73 @@ class DiplomaBuilder_Frontend {
                                             <option value="Doctor of Medicine"><?php _e('Doctor of Medicine (M.D.)', 'diploma-builder'); ?></option>
                                         </select>
                                         <div class="field-hint"><?php _e('Optional: Select the specific degree to display on the diploma', 'diploma-builder'); ?></div>
+                                    </div>
+                                </div>
+
+                                <!-- Major and Concentration -->
+                                <div class="subsection">
+                                    <div class="subsection-wrapper">
+                                        <div class="subsection-icon">📚</div>
+                                        <h5><?php _e('Major & Concentration', 'diploma-builder'); ?></h5>
+                                    </div>
+                                    <div class="field-group">
+                                        <label for="major"><?php _e('Select Major', 'diploma-builder'); ?></label>
+                                        <select id="major" name="major" class="form-select">
+                                            <option value=""><?php _e('Select major (optional)', 'diploma-builder'); ?></option>
+                                            <optgroup label="<?php _e('Business & Economics', 'diploma-builder'); ?>">
+                                                <option value="Accounting"><?php _e('Accounting', 'diploma-builder'); ?></option>
+                                                <option value="Business Administration"><?php _e('Business Administration', 'diploma-builder'); ?></option>
+                                                <option value="Economics"><?php _e('Economics', 'diploma-builder'); ?></option>
+                                                <option value="Finance"><?php _e('Finance', 'diploma-builder'); ?></option>
+                                                <option value="Marketing"><?php _e('Marketing', 'diploma-builder'); ?></option>
+                                                <option value="Management"><?php _e('Management', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?php _e('Science & Technology', 'diploma-builder'); ?>">
+                                                <option value="Biology"><?php _e('Biology', 'diploma-builder'); ?></option>
+                                                <option value="Chemistry"><?php _e('Chemistry', 'diploma-builder'); ?></option>
+                                                <option value="Computer Science"><?php _e('Computer Science', 'diploma-builder'); ?></option>
+                                                <option value="Engineering"><?php _e('Engineering', 'diploma-builder'); ?></option>
+                                                <option value="Information Technology"><?php _e('Information Technology', 'diploma-builder'); ?></option>
+                                                <option value="Mathematics"><?php _e('Mathematics', 'diploma-builder'); ?></option>
+                                                <option value="Physics"><?php _e('Physics', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?php _e('Arts & Humanities', 'diploma-builder'); ?>">
+                                                <option value="Art"><?php _e('Art', 'diploma-builder'); ?></option>
+                                                <option value="English"><?php _e('English', 'diploma-builder'); ?></option>
+                                                <option value="History"><?php _e('History', 'diploma-builder'); ?></option>
+                                                <option value="Music"><?php _e('Music', 'diploma-builder'); ?></option>
+                                                <option value="Philosophy"><?php _e('Philosophy', 'diploma-builder'); ?></option>
+                                                <option value="Theatre"><?php _e('Theatre', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?php _e('Social Sciences', 'diploma-builder'); ?>">
+                                                <option value="Anthropology"><?php _e('Anthropology', 'diploma-builder'); ?></option>
+                                                <option value="Political Science"><?php _e('Political Science', 'diploma-builder'); ?></option>
+                                                <option value="Psychology"><?php _e('Psychology', 'diploma-builder'); ?></option>
+                                                <option value="Sociology"><?php _e('Sociology', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?php _e('Health & Medicine', 'diploma-builder'); ?>">
+                                                <option value="Nursing"><?php _e('Nursing', 'diploma-builder'); ?></option>
+                                                <option value="Medicine"><?php _e('Medicine', 'diploma-builder'); ?></option>
+                                                <option value="Public Health"><?php _e('Public Health', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?php _e('Education', 'diploma-builder'); ?>">
+                                                <option value="Education"><?php _e('Education', 'diploma-builder'); ?></option>
+                                                <option value="Elementary Education"><?php _e('Elementary Education', 'diploma-builder'); ?></option>
+                                                <option value="Secondary Education"><?php _e('Secondary Education', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?php _e('Other', 'diploma-builder'); ?>">
+                                                <option value="Communications"><?php _e('Communications', 'diploma-builder'); ?></option>
+                                                <option value="Criminal Justice"><?php _e('Criminal Justice', 'diploma-builder'); ?></option>
+                                                <option value="Environmental Science"><?php _e('Environmental Science', 'diploma-builder'); ?></option>
+                                                <option value="Law"><?php _e('Law', 'diploma-builder'); ?></option>
+                                            </optgroup>
+                                        </select>
+                                        <div class="field-hint"><?php _e('Optional: Select your field of study', 'diploma-builder'); ?></div>
+                                    </div>
+                                    <div class="field-group">
+                                        <label for="concentration"><?php _e('Concentration (Optional)', 'diploma-builder'); ?></label>
+                                        <input type="text" id="concentration" name="concentration" class="form-input" placeholder="<?php _e('e.g., Software Engineering, Digital Marketing', 'diploma-builder'); ?>" maxlength="100">
+                                        <div class="field-hint"><?php _e('Optional: Specify a concentration or specialization within your major', 'diploma-builder'); ?></div>
                                     </div>
                                 </div>
 

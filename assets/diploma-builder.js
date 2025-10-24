@@ -17,7 +17,10 @@ jQuery(document).ready(function($) {
         diploma_size: '8.5x11',
         degree_type: '',
         major: '',
-        concentration: ''
+        concentration: '',
+        signature_count: '1',
+        signature1_name: '',
+        signature2_name: ''
     };
 
     // Diploma size options based on document type
@@ -62,6 +65,22 @@ jQuery(document).ready(function($) {
             // Select the first available option (Letter size)
             $sizeSelect.val(options[0].value);
             currentConfig.diploma_size = options[0].value;
+        }
+    }
+
+    // Handle signature count and show/hide fields
+    function handleSignatureCount(count) {
+        const $signature2Field = $('#signature2-field');
+        const $signature2Input = $('#signature2_name');
+
+        if (count === '2') {
+            $signature2Field.slideDown(300);
+            $signature2Input.prop('required', true);
+        } else {
+            $signature2Field.slideUp(300);
+            $signature2Input.prop('required', false);
+            $signature2Input.val('');
+            currentConfig.signature2_name = '';
         }
     }
 
@@ -217,6 +236,32 @@ jQuery(document).ready(function($) {
         // Concentration text field
         $('#concentration').on('input', function() {
             currentConfig.concentration = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Signature count dropdown
+        $('#signature_count').on('change', function() {
+            const count = $(this).val();
+            currentConfig.signature_count = count;
+            handleSignatureCount(count);
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Signature 1 name
+        $('#signature1_name').on('input', function() {
+            currentConfig.signature1_name = $(this).val();
+            validateField($(this));
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Signature 2 name
+        $('#signature2_name').on('input', function() {
+            currentConfig.signature2_name = $(this).val();
             validateField($(this));
             updatePreview();
             updateReviewSummary();
@@ -1004,7 +1049,10 @@ jQuery(document).ready(function($) {
             diploma_size: '8.5x11',
             degree_type: '',
             major: '',
-            concentration: ''
+            concentration: '',
+            signature_count: '1',
+            signature1_name: '',
+            signature2_name: ''
         };
 
         // Reset form fields
@@ -1023,6 +1071,10 @@ jQuery(document).ready(function($) {
         $('#degree_type').val('');
         $('#major').val('');
         $('#concentration').val('');
+        $('#signature_count').val('1');
+        $('#signature1_name').val('');
+        $('#signature2_name').val('');
+        handleSignatureCount('1');
         
         // Reset UI
         $('.form-section').hide();

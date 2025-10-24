@@ -310,6 +310,34 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                 </div>
 
+                                <!-- Signatures & Layout -->
+                                <div class="subsection">
+                                    <div class="subsection-wrapper">
+                                        <div class="subsection-icon">✍️</div>
+                                        <h5><?php _e('Signatures & Layout', 'diploma-builder'); ?></h5>
+                                    </div>
+                                    <div class="field-group">
+                                        <label for="signature_count"><?php _e('Number of Signatures *', 'diploma-builder'); ?></label>
+                                        <select id="signature_count" name="signature_count" class="form-select" required>
+                                            <option value="1" selected><?php _e('1 Signature', 'diploma-builder'); ?></option>
+                                            <option value="2"><?php _e('2 Signatures', 'diploma-builder'); ?></option>
+                                        </select>
+                                        <div class="field-hint"><?php _e('Select the number of signature lines on the diploma', 'diploma-builder'); ?></div>
+                                    </div>
+                                    <div id="signature-fields-container">
+                                        <div class="field-group" id="signature1-field">
+                                            <label for="signature1_name"><?php _e('Signature 1 Name *', 'diploma-builder'); ?></label>
+                                            <input type="text" id="signature1_name" name="signature1_name" class="form-input" placeholder="<?php _e('e.g., Principal\'s Name', 'diploma-builder'); ?>" maxlength="100" required>
+                                            <div class="field-hint"><?php _e('Enter the name for the first signature line', 'diploma-builder'); ?></div>
+                                        </div>
+                                        <div class="field-group" id="signature2-field" style="display: none;">
+                                            <label for="signature2_name"><?php _e('Signature 2 Name', 'diploma-builder'); ?></label>
+                                            <input type="text" id="signature2_name" name="signature2_name" class="form-input" placeholder="<?php _e('e.g., Dean\'s Name', 'diploma-builder'); ?>" maxlength="100">
+                                            <div class="field-hint"><?php _e('Enter the name for the second signature line', 'diploma-builder'); ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Diploma Style Selection -->
                                 <div class="subsection">
                                     <div class="subsection-wrapper">

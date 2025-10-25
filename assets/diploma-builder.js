@@ -30,8 +30,7 @@ jQuery(document).ready(function($) {
             { value: '7.5x9.5', label: '7.5" × 9.5"' }
         ],
         'High School': [
-            { value: '8.5x11', label: '8.5" × 11" (Letter)' },
-            { value: '7.5x9.5', label: '7.5" × 9.5"' }
+            { value: '8.5x11', label: '8.5" × 11" (Letter)' }
         ],
         'College': [
             { value: '8.5x11', label: '8.5" × 11" (Letter)' },

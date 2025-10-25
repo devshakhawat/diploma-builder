@@ -971,10 +971,10 @@
 .diploma-preview {
     flex: 1;
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: center;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 3rem 1.5rem;
     overflow: auto;
     position: relative;
     scrollbar-width: thin;
@@ -1003,7 +1003,7 @@
 
 .diploma-canvas {
     width: 100%;
-    height: 100%;
+    height: auto;
     max-width: 100%;
     min-height: 850px;
     background: white;
@@ -1016,10 +1016,11 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
 }
 
 #diploma-builder-container.fullscreen-mode .diploma-preview {
-    padding: 2rem;
+    padding: 2rem 2rem 4rem 2rem;
     background: #374151;
     border: none;
     border-radius: 0;
@@ -1491,7 +1492,7 @@
     }
     
     .diploma-preview {
-        padding: 1rem;
+        padding: 1rem 1rem 2rem 1rem;
     }
     
     .color-options {
@@ -2287,7 +2288,7 @@
     }
     
     #diploma-builder-container.fullscreen-mode .diploma-preview {
-        padding: 1rem;
+        padding: 1rem 1rem 3rem 1rem;
     }
     
     #diploma-builder-container.fullscreen-mode .diploma-canvas {
@@ -2383,12 +2384,12 @@
 
 #diploma-builder-container.fullscreen-mode .diploma-preview {
     flex: 1;
-    padding: 2rem;
+    padding: 2rem 2rem 4rem 2rem;
     background: #374151;
     border: none;
     border-radius: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 }
 
@@ -2585,8 +2586,8 @@ body {
 .diploma-container {
     max-width: 100%;
     width: 100%;
-    height: 100%;
-    min-height: 100%;
+    height: auto;
+    min-height: 850px;
     display: flex;
     flex-direction: column;
 }
@@ -2595,16 +2596,16 @@ body {
     /* background: linear-gradient(135deg, #f4f1e8 0%, #e8e2d5 100%); */
     /* border: 8px solid #8b4513; */
     /* border-radius: 15px; */
-    padding: 40px 60px;
+    padding: 40px 60px 60px 60px;
     text-align: center;
     position: relative;
-    min-height: 100%;
-    height: 100%;
+    min-height: 850px;
+    height: auto;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .diploma::before {
@@ -2871,29 +2872,64 @@ body {
 }
 
 /* Signature Section */
-.signature-section {
-    flex: 1;
-    text-align: right;
-    padding-right: 20px;
+.signatures-container {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 0 40px;
+    width: 100%;
+    flex-shrink: 0;
 }
 
-.signature-line {
-    width: 300px;
-    height: 2px;
-    background-color: #2c1810;
-    margin: 0 0 10px auto;
-    position: relative;
+.signature-single {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
-.signature-line::before {
-    content: 'Glen R. Watson';
-    position: absolute;
-    top: -30px;
-    right: 0;
+.signatures-dual {
+    display: flex;
+    justify-content: space-around;
+    gap: 60px;
+    width: 100%;
+}
+
+.signature-line-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 250px;
+}
+
+.signature-name {
     font-family: 'Dancing Script', cursive;
     font-size: 1.8rem;
     color: #2c1810;
     font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.signature-line {
+    width: 100%;
+    height: 2px;
+    background-color: #2c1810;
+    margin: 5px 0;
+}
+
+.signature-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.2rem;
+    color: #2c1810;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* Legacy support - kept for backwards compatibility */
+.signature-section {
+    flex: 1;
+    text-align: right;
+    padding-right: 20px;
 }
 
 .principal-text {
@@ -2944,9 +2980,27 @@ body {
         text-align: center;
         padding-right: 0;
     }
-    
+
     .signature-line {
         margin: 0 auto;
+    }
+
+    .signatures-container {
+        padding: 0 20px;
+    }
+
+    .signatures-dual {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .signature-name {
+        font-size: 1.5rem;
+    }
+
+    .signature-title {
+        font-size: 1rem;
     }
 }
 
@@ -2988,14 +3042,32 @@ body {
     .signature-line {
         width: 200px;
     }
+
+    .signatures-container {
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+
+    .signature-line-wrapper {
+        min-width: 200px;
+    }
+
+    .signature-name {
+        font-size: 1.3rem;
+    }
+
+    .signature-title {
+        font-size: 0.9rem;
+    }
 }
 #diploma-canvas {
     width: 100%;
-    height: 100%;
+    height: auto;
     min-height: 850px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    padding-bottom: 2rem;
 }
 .subsection-wrapper {
     display: flex;

@@ -568,6 +568,56 @@ jQuery(document).ready(function($) {
         return typeof diploma_ajax.is_customer !== 'undefined' && diploma_ajax.is_customer == 1;
     }
     
+    // Generate signature HTML based on count and names
+    function generateSignatureHTML(count, signature1Name, signature2Name) {
+        if (!signature1Name && count == '1') {
+            return ''; // Don't show signature section if no name provided for single signature
+        }
+
+        let signatureHTML = '<div class="signatures-container">';
+
+        if (count == '1') {
+            // Single signature - centered
+            signatureHTML += `
+                <div class="signature-single">
+                    <div class="signature-line-wrapper">
+                        <div class="signature-name">${signature1Name}</div>
+                        <div class="signature-line"></div>
+                        <div class="signature-title">Director</div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Two signatures - side by side
+            signatureHTML += '<div class="signatures-dual">';
+
+            if (signature1Name) {
+                signatureHTML += `
+                    <div class="signature-line-wrapper">
+                        <div class="signature-name">${signature1Name}</div>
+                        <div class="signature-line"></div>
+                        <div class="signature-title">Director</div>
+                    </div>
+                `;
+            }
+
+            if (signature2Name) {
+                signatureHTML += `
+                    <div class="signature-line-wrapper">
+                        <div class="signature-name">${signature2Name}</div>
+                        <div class="signature-line"></div>
+                        <div class="signature-title">Principal</div>
+                    </div>
+                `;
+            }
+
+            signatureHTML += '</div>';
+        }
+
+        signatureHTML += '</div>';
+        return signatureHTML;
+    }
+
     // Generate diploma HTML with improved arc header
     function generateDiplomaHTML() {
         const schoolName = currentConfig.school_name || '[School Name]';
@@ -576,7 +626,13 @@ jQuery(document).ready(function($) {
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[State]';
         const country = currentConfig.country || 'USA';
-        
+        const degreeType = currentConfig.degree_type || '';
+        const major = currentConfig.major || '';
+        const concentration = currentConfig.concentration || '';
+        const signatureCount = currentConfig.signature_count || '1';
+        const signature1Name = currentConfig.signature1_name || '';
+        const signature2Name = currentConfig.signature2_name || '';
+
         // Get emblem info
         const emblemInfo = getEmblemInfo();
         
@@ -664,12 +720,12 @@ jQuery(document).ready(function($) {
 
                 <!-- Body Text -->
                 <div class="body-text">
-                    <p>has satisfactorily completed the Course of Study prescribed by the State Board of Education and is hereby awarded this High School Diploma.</p>
+                    <p>has satisfactorily completed the Course of Study prescribed by the State Board of Education${major ? ' with a major in <strong>' + major + '</strong>' : ''}${concentration ? ' with a concentration in <strong>' + concentration + '</strong>' : ''} and is hereby awarded this${degreeType ? ' ' + degreeType : ' High School Diploma'}.</p>
                 </div>
 
                 <!-- Diploma Title -->
                 <div class="diploma-title">
-                    <h4>Diploma</h4>
+                    <h4>${degreeType || 'Diploma'}</h4>
                 </div>
 
                 <!-- Date and Location -->
@@ -683,6 +739,9 @@ jQuery(document).ready(function($) {
                     ${emblemInfo.html}
                     <div class="location-right">${country}</div>
                 </div>
+
+                <!-- Signature Section -->
+                ${generateSignatureHTML(signatureCount, signature1Name, signature2Name)}
 
             </div>
         </div>`;

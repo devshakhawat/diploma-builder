@@ -30,7 +30,8 @@ jQuery(document).ready(function($) {
             { value: '7.5x9.5', label: '7.5" × 9.5"' }
         ],
         'High School': [
-            { value: '8.5x11', label: '8.5" × 11" (Letter)' }
+            { value: '8.5x11', label: '8.5" × 11" (Letter)' },
+            { value: '7.5x9.5', label: '7.5" × 9.5"' }
         ],
         'College': [
             { value: '8.5x11', label: '8.5" × 11" (Letter)' },
@@ -504,12 +505,22 @@ jQuery(document).ready(function($) {
             light_blue: '#e6f3ff',
             light_gray: '#f0f0f0'
         };
-        
+
         const paperColor = paperColors[currentConfig.paper_color] || '#ffffff';
-        
+
         // Update the background color of the diploma canvas directly
         $('#diploma-canvas').css('background-color', paperColor);
-        
+
+        // Update diploma size class based on selected size
+        const diplomaSize = currentConfig.diploma_size || '8.5x11';
+        const sizeClass = 'size-' + diplomaSize.replace(/\./g, '-').replace('x', 'x');
+
+        // Remove all existing size classes
+        $('#diploma-canvas').removeClass('size-8-5x11 size-7-5x9-5 size-11x14');
+
+        // Add the current size class
+        $('#diploma-canvas').addClass(sizeClass);
+
         let diplomaHTML = generateDiplomaHTML();
         $('#diploma-canvas').html(diplomaHTML);
     }

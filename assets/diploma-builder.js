@@ -23,6 +23,15 @@ jQuery(document).ready(function($) {
         signature2_name: ''
     };
 
+    // Current step tracker
+    let currentStep = 1;
+
+    // Carousel state
+    let currentPage = 0;
+    let totalSlides = 0;
+    let slidesPerPage = 4;
+    let totalPages = 0;
+
     // Diploma size options based on document type
     const diplomaSizeOptions = {
         'GED': [
@@ -109,10 +118,122 @@ jQuery(document).ready(function($) {
         }
     }
     
+    // Get slides per page based on screen width
+    function getSlidesPerPage() {
+        const width = $(window).width();
+        if (width <= 768) {
+            return 1; // Mobile: 1 item
+        } else if (width <= 992) {
+            return 2; // Tablet: 2 items
+        } else {
+            return 4; // Desktop: 4 items
+        }
+    }
+
+    // Initialize carousel
+    function initCarousel() {
+        totalSlides = $('.carousel-slide').length;
+        slidesPerPage = getSlidesPerPage();
+        totalPages = Math.ceil(totalSlides / slidesPerPage);
+        currentPage = 0;
+        updateCarousel();
+        updateCarouselIndicators();
+    }
+
+    // Reinitialize carousel on window resize
+    let resizeTimer;
+    $(window).on('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            const newSlidesPerPage = getSlidesPerPage();
+            if (newSlidesPerPage !== slidesPerPage) {
+                slidesPerPage = newSlidesPerPage;
+                totalPages = Math.ceil(totalSlides / slidesPerPage);
+                currentPage = 0;
+                updateCarousel();
+                updateCarouselIndicators();
+            }
+        }, 250);
+    });
+
+    // Update carousel position
+    function updateCarousel() {
+        const $track = $('#carousel-track');
+        const $slides = $('.carousel-slide');
+
+        // Update slide visibility - mark slides on current page as active
+        $slides.removeClass('active');
+        const startIndex = currentPage * slidesPerPage;
+        const endIndex = Math.min(startIndex + slidesPerPage, totalSlides);
+
+        for (let i = startIndex; i < endIndex; i++) {
+            $slides.eq(i).addClass('active');
+        }
+
+        // Update navigation button states
+        $('#carousel-prev').prop('disabled', currentPage === 0);
+        $('#carousel-next').prop('disabled', currentPage === totalPages - 1);
+
+        // Transform track - calculate based on slide width percentage
+        const slideWidthPercent = 100 / slidesPerPage;
+        const offset = -(currentPage * slidesPerPage * slideWidthPercent);
+        $track.css('transform', `translateX(${offset}%)`);
+    }
+
+    // Update carousel indicators to show pages instead of individual slides
+    function updateCarouselIndicators() {
+        const $indicatorsContainer = $('#carousel-indicators');
+        $indicatorsContainer.empty();
+
+        for (let i = 0; i < totalPages; i++) {
+            const isActive = i === currentPage ? 'active' : '';
+            $indicatorsContainer.append(
+                `<button type="button" class="carousel-indicator ${isActive}" data-page="${i}"></button>`
+            );
+        }
+    }
+
+    // Navigate carousel by page
+    function navigateCarousel(direction) {
+        if (direction === 'next' && currentPage < totalPages - 1) {
+            currentPage++;
+        } else if (direction === 'prev' && currentPage > 0) {
+            currentPage--;
+        }
+        updateCarousel();
+        updatePageIndicators();
+    }
+
+    // Update page indicators
+    function updatePageIndicators() {
+        $('.carousel-indicator').removeClass('active');
+        $(`.carousel-indicator[data-page="${currentPage}"]`).addClass('active');
+    }
+
+    // Go to specific page
+    function goToPage(pageIndex) {
+        if (pageIndex >= 0 && pageIndex < totalPages) {
+            currentPage = pageIndex;
+            updateCarousel();
+            updatePageIndicators();
+        }
+    }
+
+    // Auto-select style when clicking on slide
+    function selectStyleFromSlide(slideIndex) {
+        const $slide = $('.carousel-slide').eq(slideIndex);
+        const styleValue = $slide.data('style');
+        $(`input[name="diploma_style"][value="${styleValue}"]`).prop('checked', true).trigger('change');
+    }
+
     // Initialize the diploma builder
     function init() {
         bindEvents();
         initializeForm();
+        initCarousel();
+        // Check Step 1 completion on init
+        checkStep1Completion();
+        // Initialize preview (but don't show it yet)
         updatePreview();
         // Hide loading overlay on initialization
         hideLoading();
@@ -120,6 +241,8 @@ jQuery(document).ready(function($) {
         handleCountrySelection('USA');
         // Initialize diploma size options
         updateDiplomaSizeOptions('High School');
+        // Start at step 1
+        navigateToStep(1);
     }
     
     // Initialize form to show first step only
@@ -131,9 +254,153 @@ jQuery(document).ready(function($) {
         $('.form-actions').show();
     }
     
+    // Validate Step 1 fields
+    function validateStep1() {
+        const country = $('#country').val();
+        const documentType = $('#document_type').val();
+        const diplomaSize = $('#diploma_size').val();
+        const paperColor = $('input[name="paper_color"]:checked').val();
+
+        return country && documentType && diplomaSize && paperColor;
+    }
+
+    // Check and enable/disable Step 1 continue button
+    function checkStep1Completion() {
+        const isValid = validateStep1();
+        $('#step1-continue').prop('disabled', !isValid);
+    }
+
+    // Navigate to a specific step
+    function navigateToStep(stepNumber) {
+        // Hide all steps
+        $('.form-section').hide();
+
+        // Show the target step
+        $(`.form-section[data-step="${stepNumber}"]`).fadeIn(300);
+
+        // Update current step
+        currentStep = stepNumber;
+
+        // Update form title
+        updateFormTitle(stepNumber);
+
+        // Handle wrapper layout
+        const $wrapper = $('#diploma-builder-wrapper');
+        const $form = $('#diploma-builder-form');
+        const $preview = $('#diploma-preview-container');
+
+        if (stepNumber === 1 || stepNumber === 2) {
+            // Steps 1 and 2: Full width form, no preview
+            $wrapper.addClass('full-width-mode');
+            $form.css('flex', '1');
+            $preview.hide();
+        } else {
+            // Step 3: Split view with preview
+            $wrapper.removeClass('full-width-mode');
+            $form.css('flex', '0 0 420px');
+            $preview.fadeIn(300);
+        }
+
+        // Scroll to top
+        $('.form-content').scrollTop(0);
+    }
+
+    // Update form title based on step
+    function updateFormTitle(stepNumber) {
+        const titles = {
+            1: 'Step 1: Choose Your Basics',
+            2: 'Step 2: Choose Your Diploma Style',
+            3: 'Step 3: Customize Your Diploma'
+        };
+        $('#form-step-title').text(titles[stepNumber] || 'Customize Your Diploma');
+    }
+
     // Bind all event handlers
     function bindEvents() {
-        // Diploma style selection (dropdown)
+        // Step 1: Field change listeners
+        $('#country, #document_type, #diploma_size').on('change', function() {
+            checkStep1Completion();
+
+            // Update config
+            const fieldName = $(this).attr('name');
+            currentConfig[fieldName] = $(this).val();
+        });
+
+        $('input[name="paper_color"]').on('change', function() {
+            checkStep1Completion();
+            currentConfig.paper_color = $(this).val();
+        });
+
+        // Step 1: Continue button
+        $('#step1-continue').on('click', function() {
+            if (validateStep1()) {
+                navigateToStep(2);
+            }
+        });
+
+        // Carousel navigation
+        $('#carousel-prev').on('click', function() {
+            navigateCarousel('prev');
+        });
+
+        $('#carousel-next').on('click', function() {
+            navigateCarousel('next');
+        });
+
+        // Carousel indicators
+        $(document).on('click', '.carousel-indicator', function() {
+            const pageIndex = $(this).data('page');
+            goToPage(pageIndex);
+        });
+
+        // Carousel slide click - select style
+        $(document).on('click', '.carousel-slide', function() {
+            const slideIndex = $(this).index();
+            selectStyleFromSlide(slideIndex);
+        });
+
+        // Step 2: Style selection
+        $('input[name="diploma_style"]').on('change', function() {
+            currentConfig.diploma_style = $(this).val();
+
+            // Update carousel to match selected style
+            const selectedValue = $(this).val();
+            const $selectedSlide = $(`.carousel-slide[data-style="${selectedValue}"]`);
+            const slideIndex = $selectedSlide.index();
+            if (slideIndex >= 0) {
+                const pageIndex = Math.floor(slideIndex / slidesPerPage);
+                goToPage(pageIndex);
+            }
+        });
+
+        // Step 2: Back button
+        $('#step2-back').on('click', function() {
+            navigateToStep(1);
+        });
+
+        // Step 2: Continue button
+        $('#step2-continue').on('click', function() {
+            navigateToStep(3);
+            updatePreview();
+        });
+
+        // Keyboard navigation for carousel
+        $(document).on('keydown', function(e) {
+            if (currentStep === 2) {
+                if (e.key === 'ArrowLeft') {
+                    navigateCarousel('prev');
+                } else if (e.key === 'ArrowRight') {
+                    navigateCarousel('next');
+                }
+            }
+        });
+
+        // Step 3: Back button
+        $('#step3-back').on('click', function() {
+            navigateToStep(2);
+        });
+
+        // Diploma style selection (dropdown) - legacy support
         $('#diploma_style').on('change', function() {
             currentConfig.diploma_style = $(this).val();
             updatePreview();

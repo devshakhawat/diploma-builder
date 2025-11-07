@@ -65,13 +65,18 @@
     flex-wrap: nowrap;
     align-items: stretch;
     min-height: calc(100vh - 250px);
+    transition: all 0.3s ease;
 }
 
-/* Full-width style selection - REMOVED: No longer needed */
-/* .diploma-builder-wrapper.step-1 {
+/* Full-width mode for steps 1 and 2 */
+.diploma-builder-wrapper.full-width-mode {
+    max-width: 900px;
+}
+
+.diploma-builder-wrapper.full-width-mode .diploma-builder-form {
+    flex: 1;
     max-width: 100%;
-    padding: 0;
-} */
+}
 
 .diploma-builder-form {
     flex: 0 0 420px;
@@ -86,6 +91,7 @@
     height: calc(100vh - 150px);
     max-height: none;
     min-height: 700px;
+    transition: all 0.3s ease;
 }
 
 .diploma-preview-container {
@@ -307,8 +313,6 @@
     text-align: left;
     background: #ffffff;
     border-radius: 12px;
-    padding: 1.5rem;
-    border: 2px solid #e5e7eb;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 }
@@ -342,23 +346,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 10;
     white-space: nowrap;
-}
-
-.subsection-icon {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-    display: inline-block;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
-    vertical-align: middle;
-}
-
-.subsection h5 {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: #1e293b;
-    display: inline-block;
-    vertical-align: middle;
-    letter-spacing: -0.025em;
 }
 
 /* Form Fields */
@@ -413,13 +400,6 @@
     border-color: #667eea;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
     background: #ffffff;
-}
-
-.field-hint {
-    margin-top: 0.25rem;
-    font-size: 0.75rem;
-    color: #6b7280;
-    line-height: 1.4;
 }
 
 .required-note {
@@ -484,7 +464,296 @@
     font-size: 0.875rem;
 }
 
-/* Color Options */
+/* Paper Color Grid - New Step 1 Design */
+.paper-color-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.paper-color-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border: 3px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.paper-color-option:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.paper-color-option input[type="radio"] {
+    display: none;
+}
+
+.paper-color-option input[type="radio"]:checked + .paper-color-preview {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    transform: scale(1.1);
+}
+
+.paper-color-option input[type="radio"]:checked ~ .paper-color-name {
+    color: #3b82f6;
+    font-weight: 700;
+}
+
+.paper-color-option:has(input[type="radio"]:checked) {
+    border-color: #3b82f6;
+    background: #f0f7ff;
+}
+
+.paper-color-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    border: 3px solid #d1d5db;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.paper-color-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Diploma Style Carousel - New Step 2 Design */
+.diploma-style-carousel-wrapper {
+    position: relative;
+    margin: 2rem 0;
+    padding: 0 4rem;
+}
+
+.diploma-style-carousel {
+    overflow: hidden;
+    border-radius: 16px;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide {
+    min-width: 25%;
+    flex-shrink: 0;
+    padding: 0 0.5rem;
+    opacity: 1;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #374151;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-nav-btn:hover:not(:disabled) {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.carousel-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.carousel-prev {
+    left: 0;
+}
+
+.carousel-next {
+    right: 0;
+}
+
+.carousel-nav-btn span {
+    line-height: 1;
+    margin-top: -3px;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 0;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #d1d5db;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.carousel-indicator:hover {
+    border-color: #3b82f6;
+    transform: scale(1.2);
+}
+
+.carousel-indicator.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    transform: scale(1.3);
+}
+
+/* Diploma Style Card */
+.diploma-style-card {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    border: 3px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #fff;
+    height: 100%;
+}
+
+.diploma-style-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.diploma-style-card input[type="radio"] {
+    display: none;
+}
+
+.diploma-style-card input[type="radio"]:checked ~ .style-card-content {
+    background: #f0f7ff;
+}
+
+.diploma-style-card input[type="radio"]:checked ~ .style-checkmark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.diploma-style-card:has(input[type="radio"]:checked) {
+    border-color: #3b82f6;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+}
+
+.style-card-content {
+    transition: all 0.3s ease;
+}
+
+.style-preview-image {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.style-preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.style-info {
+    padding: 1rem;
+}
+
+.style-info h5 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.style-info p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.style-checkmark {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+/* Step Actions */
+.step-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+.btn .btn-icon {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Color Options - Legacy Support */
 .color-options {
     display: flex;
     flex-wrap: wrap;
@@ -787,12 +1056,6 @@
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.field-hint {
-    margin-top: 5px;
-    font-size: 0.8em;
-    color: #7f8c8d;
 }
 
 /* Navigation and Action Buttons */
@@ -1428,9 +1691,13 @@
     .diploma-builder-wrapper {
         max-width: 1200px;
     }
-    
+
     .diploma-builder-form {
         flex: 0 0 380px;
+    }
+
+    .diploma-builder-wrapper.full-width-mode {
+        max-width: 800px;
     }
 }
 
@@ -1439,26 +1706,53 @@
         flex-direction: column;
         padding: 0 1rem;
     }
-    
+
+    .diploma-builder-wrapper.full-width-mode {
+        max-width: 100%;
+    }
+
     .diploma-builder-form {
         flex: none;
         width: 100%;
         margin-bottom: 2rem;
     }
-    
+
     .diploma-preview-container {
         flex: none;
         width: 100%;
         min-height: 500px;
     }
-    
+
     .field-row {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .header-content {
         padding: 0 1rem;
+    }
+
+    .paper-color-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Carousel responsive - 2 items per page on tablets */
+    .diploma-style-carousel-wrapper {
+        padding: 0 3rem;
+    }
+
+    .carousel-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .carousel-slide {
+        min-width: 50%;
+    }
+
+    .style-preview-image {
+        height: 240px;
     }
 }
 
@@ -1467,72 +1761,122 @@
         padding: 1.5rem 0;
         margin-bottom: 1.5rem;
     }
-    
+
     .header-content {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
     }
-    
+
     .header-text h1 {
         font-size: 1.75rem;
     }
-    
+
     .header-text p {
         font-size: 1rem;
     }
-    
+
     .diploma-builder-form {
         border-radius: 8px;
     }
-    
+
     .diploma-preview-container {
         border-radius: 8px;
         padding: 1rem;
     }
-    
+
     .diploma-preview {
         padding: 1rem 1rem 2rem 1rem;
     }
-    
+
     .color-options {
         gap: 0.75rem;
     }
-    
+
     .form-navigation {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
     }
-    
+
     .nav-buttons {
         width: 100%;
         justify-content: space-between;
     }
-    
+
     .form-actions {
         width: 100%;
         justify-content: center;
     }
-    
+
     .preview-header {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
     }
-    
+
     .preview-controls {
         width: 100%;
         justify-content: center;
     }
-    
+
     .step-label {
         font-size: 0.6875rem;
         max-width: 60px;
     }
-    
+
     .progress-steps {
         gap: 0.5rem;
+    }
+
+    .paper-color-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .paper-color-preview {
+        width: 100px;
+        height: 100px;
+    }
+
+    .step-actions {
+        flex-direction: column;
+    }
+
+    .btn-large {
+        width: 100%;
+    }
+
+    /* Carousel mobile - 1 item per page */
+    .diploma-style-carousel-wrapper {
+        padding: 0 2.5rem;
+    }
+
+    .carousel-nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+    }
+
+    .carousel-slide {
+        min-width: 100%;
+    }
+
+    .diploma-style-card {
+        max-width: 100%;
+    }
+
+    .style-preview-image {
+        height: 300px;
+    }
+
+    .carousel-indicators {
+        margin-top: 1.5rem;
+        gap: 0.5rem;
+    }
+
+    .carousel-indicator {
+        width: 10px;
+        height: 10px;
     }
 }
 
@@ -1540,27 +1884,56 @@
     .diploma-builder-header {
         padding: 1rem 0;
     }
-    
+
     .header-text h1 {
         font-size: 1.5rem;
     }
-    
+
     .header-text p {
         font-size: 0.875rem;
     }
-    
+
     .diploma-builder-wrapper {
         padding: 0 0.75rem;
     }
-    
-    .subsection {
-        padding: 1rem;
-    }
-    
+
     .btn {
         padding: 0.625rem 1rem;
         font-size: 0.8125rem;
         min-width: 80px;
+    }
+
+    /* Carousel extra small screens */
+    .diploma-style-carousel-wrapper {
+        padding: 0 2rem;
+    }
+
+    .carousel-nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1.125rem;
+    }
+
+    .style-preview-image {
+        height: 200px;
+    }
+
+    .style-info h5 {
+        font-size: 1rem;
+    }
+
+    .style-info p {
+        font-size: 0.8125rem;
+    }
+
+    .carousel-indicators {
+        margin-top: 1rem;
+        gap: 0.4rem;
+    }
+
+    .carousel-indicator {
+        width: 8px;
+        height: 8px;
     }
     
     .preview-specs {
@@ -3108,9 +3481,4 @@ body {
         max-width: 100%;
         min-height: auto;
     }
-}
-.subsection-wrapper {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
 }

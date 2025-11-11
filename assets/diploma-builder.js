@@ -77,6 +77,43 @@ jQuery(document).ready(function($) {
         }
     }
 
+    // Filter major options based on selected degree type
+    function filterMajorOptions(degreeType) {
+        const $majorSelect = $('#major');
+        const $allOptgroups = $majorSelect.find('optgroup');
+        const currentMajor = $majorSelect.val();
+
+        if (!degreeType || degreeType === '') {
+            // If no degree type selected, show all optgroups
+            $allOptgroups.show();
+            return;
+        }
+
+        // Hide all optgroups first
+        $allOptgroups.hide();
+
+        // Show only optgroups that match the selected degree type
+        $allOptgroups.each(function() {
+            const $optgroup = $(this);
+            const optgroupDegreeType = $optgroup.attr('data-degree-type');
+
+            if (optgroupDegreeType === degreeType) {
+                $optgroup.show();
+            }
+        });
+
+        // Check if current selection is still visible
+        const $currentOption = $majorSelect.find(`option[value="${currentMajor}"]`);
+        const isCurrentVisible = $currentOption.length > 0 && $currentOption.closest('optgroup').is(':visible');
+
+        // If current selection is not visible, reset to empty
+        if (!isCurrentVisible && currentMajor !== '') {
+            $majorSelect.val('');
+            currentConfig.major = '';
+            updatePreview();
+        }
+    }
+
     // Handle signature count and show/hide fields
     function handleSignatureCount(count) {
         const $signature2Field = $('#signature2-field');
@@ -295,6 +332,12 @@ jQuery(document).ready(function($) {
         if (validateStep1()) {
             markStepComplete(1);
             showStepCard(2);
+        }
+
+        // Filter major options based on any pre-selected degree type
+        const initialDegreeType = $('#degree_type').val();
+        if (initialDegreeType) {
+            filterMajorOptions(initialDegreeType);
         }
     }
     
@@ -603,8 +646,10 @@ jQuery(document).ready(function($) {
 
         // Degree type dropdown
         $('#degree_type').on('change', function() {
-            currentConfig.degree_type = $(this).val();
+            const degreeType = $(this).val();
+            currentConfig.degree_type = degreeType;
             validateField($(this));
+            filterMajorOptions(degreeType);
             updatePreview();
             updateReviewSummary();
         });

@@ -3,8 +3,8 @@ jQuery(document).ready(function($) {
     
     // Current diploma configuration
     let currentConfig = {
-        diploma_style: 'classic',
-        paper_color: 'white',
+        diploma_style: '',
+        paper_color: '',
         emblem_type: 'generic',
         emblem_value: 'graduation_cap',
         school_name: '',
@@ -12,9 +12,9 @@ jQuery(document).ready(function($) {
         graduation_date: '',
         city: '',
         state: '',
-        country: 'USA',
-        document_type: 'High School',
-        diploma_size: '8.5x11',
+        country: '',
+        document_type: '',
+        diploma_size: '',
         degree_type: '',
         major: '',
         concentration: '',
@@ -95,26 +95,31 @@ jQuery(document).ready(function($) {
 
     // Handle country selection and enable/disable fields
     function handleCountrySelection(selectedCountry) {
-        const schoolSubsection = $('#school-subsection');
-        const graduationSubsection = $('.subsection').has('#graduation_date');
+        // Select school fields directly since subsection wrapper was removed from Step 3
+        const schoolFields = $('#school_name, #city, #state').closest('.field-group, .field-row');
+        const graduationFields = $('#student_name, #graduation_date').closest('.field-group');
         const styleSubsection = $('.subsection').has('#diploma_style');
         const paperSubsection = $('.subsection').has('#paper_color');
-        const emblemSubsection = $('.subsection').has('.emblem-type-tabs');
+        const emblemFields = $('.emblem-type-tabs').closest('.emblem-selection-section');
 
         if (selectedCountry === 'USA') {
             // Enable all fields for USA
-            schoolSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
-            graduationSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            schoolFields.removeClass('disabled-subsection');
+            $('#school_name, #city, #state').prop('disabled', false);
+            graduationFields.removeClass('disabled-subsection');
+            $('#student_name, #graduation_date').prop('disabled', false);
             styleSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
             paperSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
-            emblemSubsection.removeClass('disabled-subsection').find('input, select, button').prop('disabled', false);
+            emblemFields.removeClass('disabled-subsection').find('input, select, button').prop('disabled', false);
         } else {
             // Disable all fields for other countries
-            schoolSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
-            graduationSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
+            schoolFields.addClass('disabled-subsection');
+            $('#school_name, #city, #state').prop('disabled', true);
+            graduationFields.addClass('disabled-subsection');
+            $('#student_name, #graduation_date').prop('disabled', true);
             styleSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
             paperSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
-            emblemSubsection.addClass('disabled-subsection').find('input, select, button').prop('disabled', true);
+            emblemFields.addClass('disabled-subsection').find('input, select, button').prop('disabled', true);
         }
     }
     
@@ -231,27 +236,66 @@ jQuery(document).ready(function($) {
         bindEvents();
         initializeForm();
         initCarousel();
-        // Check Step 1 completion on init
-        checkStep1Completion();
-        // Initialize preview (but don't show it yet)
-        updatePreview();
         // Hide loading overlay on initialization
         hideLoading();
-        // Initialize country selection state
-        handleCountrySelection('USA');
-        // Initialize diploma size options
-        updateDiplomaSizeOptions('High School');
-        // Start at step 1
-        navigateToStep(1);
+        // Prevent right-click and dragging on diploma preview
+        preventDiplomaDownload();
+    }
+
+    // Prevent right-click download and dragging of diploma preview
+    function preventDiplomaDownload() {
+        const $preview = $('#diploma-preview');
+        const $previewWrapper = $('#diploma-preview-wrapper');
+
+        // Disable context menu (right-click)
+        $preview.on('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        $previewWrapper.on('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable dragging
+        $preview.on('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable selection
+        $preview.css({
+            '-webkit-user-select': 'none',
+            '-moz-user-select': 'none',
+            '-ms-user-select': 'none',
+            'user-select': 'none'
+        });
+
+        // Prevent all images inside preview from being downloaded
+        $preview.on('contextmenu', 'img', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        $preview.on('dragstart', 'img', function(e) {
+            e.preventDefault();
+            return false;
+        });
     }
     
     // Initialize form to show first step only
     function initializeForm() {
-        // Show the main form section
-        $('.form-section[data-step="1"]').show();
+        // Show only Step 1 initially
+        $('.step-1-card').show();
+        $('.step-2-card, .step-3-card').hide();
+        $('#diploma-preview-wrapper').hide();
 
-        // Show action buttons
-        $('.form-actions').show();
+        // Check if Step 1 is already complete (page refresh)
+        if (validateStep1()) {
+            markStepComplete(1);
+            showStepCard(2);
+        }
     }
     
     // Validate Step 1 fields
@@ -270,49 +314,34 @@ jQuery(document).ready(function($) {
         $('#step1-continue').prop('disabled', !isValid);
     }
 
-    // Navigate to a specific step
-    function navigateToStep(stepNumber) {
-        // Hide all steps
-        $('.form-section').hide();
+    // Show step card function
+    function showStepCard(stepNumber) {
+        const $stepCard = $(`.step-card[data-step="${stepNumber}"]`);
 
-        // Show the target step
-        $(`.form-section[data-step="${stepNumber}"]`).fadeIn(300);
-
-        // Update current step
-        currentStep = stepNumber;
-
-        // Update form title
-        updateFormTitle(stepNumber);
-
-        // Handle wrapper layout
-        const $wrapper = $('#diploma-builder-wrapper');
-        const $form = $('#diploma-builder-form');
-        const $preview = $('#diploma-preview-container');
-
-        if (stepNumber === 1 || stepNumber === 2) {
-            // Steps 1 and 2: Full width form, no preview
-            $wrapper.addClass('full-width-mode');
-            $form.css('flex', '1');
-            $preview.hide();
-        } else {
-            // Step 3: Split view with preview
-            $wrapper.removeClass('full-width-mode');
-            $form.css('flex', '0 0 420px');
-            $preview.fadeIn(300);
+        if ($stepCard.length && !$stepCard.is(':visible')) {
+            $stepCard.slideDown(400, function() {
+                // Scroll to the newly revealed step
+                $('html, body').animate({
+                    scrollTop: $stepCard.offset().top - 100
+                }, 300);
+            });
         }
-
-        // Scroll to top
-        $('.form-content').scrollTop(0);
     }
 
-    // Update form title based on step
-    function updateFormTitle(stepNumber) {
-        const titles = {
-            1: 'Step 1: Choose Your Basics',
-            2: 'Step 2: Choose Your Diploma Style',
-            3: 'Step 3: Customize Your Diploma'
-        };
-        $('#form-step-title').text(titles[stepNumber] || 'Customize Your Diploma');
+    // Mark step as complete
+    function markStepComplete(stepNumber) {
+        const $stepCard = $(`.step-card[data-step="${stepNumber}"]`);
+        $stepCard.addClass('completed');
+        $stepCard.find('.status-icon.incomplete').hide();
+        $stepCard.find('.status-icon.complete').show();
+    }
+
+    // Mark step as incomplete
+    function markStepIncomplete(stepNumber) {
+        const $stepCard = $(`.step-card[data-step="${stepNumber}"]`);
+        $stepCard.removeClass('completed');
+        $stepCard.find('.status-icon.incomplete').show();
+        $stepCard.find('.status-icon.complete').hide();
     }
 
     // Bind all event handlers
@@ -324,17 +353,26 @@ jQuery(document).ready(function($) {
             // Update config
             const fieldName = $(this).attr('name');
             currentConfig[fieldName] = $(this).val();
+
+            // Auto-reveal Step 2 when Step 1 is complete
+            if (validateStep1()) {
+                markStepComplete(1);
+                showStepCard(2);
+            } else {
+                markStepIncomplete(1);
+            }
         });
 
         $('input[name="paper_color"]').on('change', function() {
             checkStep1Completion();
             currentConfig.paper_color = $(this).val();
-        });
 
-        // Step 1: Continue button
-        $('#step1-continue').on('click', function() {
+            // Auto-reveal Step 2 when Step 1 is complete
             if (validateStep1()) {
-                navigateToStep(2);
+                markStepComplete(1);
+                showStepCard(2);
+            } else {
+                markStepIncomplete(1);
             }
         });
 
@@ -371,33 +409,23 @@ jQuery(document).ready(function($) {
                 const pageIndex = Math.floor(slideIndex / slidesPerPage);
                 goToPage(pageIndex);
             }
-        });
 
-        // Step 2: Back button
-        $('#step2-back').on('click', function() {
-            navigateToStep(1);
-        });
-
-        // Step 2: Continue button
-        $('#step2-continue').on('click', function() {
-            navigateToStep(3);
+            // Auto-reveal Step 3 and preview when style is selected
+            markStepComplete(2);
+            showStepCard(3);
+            $('#diploma-preview-wrapper').fadeIn(400);
             updatePreview();
         });
 
         // Keyboard navigation for carousel
         $(document).on('keydown', function(e) {
-            if (currentStep === 2) {
+            if ($('.step-2-card').is(':visible')) {
                 if (e.key === 'ArrowLeft') {
                     navigateCarousel('prev');
                 } else if (e.key === 'ArrowRight') {
                     navigateCarousel('next');
                 }
             }
-        });
-
-        // Step 3: Back button
-        $('#step3-back').on('click', function() {
-            navigateToStep(2);
         });
 
         // Diploma style selection (dropdown) - legacy support
@@ -430,6 +458,95 @@ jQuery(document).ready(function($) {
             currentConfig.emblem_value = $(this).val();
             updatePreview();
         });
+
+        // Emblem Carousel Functionality - Multi-Item
+        let currentEmblemPage = 0;
+        const $emblemTrack = $('#emblem-carousel-track');
+        const $emblemSlides = $('.emblem-carousel-slide');
+        const totalEmblemSlides = $emblemSlides.length;
+
+        // Determine items per page based on screen width
+        function getItemsPerPage() {
+            const width = $(window).width();
+            if (width <= 480) return 1;
+            if (width <= 768) return 2;
+            return 3;
+        }
+
+        function getTotalPages() {
+            return Math.ceil(totalEmblemSlides / getItemsPerPage());
+        }
+
+        function updateEmblemCarousel() {
+            const itemsPerPage = getItemsPerPage();
+            const slideWidth = 100 / itemsPerPage;
+            const offset = -(currentEmblemPage * slideWidth * itemsPerPage);
+
+            // Apply transform to slide the carousel
+            $emblemTrack.css('transform', `translateX(${offset}%)`);
+
+            // Update navigation button states
+            const totalPages = getTotalPages();
+            $('#emblem-prev').prop('disabled', currentEmblemPage === 0);
+            $('#emblem-next').prop('disabled', currentEmblemPage >= totalPages - 1);
+
+            // Update indicators
+            updateEmblemIndicators();
+        }
+
+        function updateEmblemIndicators() {
+            const $indicatorsContainer = $('#emblem-carousel-indicators');
+            $indicatorsContainer.empty();
+
+            const totalPages = getTotalPages();
+            for (let i = 0; i < totalPages; i++) {
+                const isActive = i === currentEmblemPage ? 'active' : '';
+                $indicatorsContainer.append(
+                    `<button type="button" class="emblem-indicator ${isActive}" data-page="${i}"></button>`
+                );
+            }
+        }
+
+        function navigateEmblemCarousel(direction) {
+            const totalPages = getTotalPages();
+            if (direction === 'next' && currentEmblemPage < totalPages - 1) {
+                currentEmblemPage++;
+            } else if (direction === 'prev' && currentEmblemPage > 0) {
+                currentEmblemPage--;
+            }
+            updateEmblemCarousel();
+        }
+
+        // Emblem carousel navigation
+        $('#emblem-prev').on('click', function() {
+            navigateEmblemCarousel('prev');
+        });
+
+        $('#emblem-next').on('click', function() {
+            navigateEmblemCarousel('next');
+        });
+
+        // Emblem carousel indicators
+        $(document).on('click', '.emblem-indicator', function() {
+            currentEmblemPage = $(this).data('page');
+            updateEmblemCarousel();
+        });
+
+        // Handle window resize
+        let resizeTimer;
+        $(window).on('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Reset to first page on resize to avoid issues
+                currentEmblemPage = 0;
+                updateEmblemCarousel();
+            }, 250);
+        });
+
+        // Initialize emblem carousel
+        if (totalEmblemSlides > 0) {
+            updateEmblemCarousel();
+        }
         
         // State emblem selection
         $('#state-emblem-select').on('change', function() {
@@ -579,11 +696,15 @@ jQuery(document).ready(function($) {
         $('#zoom-in').on('click', function() {
             zoomPreview(0.1);
         });
-        
+
         $('#zoom-out').on('click', function() {
             zoomPreview(-0.1);
         });
-        
+
+        $('#reset-zoom').on('click', function() {
+            resetZoom();
+        });
+
         $('#toggle-fullscreen').on('click', function() {
             toggleFullscreen();
         });
@@ -775,21 +896,21 @@ jQuery(document).ready(function($) {
 
         const paperColor = paperColors[currentConfig.paper_color] || '#ffffff';
 
-        // Update the background color of the diploma canvas directly
-        $('#diploma-canvas').css('background-color', paperColor);
+        // Update the background color of the diploma preview directly
+        $('#diploma-preview').css('background-color', paperColor);
 
         // Update diploma size class based on selected size
         const diplomaSize = currentConfig.diploma_size || '8.5x11';
         const sizeClass = 'size-' + diplomaSize.replace(/\./g, '-').replace('x', 'x');
 
         // Remove all existing size classes
-        $('#diploma-canvas').removeClass('size-8-5x11 size-7-5x9-5 size-11x14');
+        $('#diploma-preview').removeClass('size-8-5x11 size-7-5x9-5 size-11x14');
 
         // Add the current size class
-        $('#diploma-canvas').addClass(sizeClass);
+        $('#diploma-preview').addClass(sizeClass);
 
         let diplomaHTML = generateDiplomaHTML();
-        $('#diploma-canvas').html(diplomaHTML);
+        $('#diploma-preview').html(diplomaHTML);
     }
     
     // NEW: Function to split text for two-line arc header
@@ -1156,13 +1277,21 @@ jQuery(document).ready(function($) {
     
     // Zoom preview
     function zoomPreview(delta) {
-        const canvas = $('.diploma-canvas');
-        const currentZoom = parseFloat(canvas.data('zoom') || 1);
+        const preview = $('#diploma-preview');
+        const currentZoom = parseFloat(preview.data('zoom') || 1);
         const newZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
-        
-        canvas.css('transform', `scale(${newZoom})`);
-        canvas.data('zoom', newZoom);
+
+        preview.css('transform', `scale(${newZoom})`);
+        preview.data('zoom', newZoom);
         $('#zoom-level').text(`${Math.round(newZoom * 100)}%`);
+    }
+
+    // Reset zoom to 100%
+    function resetZoom() {
+        const preview = $('#diploma-preview');
+        preview.css('transform', 'scale(1)');
+        preview.data('zoom', 1);
+        $('#zoom-level').text('100%');
     }
     
     // Toggle fullscreen
@@ -1237,11 +1366,11 @@ jQuery(document).ready(function($) {
         
         if (!isUserLoggedIn && !isCustomer && !isAdmin) {
             watermark = $('<div class="diploma-preview-watermark">PREVIEW</div>');
-            $('#diploma-canvas').append(watermark);
+            $('#diploma-preview').append(watermark);
         }
-        
-        // Get the actual rendered dimensions of the diploma canvas
-        const canvasElement = document.getElementById('diploma-canvas');
+
+        // Get the actual rendered dimensions of the diploma preview
+        const canvasElement = document.getElementById('diploma-preview');
         const rect = canvasElement.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;

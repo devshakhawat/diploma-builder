@@ -26,6 +26,13 @@ class DiplomaBuilder_Assets {
                 array(),
                 DIPLOMA_BUILDER_VERSION
             );
+
+            wp_enqueue_style(
+                'diploma-builder-step-cards',
+                DIPLOMA_BUILDER_URL . 'assets/step-cards.css',
+                array('diploma-builder'),
+                DIPLOMA_BUILDER_VERSION
+            );
             
             // JavaScript
             wp_enqueue_script(

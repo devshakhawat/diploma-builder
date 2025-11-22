@@ -331,6 +331,9 @@ jQuery(document).ready(function($) {
         // Sync currentConfig with default values from form fields
         syncConfigFromForm();
 
+        // Initialize the was-checked state for diploma style radio buttons
+        $('input[name="diploma_style"]:checked').data('was-checked', true);
+
         // Check if Step 1 is already complete (page refresh or default values)
         if (validateStep1()) {
             markStepComplete(1);
@@ -405,6 +408,15 @@ jQuery(document).ready(function($) {
         }
     }
 
+    // Hide step card function
+    function hideStepCard(stepNumber) {
+        const $stepCard = $(`.step-card[data-step="${stepNumber}"]`);
+
+        if ($stepCard.length && $stepCard.is(':visible')) {
+            $stepCard.slideUp(400);
+        }
+    }
+
     // Mark step as complete
     function markStepComplete(stepNumber) {
         const $stepCard = $(`.step-card[data-step="${stepNumber}"]`);
@@ -437,6 +449,11 @@ jQuery(document).ready(function($) {
                 showStepCard(2);
             } else {
                 markStepIncomplete(1);
+                // Hide Step 2 and Step 3 when Step 1 is incomplete
+                hideStepCard(2);
+                hideStepCard(3);
+                markStepIncomplete(2);
+                $('#diploma-preview-wrapper').hide();
             }
         });
 
@@ -450,6 +467,11 @@ jQuery(document).ready(function($) {
                 showStepCard(2);
             } else {
                 markStepIncomplete(1);
+                // Hide Step 2 and Step 3 when Step 1 is incomplete
+                hideStepCard(2);
+                hideStepCard(3);
+                markStepIncomplete(2);
+                $('#diploma-preview-wrapper').hide();
             }
         });
 
@@ -468,30 +490,71 @@ jQuery(document).ready(function($) {
             goToPage(pageIndex);
         });
 
-        // Carousel slide click - select style
-        $(document).on('click', '.carousel-slide', function() {
+        // Carousel slide click - select or deselect style
+        $(document).on('click', '.carousel-slide', function(e) {
+            // Prevent default if clicking on the radio button directly
+            if ($(e.target).is('input[type="radio"]')) {
+                return;
+            }
+
             const slideIndex = $(this).index();
-            selectStyleFromSlide(slideIndex);
+            const $radio = $(this).find('input[type="radio"]');
+            const wasChecked = $radio.prop('checked');
+
+            if (wasChecked) {
+                // Deselect if already selected
+                $radio.prop('checked', false);
+                currentConfig.diploma_style = '';
+                markStepIncomplete(2);
+                hideStepCard(3);
+                $('#diploma-preview-wrapper').hide();
+            } else {
+                // Select if not selected
+                selectStyleFromSlide(slideIndex);
+            }
+        });
+
+        // Allow deselecting radio button by clicking on it when already selected
+        $('input[name="diploma_style"]').on('click', function(e) {
+            const $this = $(this);
+            const wasChecked = $this.data('was-checked') === true;
+
+            if (wasChecked) {
+                // Deselect
+                $this.prop('checked', false);
+                $this.data('was-checked', false);
+                currentConfig.diploma_style = '';
+                markStepIncomplete(2);
+                hideStepCard(3);
+                $('#diploma-preview-wrapper').hide();
+            } else {
+                // Mark as checked
+                $('input[name="diploma_style"]').data('was-checked', false);
+                $this.data('was-checked', true);
+            }
         });
 
         // Step 2: Style selection
         $('input[name="diploma_style"]').on('change', function() {
-            currentConfig.diploma_style = $(this).val();
-
-            // Update carousel to match selected style
             const selectedValue = $(this).val();
-            const $selectedSlide = $(`.carousel-slide[data-style="${selectedValue}"]`);
-            const slideIndex = $selectedSlide.index();
-            if (slideIndex >= 0) {
-                const pageIndex = Math.floor(slideIndex / slidesPerPage);
-                goToPage(pageIndex);
-            }
 
-            // Auto-reveal Step 3 and preview when style is selected
-            markStepComplete(2);
-            showStepCard(3);
-            $('#diploma-preview-wrapper').fadeIn(400);
-            updatePreview();
+            if (selectedValue) {
+                currentConfig.diploma_style = selectedValue;
+
+                // Update carousel to match selected style
+                const $selectedSlide = $(`.carousel-slide[data-style="${selectedValue}"]`);
+                const slideIndex = $selectedSlide.index();
+                if (slideIndex >= 0) {
+                    const pageIndex = Math.floor(slideIndex / slidesPerPage);
+                    goToPage(pageIndex);
+                }
+
+                // Auto-reveal Step 3 and preview when style is selected
+                markStepComplete(2);
+                showStepCard(3);
+                $('#diploma-preview-wrapper').fadeIn(400);
+                updatePreview();
+            }
         });
 
         // Keyboard navigation for carousel

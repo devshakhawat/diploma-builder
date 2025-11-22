@@ -570,6 +570,7 @@
     transition: all 0.3s ease;
     z-index: 10;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0 !important;
 }
 
 .carousel-nav-btn:hover:not(:disabled) {
@@ -1578,6 +1579,7 @@
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
+        padding: 0 !important;
     }
 
     .carousel-slide {

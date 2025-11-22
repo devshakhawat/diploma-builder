@@ -156,6 +156,7 @@
 /* Field Group Spacing in Step 3 */
 .step-3-left .field-group {
     margin-bottom: 0;
+    min-width: 0;
 }
 
 .step-3-left .field-row {
@@ -163,6 +164,19 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: 0;
+    min-width: 0;
+}
+
+.step-3-left .field-row .field-group {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.step-3-left .field-row .field-group .form-input,
+.step-3-left .field-row .field-group .form-select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .step-3-right {
@@ -277,83 +291,97 @@
     text-align: center;
 }
 
-/* Navigation Arrows */
-.emblem-carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid #e5e7eb;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: #374151;
-    transition: all 0.3s ease;
-    z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Navigation Arrows - Enhanced specificity to prevent external CSS interference */
+.emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    border: 2px solid #e5e7eb !important;
+    border-style: solid !important;
+    border-width: 2px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.5rem !important;
+    color: #374151 !important;
+    transition: all 0.3s ease !important;
+    z-index: 10 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    text-decoration: none !important;
+    font-family: inherit !important;
+    line-height: 1 !important;
 }
 
-.emblem-carousel-nav:hover:not(:disabled) {
-    background: #667eea;
-    color: white;
-    border-color: #667eea;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+.emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav:hover:not(:disabled) {
+    background: #667eea !important;
+    background-color: #667eea !important;
+    color: white !important;
+    border-color: #667eea !important;
+    transform: translateY(-50%) scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
 }
 
-.emblem-carousel-nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    pointer-events: none;
+.emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav:disabled {
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    color: #374151 !important;
 }
 
-.emblem-carousel-nav.emblem-prev {
-    left: 0;
+.emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav.emblem-prev {
+    left: 0 !important;
+    right: auto !important;
 }
 
-.emblem-carousel-nav.emblem-next {
-    right: 0;
+.emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav.emblem-next {
+    right: 0 !important;
+    left: auto !important;
 }
 
-.emblem-carousel-nav span {
-    line-height: 1;
-    margin-top: -3px;
+.emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav span {
+    line-height: 1 !important;
+    margin-top: -3px !important;
+    display: inline-block !important;
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+}
+
+/* Additional button element reset for emblem carousel navigation */
+button.emblem-carousel-nav,
+button.emblem-prev,
+button.emblem-next {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
 /* Carousel Indicators */
 .emblem-carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    padding: 0;
+    display: none; /* Hidden - dots removed from emblem carousel */
 }
 
 .emblem-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid #d1d5db;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-}
-
-.emblem-indicator:hover {
-    border-color: #667eea;
-    transform: scale(1.2);
-}
-
-.emblem-indicator.active {
-    background: #667eea;
-    border-color: #667eea;
-    transform: scale(1.3);
+    display: none;
 }
 
 /* Responsive Emblem Carousel */

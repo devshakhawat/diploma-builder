@@ -122,7 +122,7 @@ class DiplomaBuilder_Frontend {
                                                 <label for="country"><?php _e('Select Country *', 'diploma-builder'); ?></label>
                                                 <select id="country" name="country" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Country', 'diploma-builder'); ?></option>
-                                                    <option value="USA"><?php _e('USA', 'diploma-builder'); ?></option>
+                                                    <option value="USA" selected><?php _e('USA', 'diploma-builder'); ?></option>
                                                     <option value="UK" disabled><?php _e('UK (Coming Soon)', 'diploma-builder'); ?></option>
                                                     <option value="Canada" disabled><?php _e('Canada (Coming Soon)', 'diploma-builder'); ?></option>
                                                     <option value="International" disabled><?php _e('International (Coming Soon)', 'diploma-builder'); ?></option>
@@ -137,7 +137,7 @@ class DiplomaBuilder_Frontend {
                                                 <select id="document_type" name="document_type" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Document Type', 'diploma-builder'); ?></option>
                                                     <option value="GED"><?php _e('GED', 'diploma-builder'); ?></option>
-                                                    <option value="High School"><?php _e('High School', 'diploma-builder'); ?></option>
+                                                    <option value="High School" selected><?php _e('High School', 'diploma-builder'); ?></option>
                                                     <option value="College"><?php _e('College', 'diploma-builder'); ?></option>
                                                     <option value="University"><?php _e('University', 'diploma-builder'); ?></option>
                                                 </select>
@@ -150,7 +150,7 @@ class DiplomaBuilder_Frontend {
                                                 <label for="diploma_size"><?php _e('Select Size *', 'diploma-builder'); ?></label>
                                                 <select id="diploma_size" name="diploma_size" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Size', 'diploma-builder'); ?></option>
-                                                    <option value="8.5x11"><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
+                                                    <option value="8.5x11" selected><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
                                                     <option value="7.5x9.5"><?php _e('7.5" × 9.5"', 'diploma-builder'); ?></option>
                                                 </select>
                                             </div>
@@ -163,13 +163,19 @@ class DiplomaBuilder_Frontend {
                                             <div class="field-group">
                                                 <label for="paper_color"><?php _e('Select Paper Color *', 'diploma-builder'); ?></label>
                                                 <div class="paper-color-grid">
-                                                    <?php foreach ($paper_colors as $key => $color): ?>
+                                                    <?php
+                                                    $color_index = 0;
+                                                    foreach ($paper_colors as $key => $color):
+                                                    ?>
                                                         <label class="paper-color-option" for="paper_color_<?php echo $key; ?>">
-                                                            <input type="radio" name="paper_color" value="<?php echo esc_attr($key); ?>" id="paper_color_<?php echo $key; ?>">
+                                                            <input type="radio" name="paper_color" value="<?php echo esc_attr($key); ?>" id="paper_color_<?php echo $key; ?>" <?php echo $color_index === 0 ? 'checked' : ''; ?>>
                                                             <div class="paper-color-preview" style="background-color: <?php echo esc_attr($color['hex']); ?>"></div>
                                                             <div class="paper-color-name"><?php echo esc_html($color['name']); ?></div>
                                                         </label>
-                                                    <?php endforeach; ?>
+                                                    <?php
+                                                    $color_index++;
+                                                    endforeach;
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +213,7 @@ class DiplomaBuilder_Frontend {
                                             ?>
                                                 <div class="carousel-slide <?php echo $style_index === 0 ? 'active' : ''; ?>" data-style="<?php echo esc_attr($key); ?>">
                                                     <label class="diploma-style-card" for="diploma_style_<?php echo $key; ?>">
-                                                        <input type="radio" name="diploma_style" value="<?php echo esc_attr($key); ?>" id="diploma_style_<?php echo $key; ?>">
+                                                        <input type="radio" name="diploma_style" value="<?php echo esc_attr($key); ?>" id="diploma_style_<?php echo $key; ?>" <?php echo $style_index === 0 ? 'checked' : ''; ?>>
                                                         <div class="style-card-content" data-style-label="<?php echo sprintf(__('Style %d', 'diploma-builder'), $style_number); ?>">
                                                             <div class="style-preview-image">
                                                                 <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/previews/' . $key . '.png'; ?>" alt="<?php echo esc_attr($style['name']); ?>" loading="lazy">
@@ -425,26 +431,32 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                     <div class="field-group">
                                         <label for="concentration"><?php _e('Concentration (Optional)', 'diploma-builder'); ?></label>
-                                        <input type="text" id="concentration" name="concentration" class="form-input" placeholder="<?php _e('e.g., Software Engineering, Digital Marketing', 'diploma-builder'); ?>" maxlength="100">
+                                        <input type="text" id="concentration" name="concentration" class="form-input" placeholder="<?php _e('e.g., Software Engineering, Digital Marketing', 'diploma-builder'); ?>" value="<?php _e('Software Engineering', 'diploma-builder'); ?>" maxlength="100">
                                     </div>
 
                                 <!-- School Information -->
                                     <div class="field-group">
                                         <label for="school_name"><?php _e('High School Name *', 'diploma-builder'); ?></label>
-                                        <input type="text" id="school_name" name="school_name" placeholder="<?php _e('e.g., Lincoln High School', 'diploma-builder'); ?>" maxlength="100" required>
+                                        <input type="text" id="school_name" name="school_name" placeholder="<?php _e('e.g., Lincoln High School', 'diploma-builder'); ?>" value="<?php _e('Lincoln High School', 'diploma-builder'); ?>" maxlength="100" required>
                                     </div>
                                     <div class="field-row">
                                         <div class="field-group">
                                             <label for="city"><?php _e('City *', 'diploma-builder'); ?></label>
-                                            <input type="text" id="city" name="city" placeholder="<?php _e('e.g., San Francisco', 'diploma-builder'); ?>" maxlength="50" required>
+                                            <input type="text" id="city" name="city" placeholder="<?php _e('e.g., San Francisco', 'diploma-builder'); ?>" value="<?php _e('San Francisco', 'diploma-builder'); ?>" maxlength="50" required>
                                         </div>
                                         <div class="field-group">
                                             <label for="state"><?php _e('State *', 'diploma-builder'); ?></label>
                                             <select id="state" name="state" class="form-select" required>
                                                 <option value=""><?php _e('Select state', 'diploma-builder'); ?></option>
-                                                <?php foreach ($us_states as $code => $name): ?>
-                                                    <option value="<?php echo esc_attr($code); ?>"><?php echo esc_html($name); ?></option>
-                                                <?php endforeach; ?>
+                                                <?php
+                                                $state_index = 0;
+                                                foreach ($us_states as $code => $name):
+                                                ?>
+                                                    <option value="<?php echo esc_attr($code); ?>" <?php echo ($code === 'CA') ? 'selected' : ''; ?>><?php echo esc_html($name); ?></option>
+                                                <?php
+                                                $state_index++;
+                                                endforeach;
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -452,11 +464,11 @@ class DiplomaBuilder_Frontend {
                                 <!-- Graduation Information -->
                                     <div class="field-group">
                                         <label for="student_name"><?php _e('Student Name *', 'diploma-builder'); ?></label>
-                                        <input type="text" id="student_name" name="student_name" placeholder="<?php _e('Enter student\'s full name', 'diploma-builder'); ?>" maxlength="100" required>
+                                        <input type="text" id="student_name" name="student_name" placeholder="<?php _e('Enter student\'s full name', 'diploma-builder'); ?>" value="<?php _e('John Michael Smith', 'diploma-builder'); ?>" maxlength="100" required>
                                     </div>
                                     <div class="field-group">
                                         <label for="graduation_date"><?php _e('Graduation Date *', 'diploma-builder'); ?></label>
-                                        <input type="date" id="graduation_date" name="graduation_date" class="form-input" required>
+                                        <input type="date" id="graduation_date" name="graduation_date" class="form-input" value="<?php echo date('Y-m-d'); ?>" required>
                                     </div>
 
                                 <!-- Signatures & Layout -->
@@ -470,11 +482,11 @@ class DiplomaBuilder_Frontend {
                                     <div id="signature-fields-container">
                                         <div class="field-group" id="signature1-field">
                                             <label for="signature1_name"><?php _e('Signature 1 Name *', 'diploma-builder'); ?></label>
-                                            <input type="text" id="signature1_name" name="signature1_name" class="form-input" placeholder="<?php _e('e.g., Principal\'s Name', 'diploma-builder'); ?>" maxlength="100" required>
+                                            <input type="text" id="signature1_name" name="signature1_name" class="form-input" placeholder="<?php _e('e.g., Principal\'s Name', 'diploma-builder'); ?>" value="<?php _e('Dr. Robert Johnson', 'diploma-builder'); ?>" maxlength="100" required>
                                         </div>
                                         <div class="field-group" id="signature2-field" style="display: none;">
                                             <label for="signature2_name"><?php _e('Signature 2 Name', 'diploma-builder'); ?></label>
-                                            <input type="text" id="signature2_name" name="signature2_name" class="form-input" placeholder="<?php _e('e.g., Dean\'s Name', 'diploma-builder'); ?>" maxlength="100">
+                                            <input type="text" id="signature2_name" name="signature2_name" class="form-input" placeholder="<?php _e('e.g., Dean\'s Name', 'diploma-builder'); ?>" value="<?php _e('Sarah Williams', 'diploma-builder'); ?>" maxlength="100">
                                         </div>
                                     </div>
 
@@ -556,7 +568,7 @@ class DiplomaBuilder_Frontend {
                                                             ?>
                                                                 <div class="emblem-carousel-slide <?php echo $emblem_index === 0 ? 'active' : ''; ?>" data-emblem="<?php echo esc_attr($key); ?>">
                                                                     <label class="emblem-carousel-option" for="emblem_<?php echo $key; ?>">
-                                                                        <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic">
+                                                                        <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $emblem_index === 0 ? 'checked' : ''; ?>>
                                                                         <div class="emblem-carousel-preview">
                                                                             <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.png'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
                                                                         </div>

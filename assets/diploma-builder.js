@@ -328,10 +328,23 @@ jQuery(document).ready(function($) {
         $('.step-2-card, .step-3-card').hide();
         $('#diploma-preview-wrapper').hide();
 
-        // Check if Step 1 is already complete (page refresh)
+        // Sync currentConfig with default values from form fields
+        syncConfigFromForm();
+
+        // Check if Step 1 is already complete (page refresh or default values)
         if (validateStep1()) {
             markStepComplete(1);
             showStepCard(2);
+
+            // Check if Step 2 (diploma style) is also complete
+            const selectedStyle = $('input[name="diploma_style"]:checked').val();
+            if (selectedStyle) {
+                currentConfig.diploma_style = selectedStyle;
+                markStepComplete(2);
+                showStepCard(3);
+                $('#diploma-preview-wrapper').fadeIn(400);
+                updatePreview();
+            }
         }
 
         // Filter major options based on any pre-selected degree type
@@ -339,6 +352,27 @@ jQuery(document).ready(function($) {
         if (initialDegreeType) {
             filterMajorOptions(initialDegreeType);
         }
+    }
+
+    // Sync currentConfig with form field values
+    function syncConfigFromForm() {
+        currentConfig.country = $('#country').val() || '';
+        currentConfig.document_type = $('#document_type').val() || '';
+        currentConfig.diploma_size = $('#diploma_size').val() || '';
+        currentConfig.paper_color = $('input[name="paper_color"]:checked').val() || '';
+        currentConfig.diploma_style = $('input[name="diploma_style"]:checked').val() || '';
+        currentConfig.emblem_value = $('input[name="emblem_value"]:checked').val() || 'graduation_cap';
+        currentConfig.school_name = $('#school_name').val() || '';
+        currentConfig.student_name = $('#student_name').val() || '';
+        currentConfig.graduation_date = $('#graduation_date').val() || '';
+        currentConfig.city = $('#city').val() || '';
+        currentConfig.state = $('#state').val() || '';
+        currentConfig.degree_type = $('#degree_type').val() || '';
+        currentConfig.major = $('#major').val() || '';
+        currentConfig.concentration = $('#concentration').val() || '';
+        currentConfig.signature_count = $('#signature_count').val() || '1';
+        currentConfig.signature1_name = $('#signature1_name').val() || '';
+        currentConfig.signature2_name = $('#signature2_name').val() || '';
     }
     
     // Validate Step 1 fields

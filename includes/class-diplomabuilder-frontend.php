@@ -102,14 +102,13 @@ class DiplomaBuilder_Frontend {
                         <!-- STEP 1: Country, Document Type, Size, and Paper Color -->
                         <div class="step-card step-1-card" data-step="1">
                             <div class="step-card-header">
-                                <div class="step-number">1</div>
                                 <div class="step-header-content">
-                                    <h3 class="step-title"><?php _e('Select Your Country, Document Type, Size, and Paper Color', 'diploma-builder'); ?></h3>
+                                    <h3 class="step-title"><?php _e('Step 1: Select Your Country, Document Type, Size, and Paper Color', 'diploma-builder'); ?></h3>
                                 </div>
-                                <div class="step-status">
+                                <!-- <div class="step-status">
                                     <span class="status-icon incomplete">○</span>
                                     <span class="status-icon complete" style="display: none;">✓</span>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="step-card-body">
@@ -187,14 +186,13 @@ class DiplomaBuilder_Frontend {
                         <!-- STEP 2: Diploma Style Selection -->
                         <div class="step-card step-2-card" data-step="2" style="display: none;">
                             <div class="step-card-header">
-                                <div class="step-number">2</div>
                                 <div class="step-header-content">
-                                    <h3 class="step-title"><?php _e('Choose Your Diploma Design', 'diploma-builder'); ?></h3>
+                                    <h3 class="step-title"><?php _e('Step 2: Choose Your Diploma Design', 'diploma-builder'); ?></h3>
                                 </div>
-                                <div class="step-status">
+                                <!-- <div class="step-status">
                                     <span class="status-icon incomplete">○</span>
                                     <span class="status-icon complete" style="display: none;">✓</span>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="step-card-body">
@@ -246,14 +244,13 @@ class DiplomaBuilder_Frontend {
                         <!-- STEP 3: Customization and Preview -->
                         <div class="step-card step-3-card" data-step="3" style="display: none;">
                             <div class="step-card-header">
-                                <div class="step-number">3</div>
                                 <div class="step-header-content">
-                                    <h3 class="step-title"><?php _e('Customize Your Diploma', 'diploma-builder'); ?></h3>
+                                    <h3 class="step-title"><?php _e('Step 3: Customize Your Diploma', 'diploma-builder'); ?></h3>
                                 </div>
-                                <div class="step-status">
+                                <!-- <div class="step-status">
                                     <span class="status-icon incomplete">○</span>
                                     <span class="status-icon complete" style="display: none;">✓</span>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="step-card-body">

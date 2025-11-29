@@ -4,7 +4,6 @@
 .diploma-builder-wrapper {
     max-width: 1600px;
     margin: 0 auto;
-    padding: 2rem;
     background: transparent;
 }
 
@@ -38,10 +37,10 @@
     overflow: hidden;
 }
 
-.step-card.completed {
+/* .step-card.completed {
     border-color: #10b981;
     box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
-}
+} */
 
 /* Step Card Header */
 .step-card-header {
@@ -50,31 +49,16 @@
     gap: 1.5rem;
     padding: 1.5rem 2rem;
     background: linear-gradient(to right, #f9fafb, #ffffff);
-    border-bottom: 2px solid #e5e7eb;
 }
 
-.step-card.completed .step-card-header {
+/* .step-card.completed .step-card-header {
     background: linear-gradient(to right, #d1fae5, #ffffff);
     border-bottom-color: #10b981;
-}
-
-.step-number {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
+} */
+/* 
 .step-card.completed .step-number {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
+} */
 
 .step-header-content {
     flex: 1;
@@ -82,9 +66,10 @@
 
 .step-title {
     margin: 0 0 0.25rem 0;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1f2937;
+    font-size: 34px;
+    font-weight: 800;
+    font-family: 'Playfair Display', serif;
+    color: #4B1C1B;
 }
 
 .step-description {

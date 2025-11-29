@@ -59,14 +59,8 @@
 .diploma-builder-wrapper {
     max-width: 1600px;
     margin: 0 auto;
-    padding: 2rem;
-    background: transparent;
+    /* background: transparent; */
 }
-
-/* Full-width mode for steps 1 and 2 */
-/* .diploma-builder-wrapper.full-width-mode {
-    max-width: 900px;
-} */
 
 .diploma-builder-wrapper.full-width-mode .diploma-builder-form {
     flex: 1;

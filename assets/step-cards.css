@@ -31,9 +31,6 @@
 .step-card {
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 2px solid #e5e7eb;
-    transition: all 0.3s ease;
     overflow: hidden;
 }
 
@@ -48,7 +45,6 @@
     align-items: center;
     gap: 1.5rem;
     padding: 1.5rem 2rem;
-    background: linear-gradient(to right, #f9fafb, #ffffff);
 }
 
 /* .step-card.completed .step-card-header {
@@ -108,11 +104,15 @@
     align-items: start;
 }
 
+
 .step-1-left,
 .step-1-right {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    border: 1px solid #e6d9c8;
+    padding: 18px 20px 20px;
+    border-radius: 14px;
 }
 
 /* Make Step 1 single column on tablets and mobile */

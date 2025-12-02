@@ -101,7 +101,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    align-items: start;
+    align-items: stretch;
 }
 
 
@@ -125,8 +125,8 @@
 /* Step 3 Two Column Layout */
 .step-3-two-column {
     display: grid;
-    grid-template-columns: 35% 1fr;
-    gap: 2rem;
+    grid-template-columns: 30% 1fr;
+    gap: 3rem;
     align-items: start;
     overflow: hidden;
 }
@@ -179,8 +179,6 @@
     background: #fff;
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 2px solid #e5e7eb;
 }
 
 .emblem-section-title {
@@ -242,7 +240,7 @@
 }
 
 .emblem-carousel-option input[type="radio"]:checked ~ .emblem-carousel-preview {
-    border-color: #667eea;
+    border-color: #9e7f3f;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
 }
 
@@ -311,10 +309,10 @@
 }
 
 .emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav:hover:not(:disabled) {
-    background: #667eea !important;
-    background-color: #667eea !important;
+    background: #9e7f3f !important;
+    background-color: #9e7f3f !important;
     color: white !important;
-    border-color: #667eea !important;
+    border-color: #9e7f3f !important;
     transform: translateY(-50%) scale(1.1) !important;
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
 }
@@ -440,7 +438,6 @@ button.emblem-next {
 .diploma-preview-container-inner {
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     border: 2px solid #e5e7eb;
     overflow: hidden;
     display: flex;
@@ -454,9 +451,10 @@ button.emblem-next {
 /* Preview Header */
 .preview-header {
     padding: 1.5rem;
+    display: none;
     border-bottom: 2px solid #e5e7eb;
     background: linear-gradient(to right, #f9fafb, #ffffff);
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
@@ -510,8 +508,8 @@ button.emblem-next {
 }
 
 .btn-icon-small:hover {
-    border-color: #667eea;
-    color: #667eea;
+    border-color: #9e7f3f;
+    color: #9e7f3f;
     background: #f3f4f6;
 }
 

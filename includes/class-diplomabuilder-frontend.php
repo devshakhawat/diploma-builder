@@ -505,9 +505,6 @@ class DiplomaBuilder_Frontend {
                                 </div>
                                 <?php endif; ?>
 
-                                <div class="required-note">
-                                    <p><?php _e('* Required fields', 'diploma-builder'); ?></p>
-                                </div>
                                     </div>
                                     <!-- End Left Column -->
 

@@ -88,7 +88,7 @@
 
 /* Form Header */
 .form-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #9e7f3f 0%, #764ba2 100%);
     padding: 1.75rem 1.5rem;
     border-bottom: none;
     display: flex;
@@ -128,7 +128,7 @@
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    background: linear-gradient(90deg, #9e7f3f, #1d4ed8);
     width: 25%;
     border-radius: 4px;
     transition: width 0.4s ease;
@@ -151,7 +151,7 @@
 }
 
 .step.active {
-    color: #3b82f6;
+    color: #9e7f3f;
 }
 
 .step.completed {
@@ -180,9 +180,9 @@
 }
 
 .step.active .step-circle {
-    background: #3b82f6;
+    background: #9e7f3f;
     color: white;
-    border-color: #3b82f6;
+    border-color: #9e7f3f;
 }
 
 .step-label {
@@ -199,7 +199,7 @@
     overflow-x: hidden;
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 #f8fafc;
-    background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+    background: #ffffff;
 }
 
 .form-content::-webkit-scrollbar {
@@ -552,7 +552,6 @@
     transform: translateY(-50%);
     width: 50px;
     height: 50px;
-    border-radius: 50%;
     background: #fff;
     border: 2px solid #e5e7eb;
     cursor: pointer;
@@ -568,11 +567,10 @@
 }
 
 .carousel-nav-btn:hover:not(:disabled) {
-    background: #3b82f6;
+    background: #9e7f3f;
     color: white;
-    border-color: #3b82f6;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    border-color: #9e7f3f;
+    transform: translateY(-50%);
 }
 
 .carousel-nav-btn:disabled {
@@ -671,7 +669,7 @@
 
 .style-preview-image {
     width: 100%;
-    height: 280px;
+    height: 170px;
     overflow: hidden;
     background: #f8f9fa;
     display: flex;
@@ -680,8 +678,8 @@
 }
 
 .style-preview-image img {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover;
 }
 
@@ -710,7 +708,7 @@
     right: 12px;
     width: 32px;
     height: 32px;
-    background: #3b82f6;
+    background: #9e7f3f;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -938,9 +936,9 @@
 }
 
 .btn-primary {
-    background: #3b82f6;
+    background: #9e7f3f;
     color: white;
-    border: 1px solid #3b82f6;
+    border: 1px solid #9e7f3f;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -986,7 +984,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.75rem 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #9e7f3f 0%, #764ba2 100%);
     flex-shrink: 0;
 }
 
@@ -1559,7 +1557,7 @@
     }
 
     .style-preview-image {
-        height: 240px;
+        height: 170px;
     }
 }
 
@@ -1673,7 +1671,7 @@
     }
 
     .style-preview-image {
-        height: 300px;
+        height: 170px;
     }
 
     .carousel-indicators {
@@ -1720,7 +1718,7 @@
     }
 
     .style-preview-image {
-        height: 200px;
+        height: 170px;
     }
 
     .style-info h5 {
@@ -1858,7 +1856,7 @@
 }
 
 .template-card:hover {
-    border-color: #3b82f6;
+    border-color: #9e7f3f;
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
 }
@@ -1868,7 +1866,7 @@
 }
 
 .template-card input[type="radio"]:checked + .template-preview {
-    border-color: #3b82f6;
+    border-color: #9e7f3f;
 }
 
 .template-card input[type="radio"]:checked + .template-preview .template-overlay {
@@ -1905,7 +1903,7 @@
 
 .template-check {
     background: white;
-    color: #3b82f6;
+    color: #9e7f3f;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -1976,13 +1974,13 @@
 }
 
 .filter-btn:hover {
-    border-color: #3b82f6;
-    color: #3b82f6;
+    border-color: #9e7f3f;
+    color: #9e7f3f;
 }
 
 .filter-btn.active {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: #9e7f3f;
+    border-color: #9e7f3f;
     color: white;
 } */
 
@@ -2008,8 +2006,8 @@
 }
 
 .emblem-tab-btn.active {
-    color: #3b82f6;
-    border-bottom-color: #3b82f6;
+    color: #9e7f3f;
+    border-bottom-color: #9e7f3f;
 }
 
 .emblem-tab-btn:hover:not(.active) {
@@ -2053,7 +2051,7 @@
 }
 
 .purchase-option:hover {
-    border-color: #3b82f6;
+    border-color: #9e7f3f;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
 }
@@ -2173,7 +2171,7 @@
 }
 
 .share-btn:hover {
-    border-color: #3b82f6;
+    border-color: #9e7f3f;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
 }
@@ -2294,7 +2292,7 @@
 
 .tour-spotlight {
     position: absolute;
-    border: 3px solid #3b82f6;
+    border: 3px solid #9e7f3f;
     border-radius: 8px;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
     z-index: 10001;
@@ -2356,8 +2354,8 @@
 }
 
 .tour-btn.primary {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: #9e7f3f;
+    border-color: #9e7f3f;
     color: white;
 }
 
@@ -2496,7 +2494,7 @@
 #diploma-builder-container.fullscreen-mode .preview-header {
     position: sticky;
     top: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #9e7f3f 0%, #764ba2 100%);
     z-index: 1000;
     padding: 15px 30px;
     margin-bottom: 20px;

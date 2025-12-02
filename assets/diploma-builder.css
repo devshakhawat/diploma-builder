@@ -535,10 +535,26 @@
 .carousel-slide {
     min-width: 25%;
     flex-shrink: 0;
-    padding: 0 0.5rem;
+    padding: 0.75rem;
     opacity: 1;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: auto;
+    box-sizing: border-box;
+}
+
+.carousel-slide > * {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-slide:hover > * {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    border-color: #d4a574;
 }
 
 .carousel-slide.active {
@@ -604,26 +620,28 @@
 /* Diploma Style Card */
 .diploma-style-card {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     cursor: pointer;
     border: 2px solid #e5e7eb;
-    border-radius: 12px;
+    border-radius: 0;
     overflow: visible;
     transition: all 0.3s ease;
     background: #fff;
     height: 100%;
+    gap: 0;
 }
 
-.diploma-style-card:hover {
+/* .diploma-style-card:hover {
     border-color: #d4a574;
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-}
+} */
 
 .diploma-style-card input[type="radio"] {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 16px;
+    left: 16px;
     width: 20px;
     height: 20px;
     margin: 0;
@@ -641,30 +659,31 @@
     transform: scale(0);
 }
 
-.diploma-style-card:has(input[type="radio"]:checked) {
+/* .diploma-style-card:has(input[type="radio"]:checked) {
     border-color: #d4a574;
     border-width: 3px;
     box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
-}
+} */
 
 .style-card-content {
     transition: all 0.3s ease;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .style-card-content::before {
     content: attr(data-style-label);
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 14px 16px 14px 48px;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #374151;
-    z-index: 5;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: #1f2937;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    order: -1;
+    min-height: 48px;
 }
 
 .style-preview-image {

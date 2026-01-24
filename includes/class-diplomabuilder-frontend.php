@@ -122,9 +122,44 @@ class DiplomaBuilder_Frontend {
                                                 <select id="country" name="country" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Country', 'diploma-builder'); ?></option>
                                                     <option value="USA" selected><?php _e('USA', 'diploma-builder'); ?></option>
-                                                    <option value="UK" disabled><?php _e('UK (Coming Soon)', 'diploma-builder'); ?></option>
-                                                    <option value="Canada" disabled><?php _e('Canada (Coming Soon)', 'diploma-builder'); ?></option>
-                                                    <option value="International" disabled><?php _e('International (Coming Soon)', 'diploma-builder'); ?></option>
+                                                    <option value="UK"><?php _e('UK', 'diploma-builder'); ?></option>
+                                                    <option value="Canada"><?php _e('Canada', 'diploma-builder'); ?></option>
+                                                    <option value="International"><?php _e('International', 'diploma-builder'); ?></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- State / Province / Region Selection -->
+                                        <div class="subsection">
+                                            <div class="field-group">
+                                                <label for="state_province_region"><?php _e('State / Province / Region', 'diploma-builder'); ?></label>
+                                                <select id="state_province_region" name="state_province_region" class="form-select">
+                                                    <option value=""><?php _e('Select State / Province / Region', 'diploma-builder'); ?></option>
+
+                                                    <!-- USA States -->
+                                                    <?php
+                                                    $uk_regions = $this->get_uk_regions();
+                                                    $canada_provinces = $this->get_canada_provinces();
+                                                    $all_countries = $this->get_all_countries();
+
+                                                    foreach ($us_states as $code => $name): ?>
+                                                        <option value="<?php echo esc_attr($code); ?>" data-country="USA"><?php echo esc_html($name); ?></option>
+                                                    <?php endforeach; ?>
+
+                                                    <!-- UK Regions -->
+                                                    <?php foreach ($uk_regions as $code => $name): ?>
+                                                        <option value="<?php echo esc_attr($code); ?>" data-country="UK" style="display:none;"><?php echo esc_html($name); ?></option>
+                                                    <?php endforeach; ?>
+
+                                                    <!-- Canada Provinces -->
+                                                    <?php foreach ($canada_provinces as $code => $name): ?>
+                                                        <option value="<?php echo esc_attr($code); ?>" data-country="Canada" style="display:none;"><?php echo esc_html($name); ?></option>
+                                                    <?php endforeach; ?>
+
+                                                    <!-- International Countries (A-Z) -->
+                                                    <?php foreach ($all_countries as $code => $name): ?>
+                                                        <option value="<?php echo esc_attr($code); ?>" data-country="International" style="display:none;"><?php echo esc_html($name); ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -854,12 +889,141 @@ class DiplomaBuilder_Frontend {
             'RI' => __('Rhode Island', 'diploma-builder'), 'SC' => __('South Carolina', 'diploma-builder'),
             'SD' => __('South Dakota', 'diploma-builder'), 'TN' => __('Tennessee', 'diploma-builder'), 
             'TX' => __('Texas', 'diploma-builder'), 'UT' => __('Utah', 'diploma-builder'),
-            'VT' => __('Vermont', 'diploma-builder'), 'VA' => __('Virginia', 'diploma-builder'), 
+            'VT' => __('Vermont', 'diploma-builder'), 'VA' => __('Virginia', 'diploma-builder'),
             'WA' => __('Washington', 'diploma-builder'), 'WV' => __('West Virginia', 'diploma-builder'),
             'WI' => __('Wisconsin', 'diploma-builder'), 'WY' => __('Wyoming', 'diploma-builder')
         );
     }
-    
+
+    private function get_uk_regions() {
+        return array(
+            'England' => __('England', 'diploma-builder'),
+            'Scotland' => __('Scotland', 'diploma-builder'),
+            'Wales' => __('Wales', 'diploma-builder'),
+            'Northern Ireland' => __('Northern Ireland', 'diploma-builder')
+        );
+    }
+
+    private function get_canada_provinces() {
+        return array(
+            'AB' => __('Alberta', 'diploma-builder'),
+            'BC' => __('British Columbia', 'diploma-builder'),
+            'MB' => __('Manitoba', 'diploma-builder'),
+            'NB' => __('New Brunswick', 'diploma-builder'),
+            'NL' => __('Newfoundland and Labrador', 'diploma-builder'),
+            'NS' => __('Nova Scotia', 'diploma-builder'),
+            'ON' => __('Ontario', 'diploma-builder'),
+            'PE' => __('Prince Edward Island', 'diploma-builder'),
+            'QC' => __('Quebec', 'diploma-builder'),
+            'SK' => __('Saskatchewan', 'diploma-builder'),
+            'NT' => __('Northwest Territories', 'diploma-builder'),
+            'NU' => __('Nunavut', 'diploma-builder'),
+            'YT' => __('Yukon', 'diploma-builder')
+        );
+    }
+
+    private function get_all_countries() {
+        return array(
+            'AF' => __('Afghanistan', 'diploma-builder'), 'AL' => __('Albania', 'diploma-builder'),
+            'DZ' => __('Algeria', 'diploma-builder'), 'AD' => __('Andorra', 'diploma-builder'),
+            'AO' => __('Angola', 'diploma-builder'), 'AG' => __('Antigua and Barbuda', 'diploma-builder'),
+            'AR' => __('Argentina', 'diploma-builder'), 'AM' => __('Armenia', 'diploma-builder'),
+            'AU' => __('Australia', 'diploma-builder'), 'AT' => __('Austria', 'diploma-builder'),
+            'AZ' => __('Azerbaijan', 'diploma-builder'), 'BS' => __('Bahamas', 'diploma-builder'),
+            'BH' => __('Bahrain', 'diploma-builder'), 'BD' => __('Bangladesh', 'diploma-builder'),
+            'BB' => __('Barbados', 'diploma-builder'), 'BY' => __('Belarus', 'diploma-builder'),
+            'BE' => __('Belgium', 'diploma-builder'), 'BZ' => __('Belize', 'diploma-builder'),
+            'BJ' => __('Benin', 'diploma-builder'), 'BT' => __('Bhutan', 'diploma-builder'),
+            'BO' => __('Bolivia', 'diploma-builder'), 'BA' => __('Bosnia and Herzegovina', 'diploma-builder'),
+            'BW' => __('Botswana', 'diploma-builder'), 'BR' => __('Brazil', 'diploma-builder'),
+            'BN' => __('Brunei', 'diploma-builder'), 'BG' => __('Bulgaria', 'diploma-builder'),
+            'BF' => __('Burkina Faso', 'diploma-builder'), 'BI' => __('Burundi', 'diploma-builder'),
+            'KH' => __('Cambodia', 'diploma-builder'), 'CM' => __('Cameroon', 'diploma-builder'),
+            'CA' => __('Canada', 'diploma-builder'), 'CV' => __('Cape Verde', 'diploma-builder'),
+            'CF' => __('Central African Republic', 'diploma-builder'), 'TD' => __('Chad', 'diploma-builder'),
+            'CL' => __('Chile', 'diploma-builder'), 'CN' => __('China', 'diploma-builder'),
+            'CO' => __('Colombia', 'diploma-builder'), 'KM' => __('Comoros', 'diploma-builder'),
+            'CG' => __('Congo', 'diploma-builder'), 'CR' => __('Costa Rica', 'diploma-builder'),
+            'HR' => __('Croatia', 'diploma-builder'), 'CU' => __('Cuba', 'diploma-builder'),
+            'CY' => __('Cyprus', 'diploma-builder'), 'CZ' => __('Czech Republic', 'diploma-builder'),
+            'DK' => __('Denmark', 'diploma-builder'), 'DJ' => __('Djibouti', 'diploma-builder'),
+            'DM' => __('Dominica', 'diploma-builder'), 'DO' => __('Dominican Republic', 'diploma-builder'),
+            'EC' => __('Ecuador', 'diploma-builder'), 'EG' => __('Egypt', 'diploma-builder'),
+            'SV' => __('El Salvador', 'diploma-builder'), 'GQ' => __('Equatorial Guinea', 'diploma-builder'),
+            'ER' => __('Eritrea', 'diploma-builder'), 'EE' => __('Estonia', 'diploma-builder'),
+            'ET' => __('Ethiopia', 'diploma-builder'), 'FJ' => __('Fiji', 'diploma-builder'),
+            'FI' => __('Finland', 'diploma-builder'), 'FR' => __('France', 'diploma-builder'),
+            'GA' => __('Gabon', 'diploma-builder'), 'GM' => __('Gambia', 'diploma-builder'),
+            'GE' => __('Georgia', 'diploma-builder'), 'DE' => __('Germany', 'diploma-builder'),
+            'GH' => __('Ghana', 'diploma-builder'), 'GR' => __('Greece', 'diploma-builder'),
+            'GD' => __('Grenada', 'diploma-builder'), 'GT' => __('Guatemala', 'diploma-builder'),
+            'GN' => __('Guinea', 'diploma-builder'), 'GW' => __('Guinea-Bissau', 'diploma-builder'),
+            'GY' => __('Guyana', 'diploma-builder'), 'HT' => __('Haiti', 'diploma-builder'),
+            'HN' => __('Honduras', 'diploma-builder'), 'HU' => __('Hungary', 'diploma-builder'),
+            'IS' => __('Iceland', 'diploma-builder'), 'IN' => __('India', 'diploma-builder'),
+            'ID' => __('Indonesia', 'diploma-builder'), 'IR' => __('Iran', 'diploma-builder'),
+            'IQ' => __('Iraq', 'diploma-builder'), 'IE' => __('Ireland', 'diploma-builder'),
+            'IL' => __('Israel', 'diploma-builder'), 'IT' => __('Italy', 'diploma-builder'),
+            'JM' => __('Jamaica', 'diploma-builder'), 'JP' => __('Japan', 'diploma-builder'),
+            'JO' => __('Jordan', 'diploma-builder'), 'KZ' => __('Kazakhstan', 'diploma-builder'),
+            'KE' => __('Kenya', 'diploma-builder'), 'KI' => __('Kiribati', 'diploma-builder'),
+            'KP' => __('North Korea', 'diploma-builder'), 'KR' => __('South Korea', 'diploma-builder'),
+            'KW' => __('Kuwait', 'diploma-builder'), 'KG' => __('Kyrgyzstan', 'diploma-builder'),
+            'LA' => __('Laos', 'diploma-builder'), 'LV' => __('Latvia', 'diploma-builder'),
+            'LB' => __('Lebanon', 'diploma-builder'), 'LS' => __('Lesotho', 'diploma-builder'),
+            'LR' => __('Liberia', 'diploma-builder'), 'LY' => __('Libya', 'diploma-builder'),
+            'LI' => __('Liechtenstein', 'diploma-builder'), 'LT' => __('Lithuania', 'diploma-builder'),
+            'LU' => __('Luxembourg', 'diploma-builder'), 'MK' => __('Macedonia', 'diploma-builder'),
+            'MG' => __('Madagascar', 'diploma-builder'), 'MW' => __('Malawi', 'diploma-builder'),
+            'MY' => __('Malaysia', 'diploma-builder'), 'MV' => __('Maldives', 'diploma-builder'),
+            'ML' => __('Mali', 'diploma-builder'), 'MT' => __('Malta', 'diploma-builder'),
+            'MH' => __('Marshall Islands', 'diploma-builder'), 'MR' => __('Mauritania', 'diploma-builder'),
+            'MU' => __('Mauritius', 'diploma-builder'), 'MX' => __('Mexico', 'diploma-builder'),
+            'FM' => __('Micronesia', 'diploma-builder'), 'MD' => __('Moldova', 'diploma-builder'),
+            'MC' => __('Monaco', 'diploma-builder'), 'MN' => __('Mongolia', 'diploma-builder'),
+            'ME' => __('Montenegro', 'diploma-builder'), 'MA' => __('Morocco', 'diploma-builder'),
+            'MZ' => __('Mozambique', 'diploma-builder'), 'MM' => __('Myanmar', 'diploma-builder'),
+            'NA' => __('Namibia', 'diploma-builder'), 'NR' => __('Nauru', 'diploma-builder'),
+            'NP' => __('Nepal', 'diploma-builder'), 'NL' => __('Netherlands', 'diploma-builder'),
+            'NZ' => __('New Zealand', 'diploma-builder'), 'NI' => __('Nicaragua', 'diploma-builder'),
+            'NE' => __('Niger', 'diploma-builder'), 'NG' => __('Nigeria', 'diploma-builder'),
+            'NO' => __('Norway', 'diploma-builder'), 'OM' => __('Oman', 'diploma-builder'),
+            'PK' => __('Pakistan', 'diploma-builder'), 'PW' => __('Palau', 'diploma-builder'),
+            'PA' => __('Panama', 'diploma-builder'), 'PG' => __('Papua New Guinea', 'diploma-builder'),
+            'PY' => __('Paraguay', 'diploma-builder'), 'PE' => __('Peru', 'diploma-builder'),
+            'PH' => __('Philippines', 'diploma-builder'), 'PL' => __('Poland', 'diploma-builder'),
+            'PT' => __('Portugal', 'diploma-builder'), 'QA' => __('Qatar', 'diploma-builder'),
+            'RO' => __('Romania', 'diploma-builder'), 'RU' => __('Russia', 'diploma-builder'),
+            'RW' => __('Rwanda', 'diploma-builder'), 'KN' => __('Saint Kitts and Nevis', 'diploma-builder'),
+            'LC' => __('Saint Lucia', 'diploma-builder'), 'VC' => __('Saint Vincent and the Grenadines', 'diploma-builder'),
+            'WS' => __('Samoa', 'diploma-builder'), 'SM' => __('San Marino', 'diploma-builder'),
+            'ST' => __('Sao Tome and Principe', 'diploma-builder'), 'SA' => __('Saudi Arabia', 'diploma-builder'),
+            'SN' => __('Senegal', 'diploma-builder'), 'RS' => __('Serbia', 'diploma-builder'),
+            'SC' => __('Seychelles', 'diploma-builder'), 'SL' => __('Sierra Leone', 'diploma-builder'),
+            'SG' => __('Singapore', 'diploma-builder'), 'SK' => __('Slovakia', 'diploma-builder'),
+            'SI' => __('Slovenia', 'diploma-builder'), 'SB' => __('Solomon Islands', 'diploma-builder'),
+            'SO' => __('Somalia', 'diploma-builder'), 'ZA' => __('South Africa', 'diploma-builder'),
+            'SS' => __('South Sudan', 'diploma-builder'), 'ES' => __('Spain', 'diploma-builder'),
+            'LK' => __('Sri Lanka', 'diploma-builder'), 'SD' => __('Sudan', 'diploma-builder'),
+            'SR' => __('Suriname', 'diploma-builder'), 'SZ' => __('Swaziland', 'diploma-builder'),
+            'SE' => __('Sweden', 'diploma-builder'), 'CH' => __('Switzerland', 'diploma-builder'),
+            'SY' => __('Syria', 'diploma-builder'), 'TW' => __('Taiwan', 'diploma-builder'),
+            'TJ' => __('Tajikistan', 'diploma-builder'), 'TZ' => __('Tanzania', 'diploma-builder'),
+            'TH' => __('Thailand', 'diploma-builder'), 'TL' => __('Timor-Leste', 'diploma-builder'),
+            'TG' => __('Togo', 'diploma-builder'), 'TO' => __('Tonga', 'diploma-builder'),
+            'TT' => __('Trinidad and Tobago', 'diploma-builder'), 'TN' => __('Tunisia', 'diploma-builder'),
+            'TR' => __('Turkey', 'diploma-builder'), 'TM' => __('Turkmenistan', 'diploma-builder'),
+            'TV' => __('Tuvalu', 'diploma-builder'), 'UG' => __('Uganda', 'diploma-builder'),
+            'UA' => __('Ukraine', 'diploma-builder'), 'AE' => __('United Arab Emirates', 'diploma-builder'),
+            'GB' => __('United Kingdom', 'diploma-builder'), 'US' => __('United States', 'diploma-builder'),
+            'UY' => __('Uruguay', 'diploma-builder'), 'UZ' => __('Uzbekistan', 'diploma-builder'),
+            'VU' => __('Vanuatu', 'diploma-builder'), 'VA' => __('Vatican City', 'diploma-builder'),
+            'VE' => __('Venezuela', 'diploma-builder'), 'VN' => __('Vietnam', 'diploma-builder'),
+            'YE' => __('Yemen', 'diploma-builder'), 'ZM' => __('Zambia', 'diploma-builder'),
+            'ZW' => __('Zimbabwe', 'diploma-builder')
+        );
+    }
+
 }
 
 ?>

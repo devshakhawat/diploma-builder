@@ -88,6 +88,9 @@ class DiplomaBuilder_Ajax {
             }
             
             // Create a temporary diploma record
+            // Use state_province_region if provided, otherwise fall back to state for backward compatibility
+            $state_value = !empty($_POST['state_province_region']) ? $_POST['state_province_region'] : ($_POST['state'] ?? '');
+
             $data = array(
                 'diploma_style' => sanitize_text_field($_POST['diploma_style'] ?? 'classic'),
                 'paper_color' => sanitize_text_field($_POST['paper_color'] ?? 'white'),
@@ -97,7 +100,7 @@ class DiplomaBuilder_Ajax {
                 'student_name' => sanitize_text_field($_POST['student_name'] ?? ''),
                 'graduation_date' => sanitize_text_field($_POST['graduation_date'] ?? ''),
                 'city' => sanitize_text_field($_POST['city'] ?? ''),
-                'state' => sanitize_text_field($_POST['state'] ?? ''),
+                'state' => sanitize_text_field($state_value),
                 'user_id' => $user_id
             );
             
@@ -416,6 +419,9 @@ class DiplomaBuilder_Ajax {
      * Sanitize diploma data
      */
     private function sanitize_diploma_data($data) {
+        // Use state_province_region if provided, otherwise fall back to state for backward compatibility
+        $state_value = !empty($data['state_province_region']) ? $data['state_province_region'] : ($data['state'] ?? '');
+
         return array(
             'diploma_style' => sanitize_text_field($data['diploma_style'] ?? 'classic'),
             'paper_color' => sanitize_text_field($data['paper_color'] ?? 'white'),
@@ -425,7 +431,7 @@ class DiplomaBuilder_Ajax {
             'student_name' => sanitize_text_field($data['student_name'] ?? ''),
             'graduation_date' => sanitize_text_field($data['graduation_date'] ?? ''),
             'city' => sanitize_text_field($data['city'] ?? ''),
-            'state' => sanitize_text_field($data['state'] ?? ''),
+            'state' => sanitize_text_field($state_value),
             'is_public' => intval($data['is_public'] ?? 0),
             'diploma_id' => intval($data['diploma_id'] ?? 0)
         );

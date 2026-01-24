@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
         city: '',
         state: '',
         country: '',
+        state_province_region: '',
         document_type: '',
         diploma_size: '',
         degree_type: '',
@@ -138,6 +139,21 @@ jQuery(document).ready(function($) {
         const styleSubsection = $('.subsection').has('#diploma_style');
         const paperSubsection = $('.subsection').has('#paper_color');
         const emblemFields = $('.emblem-type-tabs').closest('.emblem-selection-section');
+
+        // Filter state_province_region dropdown based on selected country
+        const $regionSelect = $('#state_province_region');
+        const $allOptions = $regionSelect.find('option:not(:first)');
+
+        // Reset selection
+        $regionSelect.val('');
+
+        // Hide all options first
+        $allOptions.hide().prop('disabled', true);
+
+        // Show only options for the selected country
+        if (selectedCountry) {
+            $allOptions.filter(`[data-country="${selectedCountry}"]`).show().prop('disabled', false);
+        }
 
         if (selectedCountry === 'USA') {
             // Enable all fields for USA
@@ -331,6 +347,12 @@ jQuery(document).ready(function($) {
         // Sync currentConfig with default values from form fields
         syncConfigFromForm();
 
+        // Initialize country selection to show appropriate regions
+        const initialCountry = $('#country').val();
+        if (initialCountry) {
+            handleCountrySelection(initialCountry);
+        }
+
         // Initialize the was-checked state for diploma style radio buttons
         $('input[name="diploma_style"]:checked').data('was-checked', true);
 
@@ -360,6 +382,7 @@ jQuery(document).ready(function($) {
     // Sync currentConfig with form field values
     function syncConfigFromForm() {
         currentConfig.country = $('#country').val() || '';
+        currentConfig.state_province_region = $('#state_province_region').val() || '';
         currentConfig.document_type = $('#document_type').val() || '';
         currentConfig.diploma_size = $('#diploma_size').val() || '';
         currentConfig.paper_color = $('input[name="paper_color"]:checked').val() || '';
@@ -719,6 +742,14 @@ jQuery(document).ready(function($) {
             currentConfig.country = selectedCountry;
             validateField($(this));
             handleCountrySelection(selectedCountry);
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // State/Province/Region dropdown
+        $('#state_province_region').on('change', function() {
+            currentConfig.state_province_region = $(this).val();
+            validateField($(this));
             updatePreview();
             updateReviewSummary();
         });
@@ -1652,6 +1683,7 @@ jQuery(document).ready(function($) {
             city: '',
             state: '',
             country: 'USA',
+            state_province_region: '',
             document_type: 'High School',
             diploma_size: '8.5x11',
             degree_type: '',
@@ -1672,6 +1704,8 @@ jQuery(document).ready(function($) {
         $('#city').val('');
         $('#state').val('');
         $('#country').val('USA');
+        $('#state_province_region').val('');
+        handleCountrySelection('USA'); // Reset region options for USA
         $('#document_type').val('High School');
         updateDiplomaSizeOptions('High School');
         $('#diploma_size').val('8.5x11');

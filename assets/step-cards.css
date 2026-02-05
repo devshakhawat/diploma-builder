@@ -122,29 +122,20 @@
     }
 }
 
-/* Step 3 Two Column Layout */
-.step-3-two-column {
-    display: grid;
-    grid-template-columns: 30% 1fr;
-    gap: 3rem;
-    align-items: start;
-    overflow: hidden;
-}
-
-.step-3-left {
+/* Step 3 Single Column Layout */
+.step-3-card .step-card-body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    min-width: 0;
 }
 
 /* Field Group Spacing in Step 3 */
-.step-3-left .field-group {
+.step-3-card .field-group {
     margin-bottom: 0;
     min-width: 0;
 }
 
-.step-3-left .field-row {
+.step-3-card .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -152,25 +143,33 @@
     min-width: 0;
 }
 
-.step-3-left .field-row .field-group {
+.step-3-card .field-row .field-group {
     min-width: 0;
     overflow: hidden;
 }
 
-.step-3-left .field-row .field-group .form-input,
-.step-3-left .field-row .field-group .form-select {
+.step-3-card .field-row .field-group .form-input,
+.step-3-card .field-row .field-group .form-select {
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
 }
 
-.step-3-right {
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
+/* Step 4 - Full Width Preview */
+.step-4-card .step-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.step-4-card .diploma-preview-wrapper {
+    max-height: none;
+    width: 100%;
+}
+
+.step-4-card .diploma-preview-container-inner {
+    max-height: none;
+    width: 100%;
 }
 
 /* Emblem Selection Section in Right Column */
@@ -414,19 +413,7 @@ button.emblem-next {
     }
 }
 
-/* Make Step 3 single column on tablets and mobile */
-@media (max-width: 1199px) {
-    .step-3-two-column {
-        grid-template-columns: 1fr;
-    }
-
-    .step-3-right {
-        position: relative;
-        top: 0;
-    }
-}
-
-/* Preview Wrapper - Inside Step 3 */
+/* Preview Wrapper */
 .diploma-preview-wrapper {
     height: fit-content;
     max-height: calc(100vh - 4rem);
@@ -634,14 +621,12 @@ button.emblem-next {
         padding: 1.25rem;
     }
 
-    .step-1-two-column,
-    .step-3-two-column {
+    .step-1-two-column {
         gap: 1.5rem;
     }
 
     .step-1-left,
-    .step-1-right,
-    .step-3-left {
+    .step-1-right {
         gap: 1.25rem;
     }
 }
@@ -678,14 +663,12 @@ button.emblem-next {
         padding: 1rem;
     }
 
-    .step-1-two-column,
-    .step-3-two-column {
+    .step-1-two-column {
         gap: 1.25rem;
     }
 
     .step-1-left,
-    .step-1-right,
-    .step-3-left {
+    .step-1-right {
         gap: 1rem;
     }
 

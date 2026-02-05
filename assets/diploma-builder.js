@@ -341,8 +341,7 @@ jQuery(document).ready(function($) {
     function initializeForm() {
         // Show only Step 1 initially
         $('.step-1-card').show();
-        $('.step-2-card, .step-3-card').hide();
-        $('#diploma-preview-wrapper').hide();
+        $('.step-2-card, .step-3-card, .step-4-card').hide();
 
         // Sync currentConfig with default values from form fields
         syncConfigFromForm();
@@ -367,7 +366,7 @@ jQuery(document).ready(function($) {
                 currentConfig.diploma_style = selectedStyle;
                 markStepComplete(2);
                 showStepCard(3);
-                $('#diploma-preview-wrapper').fadeIn(400);
+                showStepCard(4);
                 updatePreview();
             }
         }
@@ -472,11 +471,11 @@ jQuery(document).ready(function($) {
                 showStepCard(2);
             } else {
                 markStepIncomplete(1);
-                // Hide Step 2 and Step 3 when Step 1 is incomplete
+                // Hide Step 2, Step 3, and Step 4 when Step 1 is incomplete
                 hideStepCard(2);
                 hideStepCard(3);
+                hideStepCard(4);
                 markStepIncomplete(2);
-                $('#diploma-preview-wrapper').hide();
             }
         });
 
@@ -490,11 +489,11 @@ jQuery(document).ready(function($) {
                 showStepCard(2);
             } else {
                 markStepIncomplete(1);
-                // Hide Step 2 and Step 3 when Step 1 is incomplete
+                // Hide Step 2, Step 3, and Step 4 when Step 1 is incomplete
                 hideStepCard(2);
                 hideStepCard(3);
+                hideStepCard(4);
                 markStepIncomplete(2);
-                $('#diploma-preview-wrapper').hide();
             }
         });
 
@@ -530,7 +529,7 @@ jQuery(document).ready(function($) {
                 currentConfig.diploma_style = '';
                 markStepIncomplete(2);
                 hideStepCard(3);
-                $('#diploma-preview-wrapper').hide();
+                hideStepCard(4);
             } else {
                 // Select if not selected
                 selectStyleFromSlide(slideIndex);
@@ -549,7 +548,7 @@ jQuery(document).ready(function($) {
                 currentConfig.diploma_style = '';
                 markStepIncomplete(2);
                 hideStepCard(3);
-                $('#diploma-preview-wrapper').hide();
+                hideStepCard(4);
             } else {
                 // Mark as checked
                 $('input[name="diploma_style"]').data('was-checked', false);
@@ -572,10 +571,10 @@ jQuery(document).ready(function($) {
                     goToPage(pageIndex);
                 }
 
-                // Auto-reveal Step 3 and preview when style is selected
+                // Auto-reveal Step 3, Step 4, and preview when style is selected
                 markStepComplete(2);
                 showStepCard(3);
-                $('#diploma-preview-wrapper').fadeIn(400);
+                showStepCard(4);
                 updatePreview();
             }
         });

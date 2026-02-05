@@ -289,9 +289,6 @@ class DiplomaBuilder_Frontend {
                             </div>
 
                             <div class="step-card-body">
-                                <div class="step-3-two-column">
-                                    <!-- Left Column: Form Fields -->
-                                    <div class="step-3-left">
                                 <!-- Degree Type Selection -->
                                     <div class="field-group">
                                         <label for="degree_type"><?php _e('Degree Type (Optional)', 'diploma-builder'); ?></label>
@@ -522,51 +519,7 @@ class DiplomaBuilder_Frontend {
                                         </div>
                                     </div>
 
-                                <!-- Purchase Options -->
-                                <?php echo $this->get_purchase_option(); ?>
-
-                                <div class="form-actions">
-                                    <?php if (current_user_can('manage_options') ): ?>
-                                        <button type="button" id="download-diploma" class="btn btn-success">
-                                            <span class="btn-icon">📥</span>
-                                            <?php _e('Download Diploma', 'diploma-builder'); ?>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-
-                                <?php if (!is_user_logged_in() ): ?>
-                                <div class="preview-notice">
-                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
-                                </div>
-                                <?php endif; ?>
-
-                                    </div>
-                                    <!-- End Left Column -->
-
-                                    <!-- Right Column: Live Preview -->
-                                    <div class="step-3-right">
-                                        <div class="diploma-preview-wrapper" id="diploma-preview-wrapper" style="display: none;">
-                                            <div class="diploma-preview-container-inner" id="diploma-preview-container-inner">
-                                                <div class="preview-header">
-                                                    <div class="preview-title">
-                                                        <span class="preview-icon">✨</span>
-                                                        <h3><?php _e('Live Preview', 'diploma-builder'); ?></h3>
-                                                    </div>
-                                                    <div class="preview-controls">
-                                                        <button type="button" id="zoom-out" class="btn-icon-small" title="<?php _e('Zoom Out', 'diploma-builder'); ?>">−</button>
-                                                        <span id="zoom-level">100%</span>
-                                                        <button type="button" id="zoom-in" class="btn-icon-small" title="<?php _e('Zoom In', 'diploma-builder'); ?>">+</button>
-                                                        <button type="button" id="reset-zoom" class="btn-icon-small" title="<?php _e('Reset Zoom', 'diploma-builder'); ?>">⟲</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="preview-body">
-                                                    <div class="diploma-preview" id="diploma-preview"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Emblem Selection Carousel -->
+                                <!-- Emblem Selection Carousel -->
                                         <div class="emblem-selection-section">
                                             <h4 class="emblem-section-title"><?php _e('Choose Your Emblem', 'diploma-builder'); ?></h4>
 
@@ -644,9 +597,56 @@ class DiplomaBuilder_Frontend {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- End Right Column -->
+                            </div>
+                        </div>
+
+                        <!-- STEP 4: Preview Your Order -->
+                        <div class="step-card step-4-card" data-step="4" style="display: none;">
+                            <div class="step-card-header">
+                                <div class="step-header-content">
+                                    <h3 class="step-title"><?php _e('Step 4: Preview Your Order', 'diploma-builder'); ?></h3>
                                 </div>
+                            </div>
+
+                            <div class="step-card-body">
+                                <div class="diploma-preview-wrapper" id="diploma-preview-wrapper">
+                                    <div class="diploma-preview-container-inner" id="diploma-preview-container-inner">
+                                        <div class="preview-header">
+                                            <div class="preview-title">
+                                                <span class="preview-icon">✨</span>
+                                                <h3><?php _e('Live Preview', 'diploma-builder'); ?></h3>
+                                            </div>
+                                            <div class="preview-controls">
+                                                <button type="button" id="zoom-out" class="btn-icon-small" title="<?php _e('Zoom Out', 'diploma-builder'); ?>">−</button>
+                                                <span id="zoom-level">100%</span>
+                                                <button type="button" id="zoom-in" class="btn-icon-small" title="<?php _e('Zoom In', 'diploma-builder'); ?>">+</button>
+                                                <button type="button" id="reset-zoom" class="btn-icon-small" title="<?php _e('Reset Zoom', 'diploma-builder'); ?>">⟲</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="preview-body">
+                                            <div class="diploma-preview" id="diploma-preview"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Purchase Options -->
+                                <?php echo $this->get_purchase_option(); ?>
+
+                                <div class="form-actions">
+                                    <?php if (current_user_can('manage_options') ): ?>
+                                        <button type="button" id="download-diploma" class="btn btn-success">
+                                            <span class="btn-icon">📥</span>
+                                            <?php _e('Download Diploma', 'diploma-builder'); ?>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+
+                                <?php if (!is_user_logged_in() ): ?>
+                                <div class="preview-notice">
+                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
+                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         </div>

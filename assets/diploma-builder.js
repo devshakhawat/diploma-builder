@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
         diploma_style: '',
         paper_color: '',
         emblem_type: 'generic',
-        emblem_value: 'graduation_cap',
+        emblem_value: '',
         school_name: '',
         student_name: '',
         graduation_date: '',
@@ -386,7 +386,7 @@ jQuery(document).ready(function($) {
         currentConfig.diploma_size = $('#diploma_size').val() || '';
         currentConfig.paper_color = $('input[name="paper_color"]:checked').val() || '';
         currentConfig.diploma_style = $('input[name="diploma_style"]:checked').val() || '';
-        currentConfig.emblem_value = $('input[name="emblem_value"]:checked').val() || 'graduation_cap';
+        currentConfig.emblem_value = $('input[name="emblem_value"]:checked').val() || '';
         currentConfig.school_name = $('#school_name').val() || '';
         currentConfig.student_name = $('#student_name').val() || '';
         currentConfig.graduation_date = $('#graduation_date').val() || '';
@@ -632,7 +632,7 @@ jQuery(document).ready(function($) {
             const width = $(window).width();
             if (width <= 480) return 1;
             if (width <= 768) return 2;
-            return 3;
+            return 4;
         }
 
         function getTotalPages() {
@@ -896,7 +896,7 @@ jQuery(document).ready(function($) {
     // Update emblem value when type changes
     function updateEmblemValue() {
         if (currentConfig.emblem_type === 'generic') {
-            currentConfig.emblem_value = $('input[name="emblem_value"][data-type="generic"]:checked').val() || 'graduation_cap';
+            currentConfig.emblem_value = $('input[name="emblem_value"][data-type="generic"]:checked').val() || '';
         } else {
             currentConfig.emblem_value = $('#state-emblem-select').val() || '';
         }
@@ -1392,18 +1392,23 @@ jQuery(document).ready(function($) {
     
     // Get emblem source URL
     function getEmblemSrc() {
-        // Special handling for preview emblem
-        if (currentConfig.emblem_type === 'generic' && currentConfig.emblem_value === 'school_preview') {
-            // For preview emblem, we'll show a special placeholder
+        if (!currentConfig.emblem_value) {
             return '';
         }
-        
-        if (currentConfig.emblem_type === 'generic') {
-            return `${diploma_ajax.plugin_url}assets/emblems/generic/${currentConfig.emblem_value}.png`;
-        } else if (currentConfig.emblem_type === 'state' && currentConfig.emblem_value) {
+
+        // Look up from the emblem URL map passed from PHP
+        if (currentConfig.emblem_type === 'generic' && diploma_ajax.emblem_urls) {
+            const url = diploma_ajax.emblem_urls[currentConfig.emblem_value];
+            if (url) {
+                return url;
+            }
+        }
+
+        if (currentConfig.emblem_type === 'state' && currentConfig.emblem_value) {
             return `${diploma_ajax.plugin_url}assets/emblems/states/${currentConfig.emblem_value}.png`;
         }
-        return `${diploma_ajax.plugin_url}assets/emblems/generic/graduation_cap.jpg`;
+
+        return '';
     }
     
     // Navigate between steps
@@ -1675,7 +1680,7 @@ jQuery(document).ready(function($) {
             diploma_style: 'classic',
             paper_color: 'white',
             emblem_type: 'generic',
-            emblem_value: 'graduation_cap',
+            emblem_value: $('input[name="emblem_value"]').first().val() || '',
             school_name: '',
             student_name: '',
             graduation_date: '',

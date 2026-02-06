@@ -48,6 +48,39 @@ class DiplomaBuilder_Emblems {
         register_post_type(self::POST_TYPE, $args);
     }
 
+    /**
+     * Get all published emblems with their featured image URLs.
+     *
+     * @return array Keyed by post ID: ['name' => string, 'image_url' => string]
+     */
+    public static function get_all() {
+        $emblems = array();
+        $query = new WP_Query(array(
+            'post_type'      => self::POST_TYPE,
+            'posts_per_page' => -1,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'ASC',
+        ));
+
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $post_id = get_the_ID();
+                $thumbnail_url = get_the_post_thumbnail_url($post_id, 'medium');
+                if ($thumbnail_url) {
+                    $emblems[$post_id] = array(
+                        'name'      => get_the_title(),
+                        'image_url' => $thumbnail_url,
+                    );
+                }
+            }
+            wp_reset_postdata();
+        }
+
+        return $emblems;
+    }
+
     public function add_thumbnail_support() {
         $supported = get_theme_support('post-thumbnails');
 

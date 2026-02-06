@@ -552,7 +552,7 @@ class DiplomaBuilder_Frontend {
                                                                     <label class="emblem-carousel-option" for="emblem_<?php echo $key; ?>">
                                                                         <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $emblem_index === 0 ? 'checked' : ''; ?>>
                                                                         <div class="emblem-carousel-preview">
-                                                                            <img src="<?php echo DIPLOMA_BUILDER_URL . 'assets/emblems/generic/' . $key . '.png'; ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
+                                                                            <img src="<?php echo esc_url($emblem['image_url']); ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
                                                                         </div>
                                                                         <div class="emblem-carousel-info">
                                                                             <h6><?php echo esc_html($emblem['name']); ?></h6>
@@ -821,12 +821,6 @@ class DiplomaBuilder_Frontend {
                 'description' => __('Ornate borders with artistic flourishes', 'diploma-builder'),
                 'emblems' => 2,
                 'template' => 'decorative'
-            ),
-            'minimalist' => array(
-                'name' => __('Minimalist Clean', 'diploma-builder'),
-                'description' => __('Simple and sophisticated layout', 'diploma-builder'),
-                'emblems' => 1,
-                'template' => 'minimalist'
             )
         );
     }
@@ -841,28 +835,7 @@ class DiplomaBuilder_Frontend {
     }
     
     private function get_generic_emblems() {
-        return array(
-            'graduation_cap' => array(
-                'name' => __('Graduation Cap', 'diploma-builder'),
-                'description' => __('Traditional academic cap symbol', 'diploma-builder')
-            ),
-            'diploma_seal' => array(
-                'name' => __('Diploma Seal', 'diploma-builder'),
-                'description' => __('Official diploma seal emblem', 'diploma-builder')
-            ),
-            'academic_torch' => array(
-                'name' => __('Academic Torch', 'diploma-builder'),
-                'description' => __('Torch of knowledge and learning', 'diploma-builder')
-            ),
-            'school_crest' => array(
-                'name' => __('Preview', 'diploma-builder'),
-                'description' => __('Live preview of your diploma', 'diploma-builder')
-            ),
-            'laurel_wreath' => array(
-                'name' => __('Preview', 'diploma-builder'),
-                'description' => __('Live preview of your diploma', 'diploma-builder')
-            )
-        );
+        return DiplomaBuilder_Emblems::get_all();
     }
     
     private function get_us_states() {

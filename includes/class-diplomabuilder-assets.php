@@ -85,6 +85,13 @@ class DiplomaBuilder_Assets {
                 }
             }
             
+            // Build emblem URL map from custom post type
+            $emblem_urls = array();
+            $emblems = DiplomaBuilder_Emblems::get_all();
+            foreach ($emblems as $id => $emblem) {
+                $emblem_urls[$id] = $emblem['image_url'];
+            }
+
             // Localize script with AJAX URL and nonce
             wp_localize_script('diploma-builder', 'diploma_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
@@ -93,6 +100,7 @@ class DiplomaBuilder_Assets {
                 'is_user_logged_in' => is_user_logged_in() ? 1 : 0,
                 'is_customer' => $is_customer ? 1 : 0,
                 'is_admin' => $is_admin ? 1 : 0,
+                'emblem_urls' => $emblem_urls,
             ));
         }
     }

@@ -208,7 +208,7 @@
 }
 
 .emblem-carousel-slide {
-    min-width: calc(33.333% - 1rem);
+    min-width: calc(25% - 1.125rem);
     flex-shrink: 0;
     display: flex;
     justify-content: center;

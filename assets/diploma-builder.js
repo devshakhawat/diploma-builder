@@ -367,6 +367,7 @@ jQuery(document).ready(function($) {
                 markStepComplete(2);
                 showStepCard(3);
                 showStepCard(4);
+                showStepCard(5);
                 updatePreview();
             }
         }
@@ -471,10 +472,11 @@ jQuery(document).ready(function($) {
                 showStepCard(2);
             } else {
                 markStepIncomplete(1);
-                // Hide Step 2, Step 3, and Step 4 when Step 1 is incomplete
+                // Hide Step 2, Step 3, Step 4, and Step 5 when Step 1 is incomplete
                 hideStepCard(2);
                 hideStepCard(3);
                 hideStepCard(4);
+                hideStepCard(5);
                 markStepIncomplete(2);
             }
         });
@@ -489,10 +491,11 @@ jQuery(document).ready(function($) {
                 showStepCard(2);
             } else {
                 markStepIncomplete(1);
-                // Hide Step 2, Step 3, and Step 4 when Step 1 is incomplete
+                // Hide Step 2, Step 3, Step 4, and Step 5 when Step 1 is incomplete
                 hideStepCard(2);
                 hideStepCard(3);
                 hideStepCard(4);
+                hideStepCard(5);
                 markStepIncomplete(2);
             }
         });
@@ -530,6 +533,7 @@ jQuery(document).ready(function($) {
                 markStepIncomplete(2);
                 hideStepCard(3);
                 hideStepCard(4);
+                hideStepCard(5);
             } else {
                 // Select if not selected
                 selectStyleFromSlide(slideIndex);
@@ -549,6 +553,7 @@ jQuery(document).ready(function($) {
                 markStepIncomplete(2);
                 hideStepCard(3);
                 hideStepCard(4);
+                hideStepCard(5);
             } else {
                 // Mark as checked
                 $('input[name="diploma_style"]').data('was-checked', false);
@@ -571,10 +576,11 @@ jQuery(document).ready(function($) {
                     goToPage(pageIndex);
                 }
 
-                // Auto-reveal Step 3, Step 4, and preview when style is selected
+                // Auto-reveal Step 3, Step 4, Step 5, and preview when style is selected
                 markStepComplete(2);
                 showStepCard(3);
                 showStepCard(4);
+                showStepCard(5);
                 updatePreview();
             }
         });

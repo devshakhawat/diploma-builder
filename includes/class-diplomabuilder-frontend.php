@@ -167,7 +167,7 @@ class DiplomaBuilder_Frontend {
                                         <!-- Document Type Selection -->
                                         <div class="subsection">
                                             <div class="field-group">
-                                                <label for="document_type"><?php _e('Select Document Type *', 'diploma-builder'); ?></label>
+                                                <label for="document_type"><?php _e('Document Type *', 'diploma-builder'); ?></label>
                                                 <select id="document_type" name="document_type" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Document Type', 'diploma-builder'); ?></option>
                                                     <option value="GED"><?php _e('GED', 'diploma-builder'); ?></option>
@@ -630,6 +630,23 @@ class DiplomaBuilder_Frontend {
                                     </div>
                                 </div>
 
+                                <?php if (!is_user_logged_in() ): ?>
+                                <div class="preview-notice">
+                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- STEP 5: Place Your Order -->
+                        <div class="step-card step-5-card" data-step="5" style="display: none;">
+                            <div class="step-card-header">
+                                <div class="step-header-content">
+                                    <h3 class="step-title"><?php _e('Step 5: Place Your Order', 'diploma-builder'); ?></h3>
+                                </div>
+                            </div>
+
+                            <div class="step-card-body">
                                 <!-- Purchase Options -->
                                 <?php echo $this->get_purchase_option(); ?>
 
@@ -641,12 +658,6 @@ class DiplomaBuilder_Frontend {
                                         </button>
                                     <?php endif; ?>
                                 </div>
-
-                                <?php if (!is_user_logged_in() ): ?>
-                                <div class="preview-notice">
-                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
-                                </div>
-                                <?php endif; ?>
                             </div>
                         </div>
                         </div>
@@ -654,72 +665,6 @@ class DiplomaBuilder_Frontend {
                 </div>
             </div>
 
-            <!-- Hidden sections for compatibility -->
-            <div style="display: none;">
-                <div class="form-section" data-step="5">
-                    <div class="section-header">
-                        <h3><?php _e('Step 5 of 5', 'diploma-builder'); ?></h3>
-                        <div class="section-title"><?php _e('Review & Download', 'diploma-builder'); ?></div>
-                        <p class="section-description"><?php _e('Review your diploma and download', 'diploma-builder'); ?></p>
-                            </div>
-                            
-                            <div class="section-content">
-                                <div class="section-icon">✅</div>
-                                <h4><?php _e('Review Your Diploma', 'diploma-builder'); ?></h4>
-                                <p class="form-note"><?php _e('Please review your diploma in the preview panel. When you\'re satisfied, you can save or download it.', 'diploma-builder'); ?></p>
-                                
-                                <div class="review-summary">
-                                    <div class="summary-item">
-                                        <strong><?php _e('Student:', 'diploma-builder'); ?></strong>
-                                        <span id="review-student-name">[Student Name]</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <strong><?php _e('School:', 'diploma-builder'); ?></strong>
-                                        <span id="review-school-name">Your High School Name</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <strong><?php _e('Date:', 'diploma-builder'); ?></strong>
-                                        <span id="review-graduation-date">[Graduation Date]</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <strong><?php _e('Location:', 'diploma-builder'); ?></strong>
-                                        <span id="review-location">[City, State]</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <strong><?php _e('Style:', 'diploma-builder'); ?></strong>
-                                        <span id="review-diploma-style">[Diploma Style]</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <strong><?php _e('Paper:', 'diploma-builder'); ?></strong>
-                                        <span id="review-paper-color">[Paper Color]</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Purchase Options -->
-                                 <?php  echo $this->get_purchase_option();  ?>
-
-                                <div class="form-actions" style="display: none;">
-                                    <?php if (current_user_can('manage_options') ): ?>
-                                        <button type="button" id="download-diploma" class="btn btn-success">
-                                            <span class="btn-icon">📥</span>
-                                            <?php _e('Download Diploma', 'diploma-builder'); ?>
-                                        </button>
-                                    <?php endif; ?>
-                                    <!-- <button type="button" id="save-diploma" class="btn btn-primary">
-                                        <span class="btn-icon">💾</span>
-                                        <?php // _e('Save Diploma', 'diploma-builder'); ?>
-                                    </button> -->
-                                </div>                              
-                               
-                                <?php if (!is_user_logged_in() ): ?>
-                                <div class="preview-notice">
-                                    <p><?php _e('This is a preview only. Purchase a diploma to remove the watermark and unlock full features.', 'diploma-builder'); ?></p>
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                </div>
-            </div>
             
         </div>
         

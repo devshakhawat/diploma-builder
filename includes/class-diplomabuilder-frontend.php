@@ -181,11 +181,11 @@ class DiplomaBuilder_Frontend {
                                         <!-- Diploma Size Selection -->
                                         <div class="subsection">
                                             <div class="field-group">
-                                                <label for="diploma_size"><?php _e('Select Size *', 'diploma-builder'); ?></label>
+                                                <label for="diploma_size"><?php _e('Diploma Size *', 'diploma-builder'); ?></label>
                                                 <select id="diploma_size" name="diploma_size" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Size', 'diploma-builder'); ?></option>
                                                     <option value="8.5x11" selected><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
-                                                    <option value="7.5x9.5"><?php _e('7.5" × 9.5"', 'diploma-builder'); ?></option>
+                                                    <option value="8.27x11.69"><?php _e('8.27" × 11.69" (A4)', 'diploma-builder'); ?></option>
                                                 </select>
                                             </div>
                                         </div>

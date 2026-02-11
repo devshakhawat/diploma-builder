@@ -3375,11 +3375,14 @@ body {
 .classic-diploma::after {
     content: '';
     position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    border: 2px solid #c4a265;
+    top: 22px;
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+    border: 1.5px solid #c4a265;
+    box-shadow:
+        0 0 0 8px rgba(244, 241, 232, 0.95),
+        0 0 0 10px #c4a265;
     pointer-events: none;
     z-index: 1;
 }

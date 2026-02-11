@@ -1194,8 +1194,132 @@ jQuery(document).ready(function($) {
         return signatureHTML;
     }
 
+    // Format date for display
+    function formatGraduationDate(dateStr) {
+        if (!dateStr || dateStr === '[Date of Graduation]') return '[Graduation Date]';
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return dateStr;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    // Generate classic style diploma HTML (Style 01 - College/University International)
+    function generateClassicDiplomaHTML() {
+        const schoolName = currentConfig.school_name || '[Your School Name Here]';
+        const studentName = currentConfig.student_name || '[Your Name Here]';
+        const graduationDate = currentConfig.graduation_date || '';
+        const city = currentConfig.city || '[City]';
+        const state = currentConfig.state || '[Region]';
+        const degreeType = currentConfig.degree_type || '[Your Degree]';
+        const major = currentConfig.major || '[Your Major]';
+        const signature1Name = currentConfig.signature1_name || '';
+        const signature2Name = currentConfig.signature2_name || '';
+
+        // Get emblem info
+        const emblemInfo = getEmblemInfo();
+
+        // Watermark
+        const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
+        const isCustomer = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
+        const isAdmin = diploma_ajax.is_admin && diploma_ajax.is_admin == '1';
+        const watermarkHTML = (!isUserLoggedIn && !isCustomer && !isAdmin) ?
+            '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
+
+        const formattedDate = formatGraduationDate(graduationDate);
+
+        return `<div class="diploma-container classic-template">
+            <div class="diploma classic-diploma">
+                ${watermarkHTML}
+
+                <!-- School Name Header -->
+                <div class="classic-header">
+                    <div class="school-name-flat">${schoolName}</div>
+                </div>
+
+                <!-- Authority Text -->
+                <div class="classic-authority-text">
+                    <p><em>By the authority vested in this institution<br>
+                    and in recognition of the successful completion of the prescribed course of<br>
+                    study, has conferred upon</em></p>
+                </div>
+
+                <!-- Student Name -->
+                <div class="classic-student-name">
+                    <h3>${studentName}</h3>
+                </div>
+
+                <!-- Degree Section -->
+                <div class="classic-degree-section">
+                    <p class="classic-degree-label"><em>the degree</em></p>
+                    <h4 class="classic-degree-name">${degreeType}</h4>
+                    <p class="classic-major-name">${major}</p>
+                </div>
+
+                <!-- Rights & Privileges Text -->
+                <div class="classic-rights-text">
+                    <p><em>Together with all rights, privileges, and honors customarily pertaining thereto.<br>
+                    In testimony whereof, this credential is conferred at and upon this date</em></p>
+                </div>
+
+                <!-- City/Region and Graduation Date -->
+                <div class="classic-date-location">
+                    <div class="classic-city-label">
+                        <span class="classic-location-value">${city}, ${state}</span>
+                    </div>
+                    <div class="classic-date-label">
+                        <span class="classic-date-value">${formattedDate}</span>
+                    </div>
+                </div>
+
+                <!-- Bottom Section: Signatures + Seal -->
+                <div class="classic-bottom-section">
+                    <!-- Left Signatures -->
+                    <div class="classic-signatures-col">
+                        <div class="classic-sig-block">
+                            <div class="classic-sig-name">${signature1Name || ''}</div>
+                            <div class="classic-sig-line"></div>
+                            <div class="classic-sig-title"><em>President</em></div>
+                        </div>
+                        <div class="classic-sig-block">
+                            <div class="classic-sig-name">${signature2Name || ''}</div>
+                            <div class="classic-sig-line"></div>
+                            <div class="classic-sig-title"><em>Chair, Governing Board</em></div>
+                        </div>
+                    </div>
+
+                    <!-- Center Seal -->
+                    <div class="classic-seal-center">
+                        ${emblemInfo.html}
+                    </div>
+
+                    <!-- Right Signatures -->
+                    <div class="classic-signatures-col">
+                        <div class="classic-sig-block">
+                            <div class="classic-sig-name"></div>
+                            <div class="classic-sig-line"></div>
+                            <div class="classic-sig-title"><em>Chief Academic Officer</em></div>
+                        </div>
+                        <div class="classic-sig-block">
+                            <div class="classic-sig-name"></div>
+                            <div class="classic-sig-line"></div>
+                            <div class="classic-sig-title"><em>Registrar</em></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>`;
+    }
+
     // Generate diploma HTML with improved arc header
     function generateDiplomaHTML() {
+        const currentStyle = currentConfig.diploma_style || 'classic';
+
+        // Use dedicated classic template for Style 01
+        if (currentStyle === 'classic') {
+            return generateClassicDiplomaHTML();
+        }
+
         const schoolName = currentConfig.school_name || '[School Name]';
         const studentName = currentConfig.student_name || '[Student Name]';
         const graduationDate = currentConfig.graduation_date || '[Date of Graduation]';
@@ -1211,82 +1335,76 @@ jQuery(document).ready(function($) {
 
         // Get emblem info
         const emblemInfo = getEmblemInfo();
-        
+
         // Add watermark for non-logged-in users
         // Only show watermark if user is not logged in AND not a customer AND not an admin
         const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
         const isCustomer = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
         const isAdmin = diploma_ajax.is_admin && diploma_ajax.is_admin == '1';
-        
+
         const watermarkHTML = (!isUserLoggedIn && !isCustomer && !isAdmin) ?
             '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
-        
-        // Generate header HTML - flat text for classic style, arc for others
+
+        // Generate header HTML - arc for non-classic styles
         let arcHeaderHTML;
-        const currentStyle = currentConfig.diploma_style || 'classic';
 
-        if (currentStyle === 'classic') {
-            // Flat text header for classic style (Style 01)
-            arcHeaderHTML = `<div class="school-name-flat">${schoolName}</div>`;
-        } else {
-            // Split school name for arc header
-            const schoolNameSplit = splitSchoolNameForArc(schoolName);
+        // Split school name for arc header
+        const schoolNameSplit = splitSchoolNameForArc(schoolName);
 
-            // Dynamically adjust font size based on text length
-            let fontSize = 56; // Default font size
-            let line2FontSize = 48; // Slightly smaller for second line
+        // Dynamically adjust font size based on text length
+        let fontSize = 56; // Default font size
+        let line2FontSize = 48; // Slightly smaller for second line
 
-            if (schoolNameSplit.isTwoLine) {
-                // Adjust font sizes for two-line layout
-                const maxLineLength = Math.max(schoolNameSplit.line1.length, schoolNameSplit.line2.length);
-                if (maxLineLength > 20) {
-                    fontSize = Math.max(36, 56 - (maxLineLength - 20) * 1.2);
-                    line2FontSize = Math.max(32, fontSize - 8);
-                }
-            } else if (schoolName.length > 20) {
-                fontSize = Math.max(30, 56 - (schoolName.length - 20) * 1.5);
+        if (schoolNameSplit.isTwoLine) {
+            // Adjust font sizes for two-line layout
+            const maxLineLength = Math.max(schoolNameSplit.line1.length, schoolNameSplit.line2.length);
+            if (maxLineLength > 20) {
+                fontSize = Math.max(36, 56 - (maxLineLength - 20) * 1.2);
+                line2FontSize = Math.max(32, fontSize - 8);
             }
-
-            // Generate the arc header SVG
-            if (schoolNameSplit.isTwoLine) {
-                arcHeaderHTML = `
-                    <svg viewBox="0 0 600 160" class="arched-header two-line">
-                        <defs>
-                            <path id="curve1" d="M50,120 Q300,20 550,120" />
-                            <path id="curve2" d="M70,140 Q300,60 530,140" />
-                        </defs>
-                        <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
-                            <textPath href="#curve1" startOffset="50%">
-                                ${schoolNameSplit.line1}
-                            </textPath>
-                        </text>
-                        <text font-family="'UnifrakturMaguntia', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
-                            <textPath href="#curve2" startOffset="50%">
-                                ${schoolNameSplit.line2}
-                            </textPath>
-                        </text>
-                    </svg>
-                `;
-            } else {
-                arcHeaderHTML = `
-                    <svg viewBox="0 0 600 120" class="arched-header">
-                        <defs>
-                            <path id="curve" d="M50,100 Q300,10 550,100" />
-                        </defs>
-                        <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
-                            <textPath href="#curve" startOffset="50%">
-                                ${schoolNameSplit.line1}
-                            </textPath>
-                        </text>
-                    </svg>
-                `;
-            }
+        } else if (schoolName.length > 20) {
+            fontSize = Math.max(30, 56 - (schoolName.length - 20) * 1.5);
         }
-        
+
+        // Generate the arc header SVG
+        if (schoolNameSplit.isTwoLine) {
+            arcHeaderHTML = `
+                <svg viewBox="0 0 600 160" class="arched-header two-line">
+                    <defs>
+                        <path id="curve1" d="M50,120 Q300,20 550,120" />
+                        <path id="curve2" d="M70,140 Q300,60 530,140" />
+                    </defs>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                        <textPath href="#curve1" startOffset="50%">
+                            ${schoolNameSplit.line1}
+                        </textPath>
+                    </text>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
+                        <textPath href="#curve2" startOffset="50%">
+                            ${schoolNameSplit.line2}
+                        </textPath>
+                    </text>
+                </svg>
+            `;
+        } else {
+            arcHeaderHTML = `
+                <svg viewBox="0 0 600 120" class="arched-header">
+                    <defs>
+                        <path id="curve" d="M50,100 Q300,10 550,100" />
+                    </defs>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                        <textPath href="#curve" startOffset="50%">
+                            ${schoolNameSplit.line1}
+                        </textPath>
+                    </text>
+                </svg>
+            `;
+        }
+
         let diplomaPreview = `<div class="diploma-container">
             <div class="diploma">
                 ${watermarkHTML}
-                
+
                 <!-- Header with improved arc text -->
                 <div class="header">
                     ${arcHeaderHTML}

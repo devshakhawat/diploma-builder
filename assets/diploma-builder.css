@@ -2671,6 +2671,18 @@ body {
     align-items: center; */
 }
 
+/* Flat school name header for classic style (Style 01) */
+.school-name-flat {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 3.2rem;
+    color: #2c1810;
+    text-align: center;
+    letter-spacing: 2px;
+    margin: 0 auto 20px auto;
+    max-width: 600px;
+    line-height: 1.2;
+}
+
 .arched-header {
     width: 100%;
     max-width: 600px;

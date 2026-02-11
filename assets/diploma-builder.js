@@ -1221,58 +1221,66 @@ jQuery(document).ready(function($) {
         const watermarkHTML = (!isUserLoggedIn && !isCustomer && !isAdmin) ?
             '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
         
-        // Split school name for arc header
-        const schoolNameSplit = splitSchoolNameForArc(schoolName);
-        
-        // Dynamically adjust font size based on text length
-        let fontSize = 56; // Default font size
-        let line2FontSize = 48; // Slightly smaller for second line
-        
-        if (schoolNameSplit.isTwoLine) {
-            // Adjust font sizes for two-line layout
-            const maxLineLength = Math.max(schoolNameSplit.line1.length, schoolNameSplit.line2.length);
-            if (maxLineLength > 20) {
-                fontSize = Math.max(36, 56 - (maxLineLength - 20) * 1.2);
-                line2FontSize = Math.max(32, fontSize - 8);
-            }
-        } else if (schoolName.length > 20) {
-            fontSize = Math.max(30, 56 - (schoolName.length - 20) * 1.5);
-        }
-        
-        // Generate the arc header SVG
+        // Generate header HTML - flat text for classic style, arc for others
         let arcHeaderHTML;
-        if (schoolNameSplit.isTwoLine) {
-            arcHeaderHTML = `
-                <svg viewBox="0 0 600 160" class="arched-header two-line">
-                    <defs>
-                        <path id="curve1" d="M50,120 Q300,20 550,120" />
-                        <path id="curve2" d="M70,140 Q300,60 530,140" />
-                    </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
-                        <textPath href="#curve1" startOffset="50%">
-                            ${schoolNameSplit.line1}
-                        </textPath>
-                    </text>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
-                        <textPath href="#curve2" startOffset="50%">
-                            ${schoolNameSplit.line2}
-                        </textPath>
-                    </text>
-                </svg>
-            `;
+        const currentStyle = currentConfig.diploma_style || 'classic';
+
+        if (currentStyle === 'classic') {
+            // Flat text header for classic style (Style 01)
+            arcHeaderHTML = `<div class="school-name-flat">${schoolName}</div>`;
         } else {
-            arcHeaderHTML = `
-                <svg viewBox="0 0 600 120" class="arched-header">
-                    <defs>
-                        <path id="curve" d="M50,100 Q300,10 550,100" />
-                    </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
-                        <textPath href="#curve" startOffset="50%">
-                            ${schoolNameSplit.line1}
-                        </textPath>
-                    </text>
-                </svg>
-            `;
+            // Split school name for arc header
+            const schoolNameSplit = splitSchoolNameForArc(schoolName);
+
+            // Dynamically adjust font size based on text length
+            let fontSize = 56; // Default font size
+            let line2FontSize = 48; // Slightly smaller for second line
+
+            if (schoolNameSplit.isTwoLine) {
+                // Adjust font sizes for two-line layout
+                const maxLineLength = Math.max(schoolNameSplit.line1.length, schoolNameSplit.line2.length);
+                if (maxLineLength > 20) {
+                    fontSize = Math.max(36, 56 - (maxLineLength - 20) * 1.2);
+                    line2FontSize = Math.max(32, fontSize - 8);
+                }
+            } else if (schoolName.length > 20) {
+                fontSize = Math.max(30, 56 - (schoolName.length - 20) * 1.5);
+            }
+
+            // Generate the arc header SVG
+            if (schoolNameSplit.isTwoLine) {
+                arcHeaderHTML = `
+                    <svg viewBox="0 0 600 160" class="arched-header two-line">
+                        <defs>
+                            <path id="curve1" d="M50,120 Q300,20 550,120" />
+                            <path id="curve2" d="M70,140 Q300,60 530,140" />
+                        </defs>
+                        <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                            <textPath href="#curve1" startOffset="50%">
+                                ${schoolNameSplit.line1}
+                            </textPath>
+                        </text>
+                        <text font-family="'UnifrakturMaguntia', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
+                            <textPath href="#curve2" startOffset="50%">
+                                ${schoolNameSplit.line2}
+                            </textPath>
+                        </text>
+                    </svg>
+                `;
+            } else {
+                arcHeaderHTML = `
+                    <svg viewBox="0 0 600 120" class="arched-header">
+                        <defs>
+                            <path id="curve" d="M50,100 Q300,10 550,100" />
+                        </defs>
+                        <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                            <textPath href="#curve" startOffset="50%">
+                                ${schoolNameSplit.line1}
+                            </textPath>
+                        </text>
+                    </svg>
+                `;
+            }
         }
         
         let diplomaPreview = `<div class="diploma-container">

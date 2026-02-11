@@ -2034,120 +2034,215 @@
     background: #f9fafb;
 }
 
-/* Purchase Options */
-.purchase-options {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: #f9fafb;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    display: none !important;
-}
-
-.purchase-options h5 {
-    margin: 0 0 1rem 0;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1f2937;
-    text-align: center;
-}
-
-.purchase-grid {
+/* ============================================================
+   Pricing Cards (Step 5)
+   ============================================================ */
+.pricing-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.purchase-option {
-    background: #fff;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.purchase-option:hover {
-    border-color: #9e7f3f;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-}
-
-.purchase-option.featured {
-    border-color: #10b981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
-}
-
-.purchase-option.featured:hover {
-    border-color: #059669;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
-}
-
-.purchase-option.featured::before {
-    content: "POPULAR";
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    background: #10b981;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
-}
-
-.purchase-header {
-    margin-bottom: 1rem;
-}
-
-.purchase-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.purchase-header h6 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
     margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1f2937;
+    padding: 0;
 }
 
-.purchase-price {
-    margin-bottom: 1.5rem;
+/* Individual Card */
+.pricing-card {
+    background: #faf8f4;
+    border: 1px solid #d6cfc0;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.price-amount {
-    display: block;
-    font-size: 1.5rem;
+.pricing-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Header */
+.pricing-card-header {
+    background: #4a1a2e;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+}
+
+.pricing-card-title {
+    margin: 0 0 0.25rem 0;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.35rem;
     font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 0.25rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
 }
 
-.price-description {
-    font-size: 0.875rem;
-    color: #6b7280;
-}
-
-.purchase-btn {
-    width: 100%;
-    padding: 0.75rem;
-    font-weight: 600;
-}
-
-.purchase-note {
-    text-align: center;
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
-}
-
-.purchase-note p {
+.pricing-card-subtitle {
     margin: 0;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+}
+
+/* Card Body */
+.pricing-card-body {
+    padding: 1.75rem 1.5rem 1.5rem;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Price */
+.pricing-price {
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+}
+
+.pricing-currency {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-top: 0.5rem;
+}
+
+.pricing-amount {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.pricing-sale-label {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Features */
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0;
+    width: 100%;
+    text-align: left;
+}
+
+.pricing-features li {
+    position: relative;
+    padding: 0.6rem 0 0.6rem 1.75rem;
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.4;
+    border-bottom: 1px solid #e8e3d9;
+}
+
+.pricing-features li:last-child {
+    border-bottom: none;
+}
+
+.pricing-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #9e7f3f;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.pricing-features li::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 5px;
+    height: 9px;
+    border-right: 2px solid #9e7f3f;
+    border-bottom: 2px solid #9e7f3f;
+}
+
+/* Buttons */
+.pricing-btn {
+    display: inline-block;
+    width: 85%;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: auto;
+    border: 2px solid #9e7f3f;
+    box-sizing: border-box;
+}
+
+.pricing-btn-filled {
+    background: #9e7f3f;
+    color: #ffffff;
+}
+
+.pricing-btn-filled:hover {
+    background: #876b2f;
+    border-color: #876b2f;
+    box-shadow: 0 4px 12px rgba(158, 127, 63, 0.35);
+}
+
+.pricing-btn-outline {
+    background: transparent;
+    color: #9e7f3f;
+}
+
+.pricing-btn-outline:hover {
+    background: #9e7f3f;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(158, 127, 63, 0.35);
+}
+
+/* Footer Text */
+.pricing-footer-text {
+    margin: 1rem 0 0 0;
+    font-size: 0.75rem;
+    color: #8c8277;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .pricing-cards {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-card-body {
+        padding: 1.25rem 1rem 1rem;
+    }
+
+    .pricing-amount {
+        font-size: 2.8rem;
+    }
+
+    .pricing-btn {
+        width: 100%;
+    }
 }
 
 /* Sharing Options */

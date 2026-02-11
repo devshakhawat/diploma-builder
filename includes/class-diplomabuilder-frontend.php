@@ -703,38 +703,82 @@ class DiplomaBuilder_Frontend {
 
     private function get_purchase_option() {
         ob_start();
-        ?>
-        <div class="purchase-options">
-            <h5><?php _e('Purchase Options', 'diploma-builder'); ?></h5>
-            <div class="purchase-grid">
-                <div class="purchase-option">
-                    <div class="purchase-header">
-                        <div class="purchase-icon">💰</div>
-                        <h6><?php _e('Digital Download', 'diploma-builder'); ?></h6>
-                    </div>
-                    <div class="purchase-price">
-                        <span class="price-amount">
-                            <?php 
-                            $product_id = get_option('diploma_single_product_id', 0);
-                            $product    = wc_get_product( $product_id );
-                            $checkout_url = wc_get_checkout_url() . '?add-to-cart=' . $product_id . '&quantity=1';
-                            if($product) {
-                                echo $product->get_price();
-                            }
-                            ?>
-                        </span>
-                        <span class="price-description"><?php _e('Instant download', 'diploma-builder'); ?></span>
-                    </div>
-                    <button type="button" class="btn btn-primary purchase-btn" data-product-id="digital">
-                        <span class="btn-icon">📥</span>
-                        <a href="<?php echo esc_url($checkout_url); ?>"><?php _e('Buy Now', 'diploma-builder'); ?></a>
-                    </button>
-                </div>                                       
 
+        $product_id   = get_option( 'diploma_single_product_id', 0 );
+        $product      = function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
+        $checkout_url = function_exists( 'wc_get_checkout_url' )
+            ? wc_get_checkout_url() . '?add-to-cart=' . intval( $product_id ) . '&quantity=1'
+            : '#';
+        ?>
+        <div class="pricing-cards">
+            <!-- Card 1: Free Proof -->
+            <div class="pricing-card">
+                <div class="pricing-card-header">
+                    <h4 class="pricing-card-title"><?php _e( 'Instant Download', 'diploma-builder' ); ?></h4>
+                    <p class="pricing-card-subtitle"><?php _e( '"PROOF" Watermark', 'diploma-builder' ); ?></p>
+                </div>
+                <div class="pricing-card-body">
+                    <div class="pricing-price">
+                        <span class="pricing-currency">$</span>
+                        <span class="pricing-amount"><?php _e( 'FREE', 'diploma-builder' ); ?></span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><?php _e( 'Instant proof PDF download', 'diploma-builder' ); ?></li>
+                        <li><?php _e( 'Best for checking names, dates', 'diploma-builder' ); ?></li>
+                        <li><?php _e( 'Great "Proof" before ordering', 'diploma-builder' ); ?></li>
+                    </ul>
+                    <button type="button" id="download-proof" class="pricing-btn pricing-btn-filled">
+                        <?php _e( 'Get Free Diploma Proof', 'diploma-builder' ); ?>
+                    </button>
+                    <p class="pricing-footer-text"><?php _e( 'Free proof PDF with a "PROOF" watermark for spelling and layout review before you order a digital download or printed diploma.', 'diploma-builder' ); ?></p>
+                </div>
             </div>
-            
-            <div class="purchase-note">
-                <p><?php _e('All purchases include high-resolution files and are processed through our secure checkout.', 'diploma-builder'); ?></p>
+
+            <!-- Card 2: Digital Download -->
+            <div class="pricing-card">
+                <div class="pricing-card-header">
+                    <h4 class="pricing-card-title"><?php _e( 'Instant Download', 'diploma-builder' ); ?></h4>
+                    <p class="pricing-card-subtitle"><?php _e( 'No Watermark', 'diploma-builder' ); ?></p>
+                </div>
+                <div class="pricing-card-body">
+                    <div class="pricing-price">
+                        <span class="pricing-currency">$</span>
+                        <span class="pricing-amount">79</span>
+                    </div>
+                    <p class="pricing-sale-label"><?php _e( 'Limited Time Sale', 'diploma-builder' ); ?></p>
+                    <ul class="pricing-features">
+                        <li><?php _e( 'High-resolution PDF download', 'diploma-builder' ); ?></li>
+                        <li><?php _e( 'Print it yourself or save digitally', 'diploma-builder' ); ?></li>
+                        <li><?php _e( 'Delivered fast after checkout', 'diploma-builder' ); ?></li>
+                    </ul>
+                    <a href="<?php echo esc_url( $checkout_url ); ?>" class="pricing-btn pricing-btn-filled">
+                        <?php _e( 'Download Digital Diploma PDF', 'diploma-builder' ); ?>
+                    </a>
+                    <p class="pricing-footer-text"><?php _e( 'Instant high-resolution digital diploma PDF download with no watermark. Great for printing at home or saving as a keepsake.', 'diploma-builder' ); ?></p>
+                </div>
+            </div>
+
+            <!-- Card 3: Print It For Me -->
+            <div class="pricing-card">
+                <div class="pricing-card-header">
+                    <h4 class="pricing-card-title"><?php _e( 'Print It For Me', 'diploma-builder' ); ?></h4>
+                    <p class="pricing-card-subtitle"><?php _e( 'Premium Paper + Embossed Emblem', 'diploma-builder' ); ?></p>
+                </div>
+                <div class="pricing-card-body">
+                    <div class="pricing-price">
+                        <span class="pricing-currency">$</span>
+                        <span class="pricing-amount">125</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><?php _e( 'Printed on premium diploma paper', 'diploma-builder' ); ?></li>
+                        <li><?php _e( 'Includes embossed emblem(s)', 'diploma-builder' ); ?></li>
+                        <li><?php _e( 'Ships in 2-4 business days', 'diploma-builder' ); ?></li>
+                    </ul>
+                    <a href="<?php echo esc_url( $checkout_url ); ?>" class="pricing-btn pricing-btn-outline">
+                        <?php _e( 'Order Printed Diploma', 'diploma-builder' ); ?>
+                    </a>
+                    <p class="pricing-footer-text"><?php _e( 'Printed diploma shipped on premium paper with an embossed emblem. Ideal for display, gifting, or commemorative keepsakes.', 'diploma-builder' ); ?></p>
+                </div>
             </div>
         </div>
         <?php

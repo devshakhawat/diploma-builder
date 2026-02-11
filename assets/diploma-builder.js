@@ -1203,6 +1203,15 @@ jQuery(document).ready(function($) {
         return date.toLocaleDateString('en-US', options);
     }
 
+    // Get the display text of the selected major option (e.g. "Paralegal Studies" instead of "paralegal_studies")
+    function getMajorDisplayName() {
+        const $selected = $('#major option:selected');
+        if ($selected.length && $selected.val()) {
+            return $selected.text().trim();
+        }
+        return '';
+    }
+
     // Generate classic style diploma HTML (Style 01 - College/University International)
     function generateClassicDiplomaHTML() {
         const schoolName = currentConfig.school_name || '[Your School Name Here]';
@@ -1211,7 +1220,7 @@ jQuery(document).ready(function($) {
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[Region]';
         const degreeType = currentConfig.degree_type || '[Your Degree]';
-        const major = currentConfig.major || '[Your Major]';
+        const major = getMajorDisplayName() || '[Your Major]';
         const signature1Name = currentConfig.signature1_name || '';
         const signature2Name = currentConfig.signature2_name || '';
 
@@ -1327,7 +1336,7 @@ jQuery(document).ready(function($) {
         const state = currentConfig.state || '[State]';
         const country = currentConfig.country || 'USA';
         const degreeType = currentConfig.degree_type || '';
-        const major = currentConfig.major || '';
+        const major = getMajorDisplayName() || '';
         const concentration = currentConfig.concentration || '';
         const signatureCount = currentConfig.signature_count || '1';
         const signature1Name = currentConfig.signature1_name || '';

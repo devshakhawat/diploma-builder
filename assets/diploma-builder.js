@@ -422,12 +422,35 @@ jQuery(document).ready(function($) {
         const $stepCard = $(`.step-card[data-step="${stepNumber}"]`);
 
         if ($stepCard.length && !$stepCard.is(':visible')) {
+            // Prefill Step 3 location fields from Step 1 when Step 3 opens
+            if (stepNumber === 3) {
+                prefillStep3LocationFromStep1();
+            }
+
             $stepCard.slideDown(400, function() {
                 // Scroll to the newly revealed step
                 $('html, body').animate({
                     scrollTop: $stepCard.offset().top - 100
                 }, 300);
             });
+        }
+    }
+
+    // Prefill Step 3 Country & Region from Step 1 (callable before bindEvents sets up the inline version)
+    function prefillStep3LocationFromStep1() {
+        const isEditable = diploma_ajax.allow_edit_location && diploma_ajax.allow_edit_location == '1';
+
+        const countryVal = $('#country').val() || '';
+        const regionSelect = $('#state_province_region');
+        const regionText = regionSelect.find('option:selected').text() || '';
+        const regionVal = regionSelect.val() || '';
+
+        if (!isEditable) {
+            $('#step3_country').val(countryVal);
+            $('#step3_region').val(regionVal ? regionText : '');
+        } else {
+            if (!$('#step3_country').val()) $('#step3_country').val(countryVal);
+            if (!$('#step3_region').val()) $('#step3_region').val(regionVal ? regionText : '');
         }
     }
 
@@ -755,9 +778,44 @@ jQuery(document).ready(function($) {
         $('#state_province_region').on('change', function() {
             currentConfig.state_province_region = $(this).val();
             validateField($(this));
+            prefillStep3Location();
             updatePreview();
             updateReviewSummary();
         });
+
+        // Step 3: Prefill Country & Region from Step 1
+        // Admin controls editability via Settings > Allow Editing Country & Region
+        const locationEditable = diploma_ajax.allow_edit_location && diploma_ajax.allow_edit_location == '1';
+
+        function prefillStep3Location() {
+            const countryVal = $('#country').val() || '';
+            const regionSelect = $('#state_province_region');
+            const regionText = regionSelect.find('option:selected').text() || '';
+            const regionVal = regionSelect.val() || '';
+
+            // Always sync from Step 1 when fields are readonly; only sync editable fields if they're still empty
+            if (!locationEditable) {
+                $('#step3_country').val(countryVal);
+                $('#step3_region').val(regionVal ? regionText : '');
+            } else {
+                if (!$('#step3_country').val()) $('#step3_country').val(countryVal);
+                if (!$('#step3_region').val()) $('#step3_region').val(regionVal ? regionText : '');
+            }
+        }
+
+        // Re-prefill whenever Step 1 country or region changes
+        $('#country').on('change', function() {
+            prefillStep3Location();
+        });
+
+        // Update preview when Step 3 location fields are edited (only possible when admin allows)
+        $('#step3_country, #step3_region').on('input', function() {
+            updatePreview();
+            updateReviewSummary();
+        });
+
+        // Initial prefill
+        prefillStep3Location();
 
         // Document type dropdown
         $('#document_type').on('change', function() {

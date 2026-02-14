@@ -56,6 +56,20 @@
                     </fieldset>
                 </td>
             </tr>
+
+            <tr>
+                <th scope="row"><?php _e('Allow Editing Country & Region', 'diploma-builder'); ?></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span><?php _e('Allow Editing Country & Region', 'diploma-builder'); ?></span></legend>
+                        <label for="diploma_allow_edit_location">
+                            <input name="diploma_allow_edit_location" type="checkbox" id="diploma_allow_edit_location" value="1" <?php checked(1, get_option('diploma_allow_edit_location', 0)); ?>>
+                            <?php _e('Allow users to edit the Country and State/Province/Region fields in Step 3', 'diploma-builder'); ?>
+                        </label>
+                        <p class="description"><?php _e('When enabled, users can modify the Country and Region values that are prefilled from Step 1. When disabled, these fields are read-only.', 'diploma-builder'); ?></p>
+                    </fieldset>
+                </td>
+            </tr>
         </table>
         
         <?php submit_button(); ?>

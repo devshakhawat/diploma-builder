@@ -894,6 +894,58 @@
     margin-left: 3px;
 }
 
+/* Prefilled Location Fields (Step 3) */
+.prefilled-fields-wrapper {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.prefilled-fields-header {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.prefilled-label-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.prefilled-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: #e5e7eb;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.prefilled-field {
+    background: #f3f4f6 !important;
+    color: #6b7280 !important;
+    cursor: not-allowed;
+    border-style: dashed !important;
+}
+
+.prefilled-field.prefilled-editable {
+    background: #ffffff !important;
+    color: #374151 !important;
+    cursor: text;
+    border-style: solid !important;
+}
+
+.prefilled-fields-wrapper .field-row {
+    margin-bottom: 0;
+}
+
 .field-group input {
     padding: 12px 15px;
     border: 2px solid #ecf0f1;

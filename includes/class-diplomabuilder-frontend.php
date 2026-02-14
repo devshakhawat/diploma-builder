@@ -490,6 +490,25 @@ class DiplomaBuilder_Frontend {
                                         </div>
                                     </div>
 
+                                    <!-- Country & Region (prefilled from Step 1) -->
+                                    <?php $allow_edit = get_option( 'diploma_allow_edit_location', 0 ); ?>
+                                    <div class="prefilled-fields-wrapper">
+                                        <div class="prefilled-fields-header">
+                                            <span class="prefilled-label-text"><?php _e( 'Country & Region', 'diploma-builder' ); ?></span>
+                                            <span class="prefilled-tag"><?php echo $allow_edit ? esc_html__( 'Editable', 'diploma-builder' ) : esc_html__( 'Prefilled from Step 1', 'diploma-builder' ); ?></span>
+                                        </div>
+                                        <div class="field-row">
+                                            <div class="field-group">
+                                                <label for="step3_country"><?php _e('Country', 'diploma-builder'); ?></label>
+                                                <input type="text" id="step3_country" name="step3_country" class="form-input prefilled-field<?php echo $allow_edit ? ' prefilled-editable' : ''; ?>" <?php echo $allow_edit ? '' : 'readonly'; ?>>
+                                            </div>
+                                            <div class="field-group">
+                                                <label for="step3_region"><?php _e('State / Province / Region', 'diploma-builder'); ?></label>
+                                                <input type="text" id="step3_region" name="step3_region" class="form-input prefilled-field<?php echo $allow_edit ? ' prefilled-editable' : ''; ?>" <?php echo $allow_edit ? '' : 'readonly'; ?>>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 <!-- Graduation Information -->
                                     <div class="field-group">
                                         <label for="student_name"><?php _e('Student Name *', 'diploma-builder'); ?></label>

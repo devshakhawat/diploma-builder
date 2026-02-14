@@ -101,6 +101,7 @@ class DiplomaBuilder_Assets {
                 'is_customer' => $is_customer ? 1 : 0,
                 'is_admin' => $is_admin ? 1 : 0,
                 'emblem_urls' => $emblem_urls,
+                'allow_edit_location' => get_option('diploma_allow_edit_location', 0) ? 1 : 0,
             ));
         }
     }

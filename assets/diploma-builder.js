@@ -1359,15 +1359,15 @@ jQuery(document).ready(function($) {
                         ${emblemInfo.html}
                     </div>
 
-                    <!-- Right Signatures -->
+                    <!-- Right Signatures (static) -->
                     <div class="classic-signatures-col">
                         <div class="classic-sig-block">
-                            <div class="classic-sig-name"></div>
+                            <div class="classic-sig-name">Dr. Elaine P. Bodner, Ph.D.</div>
                             <div class="classic-sig-line"></div>
                             <div class="classic-sig-title"><em>Chief Academic Officer</em></div>
                         </div>
                         <div class="classic-sig-block">
-                            <div class="classic-sig-name"></div>
+                            <div class="classic-sig-name">Margaret L. Carson</div>
                             <div class="classic-sig-line"></div>
                             <div class="classic-sig-title"><em>Registrar</em></div>
                         </div>

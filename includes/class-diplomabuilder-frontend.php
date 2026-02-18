@@ -211,6 +211,7 @@ class DiplomaBuilder_Frontend {
                                                     endforeach;
                                                     ?>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

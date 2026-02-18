@@ -377,6 +377,8 @@ jQuery(document).ready(function($) {
         if (initialDegreeType) {
             filterMajorOptions(initialDegreeType);
         }
+
+
     }
 
     // Sync currentConfig with form field values
@@ -507,6 +509,7 @@ jQuery(document).ready(function($) {
         $('input[name="paper_color"]').on('change', function() {
             checkStep1Completion();
             currentConfig.paper_color = $(this).val();
+            updatePreview();
 
             // Auto-reveal Step 2 when Step 1 is complete
             if (validateStep1()) {
@@ -1135,6 +1138,15 @@ jQuery(document).ready(function($) {
         // Update the background color of the diploma preview directly
         $('#diploma-preview').css('background-color', paperColor);
 
+        // Paper color gradients for .classic-diploma background
+        const paperGradients = {
+            white:      { light: '#ffffff', mid: '#f8f8f8', borderBg: 'rgba(255, 255, 255, 0.95)' },
+            ivory:      { light: '#f4f1e8', mid: '#ede8db', borderBg: 'rgba(244, 241, 232, 0.95)' },
+            light_blue: { light: '#e6f3ff', mid: '#d4e8f7', borderBg: 'rgba(230, 243, 255, 0.95)' },
+            light_gray: { light: '#f0f0f0', mid: '#e5e5e5', borderBg: 'rgba(240, 240, 240, 0.95)' }
+        };
+        const currentGradient = paperGradients[currentConfig.paper_color] || paperGradients.ivory;
+
         // Update diploma size class based on selected size
         const diplomaSize = currentConfig.diploma_size || '8.5x11';
         const sizeClass = 'size-' + diplomaSize.replace(/\./g, '-').replace('x', 'x');
@@ -1147,8 +1159,23 @@ jQuery(document).ready(function($) {
 
         let diplomaHTML = generateDiplomaHTML();
         $('#diploma-preview').html(diplomaHTML);
+
+        // Apply paper color directly to the diploma elements
+        $('#diploma-preview .diploma, #diploma-preview .classic-diploma').css('background-color', paperColor);
+
+        // Apply paper color to .classic-diploma border via CSS custom properties
+        var classicDiploma = $('#diploma-preview .classic-diploma');
+        if (classicDiploma.length) {
+            classicDiploma[0].style.setProperty('--paper-border-bg', currentGradient.borderBg);
+        }
+
+        // Also apply to non-classic diploma border
+        var diplomaEl = $('#diploma-preview .diploma');
+        if (diplomaEl.length) {
+            diplomaEl[0].style.setProperty('--paper-border-bg', currentGradient.borderBg);
+        }
     }
-    
+
     // NEW: Function to split text for two-line arc header
     function splitSchoolNameForArc(schoolName, maxLineLength = 25) {
         if (!schoolName || schoolName.length <= maxLineLength) {

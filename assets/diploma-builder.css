@@ -514,6 +514,8 @@
     font-weight: 600;
 }
 
+
+
 /* Diploma Style Carousel - New Step 2 Design */
 .diploma-style-carousel-wrapper {
     position: relative;
@@ -3385,7 +3387,6 @@ body {
 }
 
 .classic-diploma {
-    background: linear-gradient(135deg, #f4f1e8 0%, #ede8db 50%, #f4f1e8 100%);
     padding: 30px !important;
     text-align: center;
     position: relative;
@@ -3403,21 +3404,6 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(139, 119, 85, 0.02) 2px,
-            rgba(139, 119, 85, 0.02) 4px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 3px,
-            rgba(139, 119, 85, 0.015) 3px,
-            rgba(139, 119, 85, 0.015) 6px
-        );
     pointer-events: none;
     z-index: 0;
     border-radius: 0;
@@ -3433,7 +3419,7 @@ body {
     bottom: 22px;
     border: 1.5px solid #c4a265;
     box-shadow:
-        0 0 0 8px rgba(244, 241, 232, 0.95),
+        0 0 0 8px var(--paper-border-bg, rgba(244, 241, 232, 0.95)),
         0 0 0 10px #c4a265;
     pointer-events: none;
     z-index: 1;

@@ -1705,7 +1705,7 @@ jQuery(document).ready(function($) {
     function getEmblemInfo() {
         const diplomaStyles = {
             classic: { emblems: 1 },
-            modern: { emblems: 2 },
+            modern: { emblems: 1 },
             formal: { emblems: 1 },
             decorative: { emblems: 2 },
             minimalist: { emblems: 1 }

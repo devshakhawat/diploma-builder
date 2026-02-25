@@ -1161,12 +1161,18 @@ jQuery(document).ready(function($) {
         $('#diploma-preview').html(diplomaHTML);
 
         // Apply paper color directly to the diploma elements
-        $('#diploma-preview .diploma, #diploma-preview .classic-diploma').css('background-color', paperColor);
+        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma').css('background-color', paperColor);
 
         // Apply paper color to .classic-diploma border via CSS custom properties
         var classicDiploma = $('#diploma-preview .classic-diploma');
         if (classicDiploma.length) {
             classicDiploma[0].style.setProperty('--paper-border-bg', currentGradient.borderBg);
+        }
+
+        // Apply paper color to .style2-diploma border via CSS custom properties
+        var style2Diploma = $('#diploma-preview .style2-diploma');
+        if (style2Diploma.length) {
+            style2Diploma[0].style.setProperty('--paper-border-bg', currentGradient.borderBg);
         }
 
         // Also apply to non-classic diploma border
@@ -1405,6 +1411,151 @@ jQuery(document).ready(function($) {
         </div>`;
     }
 
+    // Get the country emblem image URL for Style 2 (from diploma_country CPT feature images)
+    function getCountryEmblemSrc() {
+        const country = currentConfig.country || '';
+        if (diploma_ajax.country_images) {
+            // Try direct match (e.g. "Canada", "USA", "UK")
+            if (diploma_ajax.country_images[country]) {
+                return diploma_ajax.country_images[country];
+            }
+            // For International, try to match the selected state/province/region display name
+            if (country === 'International') {
+                const regionText = $('#state_province_region option:selected').text().trim();
+                if (regionText && diploma_ajax.country_images[regionText]) {
+                    return diploma_ajax.country_images[regionText];
+                }
+            }
+        }
+        return '';
+    }
+
+    // Generate Style 2 (Modern Elegant) diploma HTML — matches the university international format
+    function generateStyle2DiplomaHTML() {
+        const schoolName    = currentConfig.school_name   || 'Your School Name Here';
+        const studentName   = currentConfig.student_name  || 'Your Name Here';
+        const degreeType    = currentConfig.degree_type   || 'Your Degree Here';
+        const major         = getMajorDisplayName()        || 'Your Major / Area of Study';
+        const city          = currentConfig.city           || 'School City';
+        const country       = currentConfig.country        || 'School Country';
+        const signature1Name = currentConfig.signature1_name || '';
+        const signature2Name = currentConfig.signature2_name || '';
+        const graduationDate = currentConfig.graduation_date || '';
+        const formattedDate  = formatGraduationDate(graduationDate) || 'Day day of Month, Year';
+
+        // Watermark
+        const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
+        const isCustomer     = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
+        const isAdmin        = diploma_ajax.is_admin    && diploma_ajax.is_admin    == '1';
+        const watermarkHTML  = (!isUserLoggedIn && !isCustomer && !isAdmin)
+            ? '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
+
+        // Top country emblem (circle, from diploma_country CPT feature image)
+        const countryImgSrc = getCountryEmblemSrc();
+        const topEmblemHTML = countryImgSrc
+            ? `<img src="${countryImgSrc}" alt="${country}" class="s2-top-flag-img">`
+            : `<div class="s2-top-flag-placeholder"></div>`;
+
+        // Bottom seal (uses the user's chosen emblem / gold seal)
+        const emblemInfo = getEmblemInfo();
+        const sealHTML   = emblemInfo.html || '';
+
+        // Certificate number (preview placeholder)
+        const certYear   = new Date().getFullYear();
+        const certNumber = `${certYear}-INT-${Math.floor(10000 + Math.random() * 90000)}`;
+
+        return `<div class="diploma-container style2-template">
+            <div class="diploma style2-diploma">
+                ${watermarkHTML}
+
+                <!-- Top Country Emblem -->
+                <div class="s2-top-emblem">
+                    ${topEmblemHTML}
+                </div>
+
+                <!-- School Name -->
+                <div class="s2-school-header">
+                    <h1 class="s2-school-name">${schoolName}</h1>
+                    <p class="s2-school-location">${city}, ${country}</p>
+                </div>
+
+                <!-- Authority Text -->
+                <div class="s2-authority-text">
+                    <p>By authority of the Academic Council, this degree<br>has been duly conferred upon</p>
+                </div>
+
+                <!-- Student Name -->
+                <div class="s2-student-name">
+                    <h2>${studentName}</h2>
+                </div>
+
+                <!-- Certify Text -->
+                <div class="s2-certify-text">
+                    <p>This is to formally certify that the academic degree of</p>
+                </div>
+
+                <!-- Degree Name -->
+                <div class="s2-degree-name">
+                    <h3>${degreeType}</h3>
+                </div>
+
+                <!-- Body Text -->
+                <div class="s2-body-text">
+                    <p>upon the successful completion of an<br>approved programme of study in</p>
+                </div>
+
+                <!-- Major / Area of Study -->
+                <div class="s2-major-name">
+                    <h4>${major}</h4>
+                </div>
+
+                <!-- Date -->
+                <div class="s2-date-text">
+                    <p>Dated this ${formattedDate}</p>
+                </div>
+
+                <!-- Large Gold Seal -->
+                <div class="s2-seal-section">
+                    ${sealHTML}
+                </div>
+
+                <!-- Four Signatures -->
+                <div class="s2-signatures-section">
+                    <div class="s2-sig-col">
+                        <div class="s2-sig-block">
+                            <div class="s2-sig-name">${signature1Name || 'Prof. Arthur L. Davies'}</div>
+                            <div class="s2-sig-line"></div>
+                            <div class="s2-sig-title">Chair of the Governing Council</div>
+                        </div>
+                        <div class="s2-sig-block">
+                            <div class="s2-sig-name">Lawrence M. Talbot, Esq.</div>
+                            <div class="s2-sig-line"></div>
+                            <div class="s2-sig-title">Vice-Chancellor</div>
+                        </div>
+                    </div>
+                    <div class="s2-sig-col">
+                        <div class="s2-sig-block">
+                            <div class="s2-sig-name">${signature2Name || 'Ingrid Hoffmann M.E.'}</div>
+                            <div class="s2-sig-line"></div>
+                            <div class="s2-sig-title">Secretary of the Academic Council</div>
+                        </div>
+                        <div class="s2-sig-block">
+                            <div class="s2-sig-name">Jack Ananya Chakraborty</div>
+                            <div class="s2-sig-line"></div>
+                            <div class="s2-sig-title">Registrar of the Institution</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate Number -->
+                <div class="s2-cert-number">
+                    <p>Certificate No. ${certNumber}</p>
+                </div>
+
+            </div>
+        </div>`;
+    }
+
     // Generate diploma HTML with improved arc header
     function generateDiplomaHTML() {
         const currentStyle = currentConfig.diploma_style || 'classic';
@@ -1412,6 +1563,11 @@ jQuery(document).ready(function($) {
         // Use dedicated classic template for Style 01
         if (currentStyle === 'classic') {
             return generateClassicDiplomaHTML();
+        }
+
+        // Use Style 2 template for 'modern'
+        if (currentStyle === 'modern') {
+            return generateStyle2DiplomaHTML();
         }
 
         const schoolName = currentConfig.school_name || '[School Name]';

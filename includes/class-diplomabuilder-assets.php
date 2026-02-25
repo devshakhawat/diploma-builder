@@ -19,11 +19,18 @@ class DiplomaBuilder_Assets {
         
         // Only load assets on pages that use the shortcode
         if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'diploma_builder')) {
-            // CSS
+            // CSS — Google Fonts (Dancing Script for signatures)
+            wp_enqueue_style(
+                'diploma-builder-fonts',
+                'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap',
+                array(),
+                null
+            );
+
             wp_enqueue_style(
                 'diploma-builder',
                 DIPLOMA_BUILDER_URL . 'assets/diploma-builder.css',
-                array(),
+                array('diploma-builder-fonts'),
                 DIPLOMA_BUILDER_VERSION
             );
 
@@ -92,6 +99,15 @@ class DiplomaBuilder_Assets {
                 $emblem_urls[$id] = $emblem['image_url'];
             }
 
+            // Build country image map from countries custom post type
+            $country_images = array();
+            $countries = DiplomaBuilder_Countries::get_all();
+            foreach ($countries as $id => $country) {
+                if ( ! empty( $country['image_url'] ) ) {
+                    $country_images[ $country['name'] ] = $country['image_url'];
+                }
+            }
+
             // Localize script with AJAX URL and nonce
             wp_localize_script('diploma-builder', 'diploma_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
@@ -101,6 +117,7 @@ class DiplomaBuilder_Assets {
                 'is_customer' => $is_customer ? 1 : 0,
                 'is_admin' => $is_admin ? 1 : 0,
                 'emblem_urls' => $emblem_urls,
+                'country_images' => $country_images,
                 'allow_edit_location' => get_option('diploma_allow_edit_location', 0) ? 1 : 0,
             ));
         }

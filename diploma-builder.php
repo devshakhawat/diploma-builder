@@ -75,6 +75,8 @@ class DiplomaBuilder {
 		require_once DIPLOMA_BUILDER_PATH . 'includes/class-diplomabuilder-ajax.php';
 		require_once DIPLOMA_BUILDER_PATH . 'includes/class-diplomabuilder-assets.php';
 		require_once DIPLOMA_BUILDER_PATH . 'includes/class-diplomabuilder-emblems.php';
+		require_once DIPLOMA_BUILDER_PATH . 'includes/class-diplomabuilder-countries.php';
+		require_once DIPLOMA_BUILDER_PATH . 'includes/class-diplomabuilder-states.php';
 	}
 
 	public function init() {
@@ -84,6 +86,8 @@ class DiplomaBuilder {
 		new DiplomaBuilder_Ajax();
 		new DiplomaBuilder_Assets();
 		new DiplomaBuilder_Emblems();
+		new DiplomaBuilder_Countries();
+		new DiplomaBuilder_States();
 
 		if ( is_admin() ) {
 			new DiplomaBuilder_Admin();

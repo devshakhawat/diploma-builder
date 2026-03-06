@@ -4092,3 +4092,291 @@ body {
         height: 60px;
     }
 }
+
+/* ============================================================
+   STYLE 3 — High School Diploma (Formal)
+   ============================================================ */
+
+.style3-template {
+    font-family: 'Times New Roman', 'Georgia', serif;
+}
+
+.style3-diploma {
+    padding: 30px 40px !important;
+    text-align: center;
+    position: relative;
+    min-height: 850px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+}
+
+/* Outer gold border */
+.style3-diploma::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    border: 3px solid #b8860b;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Inner gold border — double-line effect */
+.style3-diploma::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+    border: 1.5px solid #b8860b;
+    box-shadow:
+        0 0 0 7px var(--paper-border-bg, rgba(244, 241, 232, 0.95)),
+        0 0 0 9px #b8860b;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* All direct children sit above the borders */
+.style3-diploma > * {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+/* ---- Arc Header (School Name) ---- */
+.hs3-header {
+    margin: 8px 0 2px;
+}
+
+.hs3-header .arched-header {
+    width: 100%;
+    max-width: 580px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ---- "This Certifies That" ---- */
+.hs3-certifies-text {
+    margin: 0 0 4px;
+}
+
+.hs3-certifies-text p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.35rem;
+    color: #2c1810;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* ---- Student Name ---- */
+.hs3-student-name {
+    margin: 4px 0 6px;
+}
+
+.hs3-student-name h3 {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.8rem;
+    color: #1a1a1a;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.12);
+    letter-spacing: 2px;
+    margin: 0;
+    display: inline-block;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(44, 24, 16, 0.3);
+}
+
+/* ---- Body Text ---- */
+.hs3-body-text {
+    margin: 4px 0;
+}
+
+.hs3-body-text p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.05rem;
+    color: #2c1810;
+    line-height: 1.75;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+/* ---- Diploma Title ---- */
+.hs3-diploma-title {
+    margin: 4px 0 6px;
+}
+
+.hs3-diploma-title h4 {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.4rem;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- In Witness / Given This ---- */
+.hs3-witness-text {
+    margin: 4px 0 8px;
+}
+
+.hs3-witness-text p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.0rem;
+    color: #2c1810;
+    line-height: 1.8;
+    font-style: italic;
+    margin: 0 0 3px;
+}
+
+.hs3-given-line {
+    font-size: 1.0rem !important;
+}
+
+.hs3-blank {
+    border-bottom: 1px solid #2c1810;
+    display: inline-block;
+    min-width: 55px;
+    text-align: center;
+    padding: 0 4px;
+}
+
+/* ---- Bottom Section: Signatures + Seal ---- */
+.hs3-bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 4px 10px 6px;
+    gap: 10px;
+    width: calc(100% - 20px);
+}
+
+.hs3-signatures-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.hs3-sig-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hs3-sig-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: #2c1810;
+    font-weight: 700;
+    margin-bottom: 2px;
+    text-align: center;
+    min-height: 1.4em;
+}
+
+.hs3-sig-line {
+    width: 100%;
+    max-width: 175px;
+    height: 1px;
+    background-color: #2c1810;
+    margin: 2px auto;
+}
+
+.hs3-sig-title {
+    font-family: 'Times New Roman', 'Georgia', serif;
+    font-size: 0.72rem;
+    color: #2c1810;
+    letter-spacing: 0.4px;
+    margin-top: 2px;
+    text-align: center;
+    font-style: italic;
+}
+
+/* ---- Center Seal ---- */
+.hs3-seal-center {
+    flex: 0 0 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.hs3-seal-center .seal {
+    flex: 0 0 120px;
+}
+
+.hs3-seal-center .seal-circle {
+    width: 120px;
+    height: 120px;
+}
+
+.hs3-seal-center .seal-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hs3-seal-center .seal-inner img,
+.hs3-seal-center .diploma-emblem {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* ---- Responsive — Style 3 ---- */
+@media (max-width: 768px) {
+    .style3-diploma {
+        padding: 20px 25px !important;
+    }
+
+    .hs3-student-name h3 {
+        font-size: 2rem;
+    }
+
+    .hs3-diploma-title h4 {
+        font-size: 1.75rem;
+    }
+
+    .hs3-body-text p,
+    .hs3-witness-text p {
+        font-size: 0.9rem;
+    }
+
+    .hs3-bottom-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .hs3-signatures-col {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .hs3-seal-center {
+        order: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .hs3-student-name h3 {
+        font-size: 1.6rem;
+    }
+
+    .hs3-diploma-title h4 {
+        font-size: 1.4rem;
+    }
+
+    .hs3-signatures-col {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+}

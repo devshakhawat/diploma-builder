@@ -1161,7 +1161,7 @@ jQuery(document).ready(function($) {
         $('#diploma-preview').html(diplomaHTML);
 
         // Apply paper color directly to the diploma elements
-        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma').css('background-color', paperColor);
+        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma, #diploma-preview .style3-diploma').css('background-color', paperColor);
 
         // Apply paper color to .classic-diploma border via CSS custom properties
         var classicDiploma = $('#diploma-preview .classic-diploma');
@@ -1179,6 +1179,12 @@ jQuery(document).ready(function($) {
         var diplomaEl = $('#diploma-preview .diploma');
         if (diplomaEl.length) {
             diplomaEl[0].style.setProperty('--paper-border-bg', currentGradient.borderBg);
+        }
+
+        // Apply paper color to .style3-diploma border via CSS custom properties
+        var style3Diploma = $('#diploma-preview .style3-diploma');
+        if (style3Diploma.length) {
+            style3Diploma[0].style.setProperty('--paper-border-bg', currentGradient.borderBg);
         }
     }
 
@@ -1556,6 +1562,166 @@ jQuery(document).ready(function($) {
         </div>`;
     }
 
+    // Generate Style 3 (High School Diploma / Formal) diploma HTML
+    function generateStyle3DiplomaHTML() {
+        const schoolName     = currentConfig.school_name    || 'Your High School Name';
+        const studentName    = currentConfig.student_name   || 'Your Name Here';
+        const city           = currentConfig.city           || 'City';
+        const state          = currentConfig.state          || 'State';
+        const documentType   = currentConfig.document_type  || 'High School';
+        const signature1Name = currentConfig.signature1_name || '';
+        const signature2Name = currentConfig.signature2_name || '';
+        const graduationDate = currentConfig.graduation_date || '';
+
+        // Format date into "Given this X day of Month, in the year YYYY"
+        let givenDay   = '___';
+        let givenMonth = '___________';
+        let givenYear  = '_______';
+        if (graduationDate) {
+            const d = new Date(graduationDate);
+            if (!isNaN(d.getTime())) {
+                givenDay   = d.getDate();
+                givenMonth = d.toLocaleDateString('en-US', { month: 'long' });
+                givenYear  = d.getFullYear();
+            }
+        }
+
+        // Get emblem info
+        const emblemInfo = getEmblemInfo();
+
+        // Watermark
+        const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
+        const isCustomer     = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
+        const isAdmin        = diploma_ajax.is_admin    && diploma_ajax.is_admin    == '1';
+        const watermarkHTML  = (!isUserLoggedIn && !isCustomer && !isAdmin)
+            ? '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
+
+        // Arc header (same logic as generic template)
+        const schoolNameSplit = splitSchoolNameForArc(schoolName);
+        let fontSize      = 56;
+        let line2FontSize = 48;
+        if (schoolNameSplit.isTwoLine) {
+            const maxLen = Math.max(schoolNameSplit.line1.length, schoolNameSplit.line2.length);
+            if (maxLen > 20) {
+                fontSize      = Math.max(36, 56 - (maxLen - 20) * 1.2);
+                line2FontSize = Math.max(32, fontSize - 8);
+            }
+        } else if (schoolName.length > 20) {
+            fontSize = Math.max(30, 56 - (schoolName.length - 20) * 1.5);
+        }
+
+        let arcHeaderHTML;
+        if (schoolNameSplit.isTwoLine) {
+            arcHeaderHTML = `
+                <svg viewBox="0 0 600 160" class="arched-header two-line">
+                    <defs>
+                        <path id="hs3-curve1" d="M50,120 Q300,20 550,120" />
+                        <path id="hs3-curve2" d="M70,140 Q300,60 530,140" />
+                    </defs>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                        <textPath href="#hs3-curve1" startOffset="50%">${schoolNameSplit.line1}</textPath>
+                    </text>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
+                        <textPath href="#hs3-curve2" startOffset="50%">${schoolNameSplit.line2}</textPath>
+                    </text>
+                </svg>`;
+        } else {
+            arcHeaderHTML = `
+                <svg viewBox="0 0 600 120" class="arched-header">
+                    <defs>
+                        <path id="hs3-curve" d="M50,100 Q300,10 550,100" />
+                    </defs>
+                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                        <textPath href="#hs3-curve" startOffset="50%">${schoolNameSplit.line1}</textPath>
+                    </text>
+                </svg>`;
+        }
+
+        // Diploma title based on document type
+        let diplomaTitleText = 'High School Diploma';
+        if (documentType === 'GED') {
+            diplomaTitleText = 'General Educational Development';
+        } else if (documentType === 'College') {
+            diplomaTitleText = 'College Diploma';
+        } else if (documentType === 'University') {
+            diplomaTitleText = 'University Diploma';
+        }
+
+        return `<div class="diploma-container style3-template">
+            <div class="diploma style3-diploma">
+                ${watermarkHTML}
+
+                <!-- Header: arched school name -->
+                <div class="hs3-header">
+                    ${arcHeaderHTML}
+                </div>
+
+                <!-- This Certifies That -->
+                <div class="hs3-certifies-text">
+                    <p>This Certifies That</p>
+                </div>
+
+                <!-- Student Name -->
+                <div class="hs3-student-name">
+                    <h3>${studentName}</h3>
+                </div>
+
+                <!-- Body text -->
+                <div class="hs3-body-text">
+                    <p>has satisfactorily completed the course of study prescribed by<br>
+                    the Board of Education and has met all requirements for graduation<br>
+                    and is hereby awarded this</p>
+                </div>
+
+                <!-- Diploma Title -->
+                <div class="hs3-diploma-title">
+                    <h4>${diplomaTitleText}</h4>
+                </div>
+
+                <!-- In witness / Given this -->
+                <div class="hs3-witness-text">
+                    <p>In witness whereof, we have hereunto set our hands<br>
+                    and affixed our signatures in ${city}, ${state}.</p>
+                    <p class="hs3-given-line">Given this <span class="hs3-blank">${givenDay}</span> day of <span class="hs3-blank">${givenMonth}</span>, in the year <span class="hs3-blank">${givenYear}</span>.</p>
+                </div>
+
+                <!-- Bottom: Signatures + Seal -->
+                <div class="hs3-bottom-section">
+                    <div class="hs3-signatures-col">
+                        <div class="hs3-sig-block">
+                            <div class="hs3-sig-name">${signature1Name || 'Dr. Elaine P. Brodeur, Ph.D.'}</div>
+                            <div class="hs3-sig-line"></div>
+                            <div class="hs3-sig-title">Principal</div>
+                        </div>
+                        <div class="hs3-sig-block">
+                            <div class="hs3-sig-name">${signature2Name || 'Lawrence M. Talbot, Esq.'}</div>
+                            <div class="hs3-sig-line"></div>
+                            <div class="hs3-sig-title">Assistant Principal</div>
+                        </div>
+                    </div>
+
+                    <div class="hs3-seal-center">
+                        ${emblemInfo.html}
+                    </div>
+
+                    <div class="hs3-signatures-col">
+                        <div class="hs3-sig-block">
+                            <div class="hs3-sig-name">Bernard L. Evans, MSM</div>
+                            <div class="hs3-sig-line"></div>
+                            <div class="hs3-sig-title">Superintendent</div>
+                        </div>
+                        <div class="hs3-sig-block">
+                            <div class="hs3-sig-name">Ingrid Hoffmann, M.Sc.</div>
+                            <div class="hs3-sig-line"></div>
+                            <div class="hs3-sig-title">Secretary of the School Board</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>`;
+    }
+
     // Generate diploma HTML with improved arc header
     function generateDiplomaHTML() {
         const currentStyle = currentConfig.diploma_style || 'classic';
@@ -1568,6 +1734,11 @@ jQuery(document).ready(function($) {
         // Use Style 2 template for 'modern'
         if (currentStyle === 'modern') {
             return generateStyle2DiplomaHTML();
+        }
+
+        // Use Style 3 template for 'formal' (High School Diploma)
+        if (currentStyle === 'formal') {
+            return generateStyle3DiplomaHTML();
         }
 
         const schoolName = currentConfig.school_name || '[School Name]';

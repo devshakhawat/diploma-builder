@@ -4380,3 +4380,431 @@ body {
         gap: 14px;
     }
 }
+
+/* ============================================================
+   STYLE 4 — Bilingual Province Secondary School Diploma (Decorative)
+   ============================================================ */
+
+.style4-template {
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.style4-diploma {
+    padding: 30px 40px 20px !important;
+    text-align: center;
+    position: relative;
+    min-height: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+}
+
+/* Outer thin gold border */
+.style4-diploma::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid #b8973a;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Inner thin gold border */
+.style4-diploma::after {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    right: 17px;
+    bottom: 17px;
+    border: 1px solid #b8973a;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.style4-diploma > * {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+/* ---- Top Coat of Arms ---- */
+.s4-top-emblem {
+    margin: 5px 0 6px;
+    display: flex;
+    justify-content: center;
+}
+
+.s4-top-coat-arms {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+.s4-top-emblem-placeholder {
+    width: 80px;
+    height: 80px;
+    border: 2px dashed #b8973a;
+    border-radius: 4px;
+    background: rgba(184, 151, 58, 0.08);
+}
+
+/* ---- Bilingual Title ---- */
+.s4-title {
+    margin: 2px 0 8px;
+    padding: 0 20px;
+}
+
+.s4-title h1 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.45rem;
+    font-weight: bold;
+    color: #8B6914;
+    margin: 0 0 3px;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+}
+
+.s4-title h2 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #8B6914;
+    margin: 0;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+}
+
+/* ---- Granted to / Ce diplôme est décerné à ---- */
+.s4-granted-text {
+    margin: 3px 0;
+}
+
+.s4-granted-text p {
+    font-size: 0.88rem;
+    color: #2c2c2c;
+    line-height: 1.75;
+    margin: 0;
+}
+
+.s4-granted-text em {
+    font-style: italic;
+    color: #3c3c3c;
+}
+
+/* ---- Student Name ---- */
+.s4-student-name {
+    margin: 2px 0 4px;
+}
+
+.s4-student-name p {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    letter-spacing: 3px;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* ---- a student of / élève de ---- */
+.s4-student-of {
+    margin: 3px 0;
+}
+
+.s4-student-of p {
+    font-size: 0.88rem;
+    color: #2c2c2c;
+    line-height: 1.75;
+    margin: 0;
+}
+
+.s4-student-of em {
+    font-style: italic;
+}
+
+/* ---- School Name ---- */
+.s4-school-name {
+    margin: 2px 0 5px;
+}
+
+.s4-school-name p {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.65rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* ---- Bilingual Body Text ---- */
+.s4-body-text {
+    margin: 4px 0 10px;
+    padding: 0 30px;
+}
+
+.s4-body-text p {
+    font-size: 0.8rem;
+    color: #2c2c2c;
+    line-height: 1.85;
+    margin: 0;
+}
+
+.s4-body-text em {
+    font-style: italic;
+    color: #3c3c3c;
+}
+
+/* ---- Bottom Section: Date | Seal | Signatures ---- */
+.s4-bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 2px 5px 5px;
+    gap: 10px;
+    width: calc(100% - 10px);
+    text-align: left;
+}
+
+/* ---- Date Column (left) ---- */
+.s4-date-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 130px;
+}
+
+.s4-dated-at-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.s4-label-sm {
+    font-size: 0.7rem;
+    color: #2c2c2c;
+    line-height: 1.65;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.s4-label-sm em {
+    font-style: italic;
+}
+
+.s4-location-value {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    padding-top: 2px;
+}
+
+.s4-date-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: nowrap;
+}
+
+.s4-the-word {
+    font-size: 0.7rem;
+    color: #2c2c2c;
+    line-height: 1.65;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.s4-the-word em {
+    font-style: italic;
+}
+
+.s4-day-value {
+    font-size: 0.88rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    min-width: 26px;
+    text-align: center;
+    border-bottom: 1px solid #2c2c2c;
+    padding: 0 3px;
+    flex-shrink: 0;
+}
+
+.s4-day-of-word {
+    font-size: 0.7rem;
+    color: #2c2c2c;
+    line-height: 1.65;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.s4-day-of-word em {
+    font-style: italic;
+}
+
+.s4-month-year-value {
+    font-size: 0.88rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    border-bottom: 1px solid #2c2c2c;
+    padding: 0 3px;
+    white-space: nowrap;
+}
+
+/* ---- Center Seal ---- */
+.s4-seal-center {
+    flex: 0 0 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.s4-seal-center .seal-circle {
+    width: 130px;
+    height: 130px;
+}
+
+.s4-seal-center .seal-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.s4-seal-center .seal-inner img,
+.s4-seal-center .diploma-emblem {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+}
+
+.s4-seal-placeholder {
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #b8973a;
+    border-radius: 50%;
+    background: rgba(184, 151, 58, 0.08);
+}
+
+/* ---- Signatures Column (right) ---- */
+.s4-signatures-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: right;
+    min-width: 130px;
+}
+
+.s4-sig-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.s4-sig-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.0rem;
+    color: #2c1810;
+    font-weight: 700;
+    margin-bottom: 1px;
+}
+
+.s4-sig-line {
+    width: 100%;
+    max-width: 180px;
+    height: 1px;
+    background-color: #2c2c2c;
+    margin: 2px 0;
+}
+
+.s4-sig-title {
+    font-size: 0.66rem;
+    color: #2c2c2c;
+    line-height: 1.55;
+    text-align: right;
+}
+
+.s4-sig-title em {
+    font-style: italic;
+}
+
+/* ---- Responsive — Style 4 ---- */
+@media (max-width: 768px) {
+    .style4-diploma {
+        padding: 20px 25px !important;
+    }
+
+    .s4-student-name p {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+
+    .s4-school-name p {
+        font-size: 1.2rem;
+    }
+
+    .s4-title h1 {
+        font-size: 1.1rem;
+    }
+
+    .s4-title h2 {
+        font-size: 0.95rem;
+    }
+
+    .s4-bottom-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
+    }
+
+    .s4-date-col,
+    .s4-signatures-col {
+        width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .s4-sig-block {
+        align-items: center;
+    }
+
+    .s4-sig-title {
+        text-align: center;
+    }
+
+    .s4-dated-at-row,
+    .s4-date-row {
+        justify-content: center;
+    }
+
+    .s4-seal-center {
+        order: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .s4-student-name p {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+
+    .s4-school-name p {
+        font-size: 1.0rem;
+    }
+
+    .s4-title h1 {
+        font-size: 0.95rem;
+    }
+
+    .s4-title h2 {
+        font-size: 0.85rem;
+    }
+}

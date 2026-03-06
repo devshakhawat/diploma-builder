@@ -1161,7 +1161,7 @@ jQuery(document).ready(function($) {
         $('#diploma-preview').html(diplomaHTML);
 
         // Apply paper color directly to the diploma elements
-        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma, #diploma-preview .style3-diploma').css('background-color', paperColor);
+        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma, #diploma-preview .style3-diploma, #diploma-preview .style4-diploma').css('background-color', paperColor);
 
         // Apply paper color to .classic-diploma border via CSS custom properties
         var classicDiploma = $('#diploma-preview .classic-diploma');
@@ -1722,6 +1722,157 @@ jQuery(document).ready(function($) {
         </div>`;
     }
 
+    // Generate Style 4 (Bilingual Province Secondary School Diploma / Decorative)
+    function generateStyle4DiplomaHTML() {
+        const schoolName     = currentConfig.school_name    || 'Your Province';
+        const studentName    = currentConfig.student_name   || 'Your Name Here';
+        const city           = currentConfig.city           || 'Province';
+        const country        = currentConfig.country        || 'Canada';
+        const signature1Name = currentConfig.signature1_name || '';
+        const signature2Name = currentConfig.signature2_name || '';
+        const graduationDate = currentConfig.graduation_date || '';
+        const documentType   = currentConfig.document_type  || 'High School';
+
+        // Format date
+        let givenDay       = 'Day';
+        let givenMonthYear = 'Month, Year';
+        if (graduationDate) {
+            const d = new Date(graduationDate);
+            if (!isNaN(d.getTime())) {
+                givenDay       = d.getDate();
+                givenMonthYear = d.toLocaleDateString('en-US', { month: 'long' }) + ', ' + d.getFullYear();
+            }
+        }
+
+        // Watermark
+        const isUserLoggedIn = diploma_ajax.is_user_logged_in && diploma_ajax.is_user_logged_in != '0';
+        const isCustomer     = diploma_ajax.is_customer && diploma_ajax.is_customer == '1';
+        const isAdmin        = diploma_ajax.is_admin    && diploma_ajax.is_admin    == '1';
+        const watermarkHTML  = (!isUserLoggedIn && !isCustomer && !isAdmin)
+            ? '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
+
+        // Top country/province coat of arms (from country_images)
+        const countryImgSrc = getCountryEmblemSrc();
+        const topEmblemHTML = countryImgSrc
+            ? `<img src="${countryImgSrc}" alt="${country}" class="s4-top-coat-arms">`
+            : `<div class="s4-top-emblem-placeholder"></div>`;
+
+        // Center seal — build directly from emblem source (single seal)
+        const emblemSrc = getEmblemSrc();
+        let sealHTML = '';
+        if (currentConfig.emblem_value === 'school_preview') {
+            sealHTML = `<div class="s4-seal-placeholder"></div>`;
+        } else if (emblemSrc) {
+            sealHTML = `
+                <div class="seal">
+                    <div class="seal-circle">
+                        <div class="seal-inner">
+                            <img src="${emblemSrc}" alt="Seal" class="diploma-emblem"
+                                 onerror="this.parentNode.innerHTML='<div class=\\'emblem-placeholder\\'></div>'">
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        // Bilingual diploma title
+        let enTitle = `${schoolName} Secondary School Diploma`;
+        let frTitle = `Diplôme d'études secondaires de ${schoolName}`;
+        if (documentType === 'GED') {
+            enTitle = `${schoolName} General Equivalency Diploma`;
+            frTitle = `Diplôme d'équivalence général de ${schoolName}`;
+        } else if (documentType === 'College') {
+            enTitle = `${schoolName} College Diploma`;
+            frTitle = `Diplôme collégial de ${schoolName}`;
+        } else if (documentType === 'University') {
+            enTitle = `${schoolName} University Degree`;
+            frTitle = `Diplôme universitaire de ${schoolName}`;
+        }
+
+        return `<div class="diploma-container style4-template">
+            <div class="diploma style4-diploma">
+                ${watermarkHTML}
+
+                <!-- Top Coat of Arms -->
+                <div class="s4-top-emblem">
+                    ${topEmblemHTML}
+                </div>
+
+                <!-- Bilingual Diploma Title -->
+                <div class="s4-title">
+                    <h1>${enTitle}</h1>
+                    <h2>${frTitle}</h2>
+                </div>
+
+                <!-- This Diploma is granted to -->
+                <div class="s4-granted-text">
+                    <p>This Diploma is granted to<br><em>Ce diplôme est décerné à</em></p>
+                </div>
+
+                <!-- Student Name -->
+                <div class="s4-student-name">
+                    <p>${studentName.toUpperCase()}</p>
+                </div>
+
+                <!-- a student of / élève de -->
+                <div class="s4-student-of">
+                    <p>a student of<br><em>élève de</em></p>
+                </div>
+
+                <!-- School Name -->
+                <div class="s4-school-name">
+                    <p>${schoolName.toUpperCase()}</p>
+                </div>
+
+                <!-- Bilingual Body Text -->
+                <div class="s4-body-text">
+                    <p>who has fulfilled the requirements for the Secondary School Diploma<br>
+                    in accordance with the provisions of the Ministry of Education and Training<br>
+                    <em>qui a rempli les conditions prescrites pour l'obtention du diplôme d'études secondaires<br>
+                    en vertu des dispositions du ministère de l'Éducation et de la Formation</em></p>
+                </div>
+
+                <!-- Bottom Section: Date | Seal | Signatures -->
+                <div class="s4-bottom-section">
+
+                    <!-- Left: Date -->
+                    <div class="s4-date-col">
+                        <div class="s4-dated-at-row">
+                            <span class="s4-label-sm">Dated at<br><em>Délivré à</em></span>
+                            <span class="s4-location-value">${city}, ${country}</span>
+                        </div>
+                        <div class="s4-date-row">
+                            <span class="s4-the-word">the<br><em>ce</em></span>
+                            <span class="s4-day-value">${givenDay}</span>
+                            <span class="s4-day-of-word">day of<br><em>jour de</em></span>
+                            <span class="s4-month-year-value">${givenMonthYear}</span>
+                        </div>
+                    </div>
+
+                    <!-- Center: Seal -->
+                    <div class="s4-seal-center">
+                        ${sealHTML}
+                    </div>
+
+                    <!-- Right: Signatures -->
+                    <div class="s4-signatures-col">
+                        <div class="s4-sig-block">
+                            <div class="s4-sig-name">${signature1Name || 'Richard Collins'}</div>
+                            <div class="s4-sig-line"></div>
+                            <div class="s4-sig-title">Minister of Education and Training<br><em>Ministre de l'Éducation et de la Formation</em></div>
+                        </div>
+                        <div class="s4-sig-block">
+                            <div class="s4-sig-name">${signature2Name || 'Jane Johnson'}</div>
+                            <div class="s4-sig-line"></div>
+                            <div class="s4-sig-title">Principal of School<br><em>Le directeur de l'école</em></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>`;
+    }
+
     // Generate diploma HTML with improved arc header
     function generateDiplomaHTML() {
         const currentStyle = currentConfig.diploma_style || 'classic';
@@ -1739,6 +1890,11 @@ jQuery(document).ready(function($) {
         // Use Style 3 template for 'formal' (High School Diploma)
         if (currentStyle === 'formal') {
             return generateStyle3DiplomaHTML();
+        }
+
+        // Use Style 4 template for 'decorative' (Bilingual Province Diploma)
+        if (currentStyle === 'decorative') {
+            return generateStyle4DiplomaHTML();
         }
 
         const schoolName = currentConfig.school_name || '[School Name]';

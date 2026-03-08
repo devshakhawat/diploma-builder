@@ -11,8 +11,11 @@ class DiplomaBuilder_Emblems {
 
     const POST_TYPE = 'diploma_emblem';
 
+    const TAXONOMY = 'emblem_category';
+
     public function __construct() {
         add_action('init', array($this, 'register_post_type'));
+        add_action('init', array($this, 'register_taxonomy'));
         add_action('after_setup_theme', array($this, 'add_thumbnail_support'));
     }
 
@@ -46,6 +49,35 @@ class DiplomaBuilder_Emblems {
         );
 
         register_post_type(self::POST_TYPE, $args);
+    }
+
+    public function register_taxonomy() {
+        $labels = array(
+            'name'              => __('Emblem Categories', 'diploma-builder'),
+            'singular_name'     => __('Emblem Category', 'diploma-builder'),
+            'search_items'      => __('Search Categories', 'diploma-builder'),
+            'all_items'         => __('All Categories', 'diploma-builder'),
+            'parent_item'       => __('Parent Category', 'diploma-builder'),
+            'parent_item_colon' => __('Parent Category:', 'diploma-builder'),
+            'edit_item'         => __('Edit Category', 'diploma-builder'),
+            'update_item'       => __('Update Category', 'diploma-builder'),
+            'add_new_item'      => __('Add New Category', 'diploma-builder'),
+            'new_item_name'     => __('New Category Name', 'diploma-builder'),
+            'menu_name'         => __('Categories', 'diploma-builder'),
+        );
+
+        $args = array(
+            'labels'            => $labels,
+            'hierarchical'      => true,
+            'public'            => false,
+            'show_ui'           => true,
+            'show_in_menu'      => true,
+            'show_admin_column' => true,
+            'query_var'         => false,
+            'rewrite'           => false,
+        );
+
+        register_taxonomy(self::TAXONOMY, self::POST_TYPE, $args);
     }
 
     /**

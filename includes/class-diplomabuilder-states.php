@@ -13,6 +13,7 @@ class DiplomaBuilder_States {
 
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
+		add_action( 'init', array( $this, 'register_taxonomy' ) );
 		add_action( 'after_setup_theme', array( $this, 'add_thumbnail_support' ) );
 	}
 
@@ -46,6 +47,35 @@ class DiplomaBuilder_States {
 		);
 
 		register_post_type( self::POST_TYPE, $args );
+	}
+
+	public function register_taxonomy() {
+		$labels = array(
+			'name'              => __( 'Countries', 'diploma-builder' ),
+			'singular_name'     => __( 'Country', 'diploma-builder' ),
+			'search_items'      => __( 'Search Countries', 'diploma-builder' ),
+			'all_items'         => __( 'All Countries', 'diploma-builder' ),
+			'parent_item'       => __( 'Parent Country', 'diploma-builder' ),
+			'parent_item_colon' => __( 'Parent Country:', 'diploma-builder' ),
+			'edit_item'         => __( 'Edit Country', 'diploma-builder' ),
+			'update_item'       => __( 'Update Country', 'diploma-builder' ),
+			'add_new_item'      => __( 'Add New Country', 'diploma-builder' ),
+			'new_item_name'     => __( 'New Country Name', 'diploma-builder' ),
+			'menu_name'         => __( 'Countries', 'diploma-builder' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'hierarchical'      => true,
+			'public'            => false,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_menu'      => true,
+			'rewrite'           => false,
+			'query_var'         => false,
+		);
+
+		register_taxonomy( 'diploma_state_country', self::POST_TYPE, $args );
 	}
 
 	public function add_thumbnail_support() {

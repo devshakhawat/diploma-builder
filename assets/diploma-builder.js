@@ -165,14 +165,14 @@ jQuery(document).ready(function($) {
             paperSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
             emblemFields.removeClass('disabled-subsection').find('input, select, button').prop('disabled', false);
         } else {
-            // Disable all fields for other countries
-            schoolFields.addClass('disabled-subsection');
-            $('#school_name, #city, #state').prop('disabled', true);
-            graduationFields.addClass('disabled-subsection');
-            $('#student_name, #graduation_date').prop('disabled', true);
-            styleSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
-            paperSubsection.addClass('disabled-subsection').find('input, select').prop('disabled', true);
-            emblemFields.addClass('disabled-subsection').find('input, select, button').prop('disabled', true);
+            // Enable all fields for other countries too
+            schoolFields.removeClass('disabled-subsection');
+            $('#school_name, #city, #state').prop('disabled', false);
+            graduationFields.removeClass('disabled-subsection');
+            $('#student_name, #graduation_date').prop('disabled', false);
+            styleSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            paperSubsection.removeClass('disabled-subsection').find('input, select').prop('disabled', false);
+            emblemFields.removeClass('disabled-subsection').find('input, select, button').prop('disabled', false);
         }
     }
     

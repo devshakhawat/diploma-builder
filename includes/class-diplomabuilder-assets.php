@@ -108,6 +108,15 @@ class DiplomaBuilder_Assets {
                 }
             }
 
+            // Build state image map from diploma_state custom post type
+            $state_images = array();
+            $states = DiplomaBuilder_States::get_all();
+            foreach ($states as $id => $state) {
+                if ( ! empty( $state['image_url'] ) ) {
+                    $state_images[ $state['name'] ] = $state['image_url'];
+                }
+            }
+
             // Localize script with AJAX URL and nonce
             wp_localize_script('diploma-builder', 'diploma_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
@@ -118,6 +127,7 @@ class DiplomaBuilder_Assets {
                 'is_admin' => $is_admin ? 1 : 0,
                 'emblem_urls' => $emblem_urls,
                 'country_images' => $country_images,
+                'state_images' => $state_images,
                 'allow_edit_location' => get_option('diploma_allow_edit_location', 0) ? 1 : 0,
                 'papers_url' => DIPLOMA_BUILDER_URL . 'assets/papers/',
             ));

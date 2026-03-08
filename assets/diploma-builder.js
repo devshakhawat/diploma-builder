@@ -1454,6 +1454,18 @@ jQuery(document).ready(function($) {
         return '';
     }
 
+    // Get the state featured image URL from diploma_state CPT
+    // Matches the selected state/province/region display name against diploma_state post titles
+    function getStateEmblemSrc() {
+        if (diploma_ajax.state_images) {
+            const regionText = $('#state_province_region option:selected').text().trim();
+            if (regionText && diploma_ajax.state_images[regionText]) {
+                return diploma_ajax.state_images[regionText];
+            }
+        }
+        return '';
+    }
+
     // Generate Style 2 (Modern Elegant) diploma HTML — matches the university international format
     function generateStyle2DiplomaHTML() {
         const schoolName    = currentConfig.school_name   || 'Your School Name Here';
@@ -1769,11 +1781,10 @@ jQuery(document).ready(function($) {
         const watermarkHTML  = (!isUserLoggedIn && !isCustomer && !isAdmin)
             ? '<div class="diploma-preview-watermark">PREVIEW</div>' : '';
 
-        // Top country/province coat of arms (from country_images)
-        const countryImgSrc = getCountryEmblemSrc();
-        const topEmblemHTML = countryImgSrc
-            ? `<img src="${countryImgSrc}" alt="${country}" class="s4-top-coat-arms">`
-            : `<div class="s4-top-emblem-placeholder"></div>`;
+        // Top emblem from diploma_state featured image based on selected state
+        const stateImgSrc = getStateEmblemSrc();
+        const fallbackImg = diploma_ajax.plugin_url + 'assets/no-data-available.svg';
+        const topEmblemHTML = `<img src="${stateImgSrc || fallbackImg}" alt="${country}" class="s4-top-coat-arms">`;
 
         // Center seal — build directly from emblem source (single seal)
         const emblemSrc = getEmblemSrc();

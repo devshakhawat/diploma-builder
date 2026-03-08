@@ -837,10 +837,10 @@ class DiplomaBuilder_Frontend {
     private function get_paper_colors() {
         $papers_url = DIPLOMA_BUILDER_URL . 'assets/papers/';
         return array(
-            'parchment'  => array('name' => __('Parchment', 'diploma-builder'), 'hex' => '#e8d5b7', 'image' => $papers_url . 'parchment.jpg'),
-            'ivory'      => array('name' => __('Ivory Cream', 'diploma-builder'), 'hex' => '#f5f5dc', 'image' => $papers_url . 'ivory.jpg'),
-            'light_blue' => array('name' => __('Light Blue', 'diploma-builder'), 'hex' => '#dce8ef', 'image' => $papers_url . 'light-blue.jpg'),
-            'white'      => array('name' => __('Classic White', 'diploma-builder'), 'hex' => '#f5f5f0', 'image' => $papers_url . 'white.jpg'),
+            'parchment'  => array('name' => __('Pewter', 'diploma-builder'), 'hex' => '#e8d5b7', 'image' => $papers_url . 'parchment.jpg'),
+            'ivory'      => array('name' => __('Aged', 'diploma-builder'), 'hex' => '#f5f5dc', 'image' => $papers_url . 'ivory.jpg'),
+            'light_blue' => array('name' => __('Natural', 'diploma-builder'), 'hex' => '#dce8ef', 'image' => $papers_url . 'light-blue.jpg'),
+            'white'      => array('name' => __('White', 'diploma-builder'), 'hex' => '#f5f5f0', 'image' => $papers_url . 'white.jpg'),
         );
     }
     

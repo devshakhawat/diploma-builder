@@ -160,7 +160,7 @@ class DiplomaBuilder {
 	private function set_default_options() {
 		add_option( 'diploma_builder_version', DIPLOMA_BUILDER_VERSION );
 		add_option( 'diploma_allow_guests', 1 );
-		add_option( 'diploma_default_paper', 'white' );
+		add_option( 'diploma_default_paper', 'parchment' );
 		add_option( 'diploma_max_per_user', 10 );
 		add_option( 'diploma_single_product_id', 0 );
 		add_option( 'diploma_allow_edit_location', 0 );

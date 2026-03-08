@@ -1044,7 +1044,7 @@ jQuery(document).ready(function($) {
         
         // Update style and paper info
         const styleName = $('#diploma_style option:selected').text() || '[Style]';
-        const paperName = $('#paper_color option:selected').text() || '[Paper]';
+        const paperName = $('input[name="paper_color"]:checked').closest('.paper-color-option').find('.paper-color-name').text() || '[Paper]';
 
         $('#review-diploma-style').text(styleName);
         $('#review-paper-color').text(paperName);
@@ -1126,26 +1126,39 @@ jQuery(document).ready(function($) {
     
     // Update the live preview
     function updatePreview() {
-        const paperColors = {
-            white: '#ffffff',
-            ivory: '#f5f5dc',
-            light_blue: '#e6f3ff',
-            light_gray: '#f0f0f0'
+        const paperImages = {
+            parchment:  diploma_ajax.papers_url + 'parchment.jpg',
+            ivory:      diploma_ajax.papers_url + 'ivory.jpg',
+            light_blue: diploma_ajax.papers_url + 'light-blue.jpg',
+            white:      diploma_ajax.papers_url + 'white.jpg'
         };
 
-        const paperColor = paperColors[currentConfig.paper_color] || '#ffffff';
+        const paperColors = {
+            parchment:  '#e8d5b7',
+            ivory:      '#f5f5dc',
+            light_blue: '#dce8ef',
+            white:      '#f5f5f0'
+        };
 
-        // Update the background color of the diploma preview directly
-        $('#diploma-preview').css('background-color', paperColor);
+        const paperColor = paperColors[currentConfig.paper_color] || '#f5f5f0';
+        const paperImage = paperImages[currentConfig.paper_color] || '';
+
+        // Update the background of the diploma preview
+        $('#diploma-preview').css({
+            'background-color': paperColor,
+            'background-image': paperImage ? 'url(' + paperImage + ')' : 'none',
+            'background-size': 'cover',
+            'background-position': 'center'
+        });
 
         // Paper color gradients for .classic-diploma background
         const paperGradients = {
-            white:      { light: '#ffffff', mid: '#f8f8f8', borderBg: 'rgba(255, 255, 255, 0.95)' },
-            ivory:      { light: '#f4f1e8', mid: '#ede8db', borderBg: 'rgba(244, 241, 232, 0.95)' },
-            light_blue: { light: '#e6f3ff', mid: '#d4e8f7', borderBg: 'rgba(230, 243, 255, 0.95)' },
-            light_gray: { light: '#f0f0f0', mid: '#e5e5e5', borderBg: 'rgba(240, 240, 240, 0.95)' }
+            parchment:  { borderBg: 'rgba(232, 213, 183, 0.95)' },
+            ivory:      { borderBg: 'rgba(244, 241, 232, 0.95)' },
+            light_blue: { borderBg: 'rgba(220, 232, 239, 0.95)' },
+            white:      { borderBg: 'rgba(245, 245, 240, 0.95)' }
         };
-        const currentGradient = paperGradients[currentConfig.paper_color] || paperGradients.ivory;
+        const currentGradient = paperGradients[currentConfig.paper_color] || paperGradients.parchment;
 
         // Update diploma size class based on selected size
         const diplomaSize = currentConfig.diploma_size || '8.5x11';
@@ -1160,8 +1173,13 @@ jQuery(document).ready(function($) {
         let diplomaHTML = generateDiplomaHTML();
         $('#diploma-preview').html(diplomaHTML);
 
-        // Apply paper color directly to the diploma elements
-        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma, #diploma-preview .style3-diploma, #diploma-preview .style4-diploma').css('background-color', paperColor);
+        // Apply paper texture to the diploma elements
+        $('#diploma-preview .diploma, #diploma-preview .classic-diploma, #diploma-preview .style2-diploma, #diploma-preview .style3-diploma, #diploma-preview .style4-diploma').css({
+            'background-color': paperColor,
+            'background-image': paperImage ? 'url(' + paperImage + ')' : 'none',
+            'background-size': 'cover',
+            'background-position': 'center'
+        });
 
         // Apply paper color to .classic-diploma border via CSS custom properties
         var classicDiploma = $('#diploma-preview .classic-diploma');
@@ -2387,7 +2405,7 @@ jQuery(document).ready(function($) {
         // Reset configuration
         currentConfig = {
             diploma_style: 'classic',
-            paper_color: 'white',
+            paper_color: 'parchment',
             emblem_type: 'generic',
             emblem_value: $('input[name="emblem_value"]').first().val() || '',
             school_name: '',
@@ -2409,7 +2427,7 @@ jQuery(document).ready(function($) {
 
         // Reset form fields
         $('#diploma_style').val('classic');
-        $('#paper_color').val('white');
+        $('#paper_color').val('parchment');
 
         $('#school_name').val('');
         $('#student_name').val('');

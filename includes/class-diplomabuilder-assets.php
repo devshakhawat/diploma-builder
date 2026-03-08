@@ -119,6 +119,7 @@ class DiplomaBuilder_Assets {
                 'emblem_urls' => $emblem_urls,
                 'country_images' => $country_images,
                 'allow_edit_location' => get_option('diploma_allow_edit_location', 0) ? 1 : 0,
+                'papers_url' => DIPLOMA_BUILDER_URL . 'assets/papers/',
             ));
         }
     }

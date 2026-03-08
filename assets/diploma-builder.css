@@ -2825,7 +2825,7 @@ body {
 /* Flat school name header for classic style (Style 01) */
 .school-name-flat {
     font-family: 'UnifrakturMaguntia', cursive;
-    font-size: 3.2rem;
+    font-size: 60px;
     color: #2c1810;
     text-align: center;
     letter-spacing: 2px;
@@ -3441,7 +3441,7 @@ body {
 
 .classic-template .school-name-flat {
     font-family: 'UnifrakturMaguntia', cursive;
-    font-size: 3.5rem;
+    font-size: 60px;
     color: #1a1a1a;
     text-align: center;
     letter-spacing: 2px;
@@ -3476,7 +3476,7 @@ body {
 
 .classic-student-name h3 {
     font-family: 'UnifrakturMaguntia', cursive;
-    font-size: 3rem;
+    font-size: 40px;
     color: #1a1a1a;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
     letter-spacing: 3px;
@@ -3501,7 +3501,7 @@ body {
 
 .classic-degree-name {
     font-family: 'UnifrakturMaguntia', cursive;
-    font-size: 2.2rem;
+    font-size: 40px;
     color: #1a1a1a;
     margin: 5px 0;
     letter-spacing: 2px;
@@ -3510,7 +3510,7 @@ body {
 
 .classic-major-name {
     font-family: 'Times New Roman', 'Georgia', serif;
-    font-size: 1.4rem;
+    font-size: 30px;
     color: #2c1810;
     margin: 5px 0 0 0;
     font-style: italic;
@@ -3553,7 +3553,7 @@ body {
 .classic-location-value,
 .classic-date-value {
     font-family: 'UnifrakturMaguntia', cursive;
-    font-size: 1.3rem;
+    font-size: 24px;
     color: #1a1a1a;
     font-weight: bold;
     letter-spacing: 1px;

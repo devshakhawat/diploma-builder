@@ -113,6 +113,52 @@ class DiplomaBuilder_Emblems {
         return $emblems;
     }
 
+    /**
+     * Get published emblems filtered by emblem_category slug.
+     *
+     * @param string $category_slug The emblem_category taxonomy slug (e.g. 'usa', 'uk', 'canada', 'international').
+     * @return array Keyed by post ID: ['name' => string, 'image_url' => string]
+     */
+    public static function get_by_category($category_slug) {
+        $emblems = array();
+
+        if (empty($category_slug)) {
+            return $emblems;
+        }
+
+        $query = new WP_Query(array(
+            'post_type'      => self::POST_TYPE,
+            'posts_per_page' => -1,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'ASC',
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => self::TAXONOMY,
+                    'field'    => 'slug',
+                    'terms'    => $category_slug,
+                ),
+            ),
+        ));
+
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $post_id = get_the_ID();
+                $thumbnail_url = get_the_post_thumbnail_url($post_id, 'medium');
+                if ($thumbnail_url) {
+                    $emblems[$post_id] = array(
+                        'name'      => get_the_title(),
+                        'image_url' => $thumbnail_url,
+                    );
+                }
+            }
+            wp_reset_postdata();
+        }
+
+        return $emblems;
+    }
+
     public function add_thumbnail_support() {
         $supported = get_theme_support('post-thumbnails');
 

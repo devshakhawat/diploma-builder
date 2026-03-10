@@ -22,6 +22,9 @@ class DiplomaBuilder_Ajax {
         
         add_action('wp_ajax_load_state_emblem', array($this, 'load_state_emblem'));
         add_action('wp_ajax_nopriv_load_state_emblem', array($this, 'load_state_emblem'));
+
+        add_action('wp_ajax_load_emblems_by_country', array($this, 'load_emblems_by_country'));
+        add_action('wp_ajax_nopriv_load_emblems_by_country', array($this, 'load_emblems_by_country'));
         
         // Admin only actions
         add_action('wp_ajax_delete_diploma', array($this, 'delete_diploma'));
@@ -240,6 +243,57 @@ class DiplomaBuilder_Ajax {
         }
     }
     
+    /**
+     * Load emblems filtered by country (mapped to emblem_category taxonomy slug).
+     */
+    public function load_emblems_by_country() {
+        try {
+            if (!wp_verify_nonce($_POST['nonce'] ?? '', 'diploma_builder_nonce')) {
+                throw new Exception(__('Security check failed.', 'diploma-builder'));
+            }
+
+            $country = sanitize_text_field($_POST['country'] ?? '');
+            if (!$country) {
+                throw new Exception(__('Invalid country.', 'diploma-builder'));
+            }
+
+            // Map country value to emblem_category slug
+            $slug = sanitize_title($country);
+
+            $emblems = DiplomaBuilder_Emblems::get_by_category($slug);
+
+            // Build HTML for the carousel slides
+            $html = '';
+            $emblem_urls = array();
+            $index = 0;
+            foreach ($emblems as $id => $emblem) {
+                $active_class = $index === 0 ? 'active' : '';
+                $checked = $index === 0 ? 'checked' : '';
+                $emblem_urls[$id] = $emblem['image_url'];
+
+                $html .= '<div class="emblem-carousel-slide ' . $active_class . '" data-emblem="' . esc_attr($id) . '">';
+                $html .= '<label class="emblem-carousel-option" for="emblem_' . esc_attr($id) . '">';
+                $html .= '<input type="radio" name="emblem_value" value="' . esc_attr($id) . '" id="emblem_' . esc_attr($id) . '" data-type="generic" ' . $checked . '>';
+                $html .= '<div class="emblem-carousel-preview">';
+                $html .= '<img src="' . esc_url($emblem['image_url']) . '" alt="' . esc_attr($emblem['name']) . '" loading="lazy">';
+                $html .= '</div>';
+                $html .= '<div class="emblem-carousel-info"><h6>' . esc_html($emblem['name']) . '</h6></div>';
+                $html .= '</label>';
+                $html .= '</div>';
+                $index++;
+            }
+
+            wp_send_json_success(array(
+                'html'        => $html,
+                'emblem_urls' => $emblem_urls,
+                'count'       => count($emblems),
+            ));
+
+        } catch (Exception $e) {
+            wp_send_json_error($e->getMessage());
+        }
+    }
+
     /**
      * Delete diploma (admin only)
      */

@@ -76,7 +76,7 @@ class DiplomaBuilder_Frontend {
     private function render_diploma_builder($atts) {
         $diploma_styles = $this->get_diploma_styles();
         $paper_colors = $this->get_paper_colors();
-        $generic_emblems = $this->get_generic_emblems();
+        $generic_emblems = $this->get_generic_emblems('USA');
         $us_states = $this->get_us_states();
         ?>
         <div id="diploma-builder-container" style="max-width: <?php //echo esc_attr($atts['max_width']); ?>" >
@@ -593,6 +593,18 @@ class DiplomaBuilder_Frontend {
 
                                                 <!-- Carousel Indicators -->
                                                 <div class="emblem-carousel-indicators" id="emblem-carousel-indicators"></div>
+
+                                                <!-- No emblems message -->
+                                                <div class="emblem-no-data" id="emblem-no-data" style="<?php echo empty($generic_emblems) ? '' : 'display:none;'; ?>">
+                                                    <img src="<?php echo esc_url(DIPLOMA_BUILDER_URL . 'assets/no-data-available.svg'); ?>" alt="<?php esc_attr_e('No emblems available', 'diploma-builder'); ?>" style="max-width:120px;margin:0 auto 1rem;display:block;">
+                                                    <p><?php _e('No emblems available for the selected country.', 'diploma-builder'); ?></p>
+                                                </div>
+
+                                                <!-- Loading spinner -->
+                                                <div class="emblem-loading" id="emblem-loading" style="display:none;">
+                                                    <div class="emblem-spinner"></div>
+                                                    <p><?php _e('Loading emblems...', 'diploma-builder'); ?></p>
+                                                </div>
                                             </div>
 
                                             <!-- State Emblems - Hidden for now -->
@@ -844,7 +856,16 @@ class DiplomaBuilder_Frontend {
         );
     }
     
-    private function get_generic_emblems() {
+    private function get_generic_emblems($country = '') {
+        if ($country) {
+            $slug = sanitize_title($country);
+            $emblems = DiplomaBuilder_Emblems::get_by_category($slug);
+            // Fall back to all emblems if no category match
+            if (empty($emblems)) {
+                return DiplomaBuilder_Emblems::get_all();
+            }
+            return $emblems;
+        }
         return DiplomaBuilder_Emblems::get_all();
     }
     

@@ -647,8 +647,8 @@ jQuery(document).ready(function($) {
             updatePreview();
         });
         
-        // Generic emblem selection
-        $('input[name="emblem_value"][data-type="generic"]').on('change', function() {
+        // Generic emblem selection (delegated for dynamically loaded emblems)
+        $(document).on('change', 'input[name="emblem_value"][data-type="generic"]', function() {
             currentConfig.emblem_value = $(this).val();
             updatePreview();
         });
@@ -656,8 +656,10 @@ jQuery(document).ready(function($) {
         // Emblem Carousel Functionality - Multi-Item
         let currentEmblemPage = 0;
         const $emblemTrack = $('#emblem-carousel-track');
-        const $emblemSlides = $('.emblem-carousel-slide');
-        const totalEmblemSlides = $emblemSlides.length;
+
+        function getEmblemSlideCount() {
+            return $('.emblem-carousel-slide').length;
+        }
 
         // Determine items per page based on screen width
         function getItemsPerPage() {
@@ -668,10 +670,13 @@ jQuery(document).ready(function($) {
         }
 
         function getTotalPages() {
-            return Math.ceil(totalEmblemSlides / getItemsPerPage());
+            return Math.ceil(getEmblemSlideCount() / getItemsPerPage());
         }
 
         function updateEmblemCarousel() {
+            const totalSlides = getEmblemSlideCount();
+            if (totalSlides === 0) return;
+
             const itemsPerPage = getItemsPerPage();
             const slideWidth = 100 / itemsPerPage;
             const offset = -(currentEmblemPage * slideWidth * itemsPerPage);
@@ -711,6 +716,74 @@ jQuery(document).ready(function($) {
             updateEmblemCarousel();
         }
 
+        /**
+         * Load emblems by country via AJAX and rebuild the carousel.
+         */
+        function loadEmblemsByCountry(country) {
+            const $wrapper = $('.emblem-carousel-wrapper');
+            const $noData = $('#emblem-no-data');
+            const $loading = $('#emblem-loading');
+            const $indicators = $('#emblem-carousel-indicators');
+
+            // Show loading, hide carousel and no-data
+            $wrapper.hide();
+            $noData.hide();
+            $indicators.hide();
+            $loading.show();
+
+            $.ajax({
+                url: diploma_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'load_emblems_by_country',
+                    nonce: diploma_ajax.nonce,
+                    country: country
+                },
+                success: function(response) {
+                    $loading.hide();
+
+                    if (response.success && response.data.count > 0) {
+                        // Replace carousel track content
+                        $emblemTrack.html(response.data.html);
+
+                        // Update the emblem URL map for preview
+                        diploma_ajax.emblem_urls = response.data.emblem_urls;
+
+                        // Reset carousel state
+                        currentEmblemPage = 0;
+                        $wrapper.show();
+                        $indicators.show();
+                        $noData.hide();
+                        updateEmblemCarousel();
+
+                        // Select the first emblem
+                        const $firstRadio = $emblemTrack.find('input[name="emblem_value"]').first();
+                        if ($firstRadio.length) {
+                            $firstRadio.prop('checked', true);
+                            currentConfig.emblem_value = $firstRadio.val();
+                        }
+
+                        // Re-bind generic emblem change events (delegated)
+                        updatePreview();
+                    } else {
+                        // No emblems for this country
+                        $emblemTrack.html('');
+                        $wrapper.hide();
+                        $indicators.hide();
+                        $noData.show();
+                        currentConfig.emblem_value = '';
+                        diploma_ajax.emblem_urls = {};
+                        updatePreview();
+                    }
+                },
+                error: function() {
+                    $loading.hide();
+                    $wrapper.show();
+                    $indicators.show();
+                }
+            });
+        }
+
         // Emblem carousel navigation
         $('#emblem-prev').on('click', function() {
             navigateEmblemCarousel('prev');
@@ -738,7 +811,7 @@ jQuery(document).ready(function($) {
         });
 
         // Initialize emblem carousel
-        if (totalEmblemSlides > 0) {
+        if (getEmblemSlideCount() > 0) {
             updateEmblemCarousel();
         }
         
@@ -773,6 +846,10 @@ jQuery(document).ready(function($) {
             currentConfig.country = selectedCountry;
             validateField($(this));
             handleCountrySelection(selectedCountry);
+            // Reload emblems for the selected country
+            if (selectedCountry) {
+                loadEmblemsByCountry(selectedCountry);
+            }
             updatePreview();
             updateReviewSummary();
         });

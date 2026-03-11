@@ -996,6 +996,7 @@ jQuery(document).ready(function($) {
         // Action buttons
         $('#save-diploma').on('click', saveDiploma);
         $('#download-diploma').on('click', downloadDiploma);
+        $('#download-proof').on('click', downloadDiploma);
         
         // Form actions
         $('#create-another').on('click', function() {

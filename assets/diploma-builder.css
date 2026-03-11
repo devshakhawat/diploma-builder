@@ -981,7 +981,7 @@
 }
 
 .form-actions {
-    display: none !important;
+    display: flex;
     gap: 0.75rem;
     justify-content: center;
     margin-top: 15px;

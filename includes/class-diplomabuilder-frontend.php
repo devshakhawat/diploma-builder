@@ -668,6 +668,31 @@ class DiplomaBuilder_Frontend {
                                 </div>
                                 <?php endif; ?>
                             </div>
+
+                            <div class="form-actions">
+                                <?php
+                                $show_download = false;
+                                if (current_user_can('manage_options')) {
+                                    $show_download = true;
+                                } elseif (is_user_logged_in() && function_exists('wc_customer_bought_product')) {
+                                    $uid = get_current_user_id();
+                                    $email = wp_get_current_user()->user_email;
+                                    $digital_id = get_option('diploma_digital_product_id', 0);
+                                    $printed_id = get_option('diploma_printed_product_id', 0);
+                                    $premium_id = get_option('diploma_premium_product_id', 0);
+                                    if (($digital_id && wc_customer_bought_product($email, $uid, $digital_id)) ||
+                                        ($printed_id && wc_customer_bought_product($email, $uid, $printed_id)) ||
+                                        ($premium_id && wc_customer_bought_product($email, $uid, $premium_id))) {
+                                        $show_download = true;
+                                    }
+                                }
+                                if ($show_download): ?>
+                                    <button type="button" id="download-diploma" class="btn btn-success">
+                                        <span class="btn-icon">📥</span>
+                                        <?php _e('Download Diploma PNG', 'diploma-builder'); ?>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                         <!-- STEP 5: Place Your Order -->
@@ -682,14 +707,7 @@ class DiplomaBuilder_Frontend {
                                 <!-- Purchase Options -->
                                 <?php echo $this->get_purchase_option(); ?>
 
-                                <div class="form-actions">
-                                    <?php if (current_user_can('manage_options') ): ?>
-                                        <button type="button" id="download-diploma" class="btn btn-success">
-                                            <span class="btn-icon">📥</span>
-                                            <?php _e('Download Diploma', 'diploma-builder'); ?>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
+                                
                             </div>
                         </div>
                         </div>

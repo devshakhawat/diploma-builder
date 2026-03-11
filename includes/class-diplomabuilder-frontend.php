@@ -171,9 +171,9 @@ class DiplomaBuilder_Frontend {
                                                 <select id="document_type" name="document_type" class="form-select" required>
                                                     <option value=""><?php _e('Choose a Document Type', 'diploma-builder'); ?></option>
                                                     <option value="GED"><?php _e('GED', 'diploma-builder'); ?></option>
-                                                    <option value="High School" selected><?php _e('High School', 'diploma-builder'); ?></option>
-                                                    <option value="College"><?php _e('College', 'diploma-builder'); ?></option>
-                                                    <option value="University"><?php _e('University', 'diploma-builder'); ?></option>
+                                                    <option value="High School" selected><?php _e('High School Diploma', 'diploma-builder'); ?></option>
+                                                    <option value="College"><?php _e('College Diploma', 'diploma-builder'); ?></option>
+                                                    <option value="University"><?php _e('University Diploma', 'diploma-builder'); ?></option>
                                                 </select>
                                             </div>
                                         </div>

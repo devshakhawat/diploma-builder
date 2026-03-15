@@ -2806,6 +2806,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'EngraversOldEnglish';
+    src: url('font/Engravers_old_english_Shadow.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -2824,7 +2831,7 @@ body {
 
 /* Flat school name header for classic style (Style 01) */
 .school-name-flat {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 60px;
     color: #2c1810;
     text-align: center;
@@ -3440,7 +3447,7 @@ body {
 }
 
 .classic-template .school-name-flat {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 60px;
     color: #1a1a1a;
     text-align: center;

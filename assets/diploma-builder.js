@@ -1414,8 +1414,6 @@ jQuery(document).ready(function($) {
         const state = currentConfig.state || '[Region]';
         const degreeType = currentConfig.degree_type || '[Your Degree]';
         const major = getMajorDisplayName() || '[Your Major]';
-        const signature1Name = currentConfig.signature1_name || '';
-        const signature2Name = currentConfig.signature2_name || '';
 
         // Get emblem info
         const emblemInfo = getEmblemInfo();
@@ -1478,12 +1476,12 @@ jQuery(document).ready(function($) {
                     <!-- Left Signatures -->
                     <div class="classic-signatures-col">
                         <div class="classic-sig-block">
-                            <div class="classic-sig-name">${signature1Name || ''}</div>
+                            <div class="classic-sig-name">Dr. Robert Johnson</div>
                             <div class="classic-sig-line"></div>
                             <div class="classic-sig-title"><em>President</em></div>
                         </div>
                         <div class="classic-sig-block">
-                            <div class="classic-sig-name">${signature2Name || ''}</div>
+                            <div class="classic-sig-name">Sarah Williams</div>
                             <div class="classic-sig-line"></div>
                             <div class="classic-sig-title"><em>Chair, Governing Board</em></div>
                         </div>
@@ -1726,10 +1724,10 @@ jQuery(document).ready(function($) {
                         <path id="hs3-curve1" d="M50,120 Q300,20 550,120" />
                         <path id="hs3-curve2" d="M70,140 Q300,60 530,140" />
                     </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                    <text font-family="'EngraversOldEnglish', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
                         <textPath href="#hs3-curve1" startOffset="50%">${schoolNameSplit.line1}</textPath>
                     </text>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
+                    <text font-family="'EngraversOldEnglish', cursive" font-size="${line2FontSize}" fill="#2c1810" text-anchor="middle">
                         <textPath href="#hs3-curve2" startOffset="50%">${schoolNameSplit.line2}</textPath>
                     </text>
                 </svg>`;
@@ -1739,7 +1737,7 @@ jQuery(document).ready(function($) {
                     <defs>
                         <path id="hs3-curve" d="M50,100 Q300,10 550,100" />
                     </defs>
-                    <text font-family="'UnifrakturMaguntia', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
+                    <text font-family="'EngraversOldEnglish', cursive" font-size="${fontSize}" fill="#2c1810" text-anchor="middle">
                         <textPath href="#hs3-curve" startOffset="50%">${schoolNameSplit.line1}</textPath>
                     </text>
                 </svg>`;

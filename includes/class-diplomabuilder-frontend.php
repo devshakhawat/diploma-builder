@@ -258,7 +258,8 @@ class DiplomaBuilder_Frontend {
                             </div>
 
                             <div class="step-card-body">
-                                <!-- Degree Type Selection -->
+                                <!-- Row 1: Degree Type + Major -->
+                                <div class="field-row">
                                     <div class="field-group">
                                         <label for="degree_type"><?php _e('Degree Type (Optional)', 'diploma-builder'); ?></label>
                                         <select id="degree_type" name="degree_type" class="form-select">
@@ -271,7 +272,6 @@ class DiplomaBuilder_Frontend {
                                         </select>
                                     </div>
 
-                                <!-- Major and Concentration -->
                                     <div class="field-group">
                                         <label for="major"><?php _e('Select Major', 'diploma-builder'); ?></label>
                                         <select id="major" name="major" class="form-select">
@@ -427,17 +427,22 @@ class DiplomaBuilder_Frontend {
                                             
                                         </select>
                                     </div>
+                                </div>
+
+                                <!-- Row 2: Concentration + School Name -->
+                                <div class="field-row">
                                     <div class="field-group">
                                         <label for="concentration"><?php _e('Concentration (Optional)', 'diploma-builder'); ?></label>
                                         <input type="text" id="concentration" name="concentration" class="form-input" placeholder="<?php _e('e.g., Software Engineering, Digital Marketing', 'diploma-builder'); ?>" value="<?php _e('Software Engineering', 'diploma-builder'); ?>" maxlength="100">
                                     </div>
-
-                                <!-- School Information -->
                                     <div class="field-group">
-                                        <label for="school_name"><?php _e('High School Name *', 'diploma-builder'); ?></label>
-                                        <input type="text" id="school_name" name="school_name" placeholder="<?php _e('e.g., Lincoln High School', 'diploma-builder'); ?>" value="<?php _e('Lincoln High School', 'diploma-builder'); ?>" maxlength="100" required>
+                                        <label for="school_name"><?php _e('School Name *', 'diploma-builder'); ?></label>
+                                        <input type="text" id="school_name" name="school_name" class="form-input" placeholder="<?php _e('e.g., Lincoln High School', 'diploma-builder'); ?>" value="<?php _e('Lincoln High School', 'diploma-builder'); ?>" maxlength="100" required>
                                     </div>
-                                    <div class="field-row">
+                                </div>
+
+                                <!-- Row 3: City + State -->
+                                <div class="field-row">
                                         <div class="field-group">
                                             <label for="city"><?php _e('City *', 'diploma-builder'); ?></label>
                                             <input type="text" id="city" name="city" placeholder="<?php _e('e.g., San Francisco', 'diploma-builder'); ?>" value="<?php _e('San Francisco', 'diploma-builder'); ?>" maxlength="50" required>
@@ -478,15 +483,17 @@ class DiplomaBuilder_Frontend {
                                         </div>
                                     </div>
 
-                                <!-- Graduation Information -->
+                                <!-- Row 5: Student Name + Graduation Date -->
+                                <div class="field-row">
                                     <div class="field-group">
                                         <label for="student_name"><?php _e('Student Name *', 'diploma-builder'); ?></label>
-                                        <input type="text" id="student_name" name="student_name" placeholder="<?php _e('Enter student\'s full name', 'diploma-builder'); ?>" value="<?php _e('John Michael Smith', 'diploma-builder'); ?>" maxlength="100" required>
+                                        <input type="text" id="student_name" name="student_name" class="form-input" placeholder="<?php _e('Enter student\'s full name', 'diploma-builder'); ?>" value="<?php _e('John Michael Smith', 'diploma-builder'); ?>" maxlength="100" required>
                                     </div>
                                     <div class="field-group">
                                         <label for="graduation_date"><?php _e('Graduation Date *', 'diploma-builder'); ?></label>
                                         <input type="date" id="graduation_date" name="graduation_date" class="form-input" value="<?php echo date('Y-m-d'); ?>" required>
                                     </div>
+                                </div>
 
                                 <!-- Signatures & Layout -->
                                     <div id="signature-fields-container" style="display: none;">

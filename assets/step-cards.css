@@ -149,7 +149,7 @@
     }
 }
 
-/* Step 3 Single Column Layout */
+/* Step 3 Two-Column Layout */
 .step-3-card .step-card-body {
     display: flex;
     flex-direction: column;
@@ -165,7 +165,7 @@
 .step-3-card .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
     margin-bottom: 0;
     min-width: 0;
 }
@@ -176,10 +176,20 @@
 }
 
 .step-3-card .field-row .field-group .form-input,
-.step-3-card .field-row .field-group .form-select {
+.step-3-card .field-row .field-group .form-select,
+.step-3-card .field-row .field-group input,
+.step-3-card .field-row .field-group select {
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
+}
+
+/* Step 3 responsive: single column on mobile */
+@media (max-width: 640px) {
+    .step-3-card .field-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 /* Step 4 - Full Width Preview */

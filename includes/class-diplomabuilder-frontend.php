@@ -195,11 +195,8 @@ class DiplomaBuilder_Frontend {
                             <div class="step-card-header">
                                 <div class="step-header-content">
                                     <h3 class="step-title"><?php _e('Step 2: Choose Your Diploma Design', 'diploma-builder'); ?></h3>
+                                    <p class="step-intro-text"><?php _e('Based on your selections in Step 1, the diploma designs that match your country and document type are shown below. Review the available layouts and select the design you prefer. Your selection determines the placement of the school name, signatures, and emblem areas shown in the live preview in Step 3.', 'diploma-builder'); ?></p>
                                 </div>
-                                <!-- <div class="step-status">
-                                    <span class="status-icon incomplete">○</span>
-                                    <span class="status-icon complete" style="display: none;">✓</span>
-                                </div> -->
                             </div>
 
                             <div class="step-card-body">

@@ -61,9 +61,9 @@
 }
 
 .step-title {
-    margin: 0 0 0.25rem 0;
+    margin: 0 0 1rem 0;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Playfair Display', serif;
     color: #4B1C1B;
 }
@@ -93,32 +93,59 @@
 
 /* Step Card Body */
 .step-card-body {
-    padding: 2rem;
+    padding: 0 2rem;
 }
 
-/* Step 1 Two Column Layout */
-.step-1-two-column {
+/* Step 1 Intro Text */
+.step-intro-text {
+    margin: 0.5rem 0 0 0;
+    color: #4b5563;
+    font-size: 0.925rem;
+    line-height: 1.65;
+}
+
+.step-intro-text strong {
+    color: #1f2937;
+    font-weight: 700;
+}
+
+/* Step 1 Field Rows - Two fields side by side */
+.step-1-field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: stretch;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
+.step-1-field-row .field-group {
+    margin-bottom: 0;
+}
 
-.step-1-left,
-.step-1-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    border: 1px solid #e6d9c8;
-    padding: 18px 20px 20px;
-    border-radius: 14px;
+/* Step 1 Paper Color Section */
+.step-1-paper-section {
+    margin-top: 0.5rem;
+}
+
+.paper-color-heading {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #4B1C1B;
+}
+
+.paper-color-note {
+    margin: 0.75rem 0 0 0;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #9ca3af;
 }
 
 /* Make Step 1 single column on tablets and mobile */
-@media (max-width: 1023px) {
-    .step-1-two-column {
+@media (max-width: 640px) {
+    .step-1-field-row {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }
 
@@ -655,13 +682,8 @@ button.emblem-next {
         padding: 1.25rem;
     }
 
-    .step-1-two-column {
-        gap: 1.5rem;
-    }
-
-    .step-1-left,
-    .step-1-right {
-        gap: 1.25rem;
+    .step-1-field-row {
+        gap: 1rem;
     }
 }
 
@@ -697,13 +719,9 @@ button.emblem-next {
         padding: 1rem;
     }
 
-    .step-1-two-column {
-        gap: 1.25rem;
-    }
-
-    .step-1-left,
-    .step-1-right {
-        gap: 1rem;
+    .step-1-field-row {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
 
     .field-group {

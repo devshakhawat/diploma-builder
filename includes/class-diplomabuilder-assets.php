@@ -22,7 +22,7 @@ class DiplomaBuilder_Assets {
             // CSS — Google Fonts (Dancing Script for signatures)
             wp_enqueue_style(
                 'diploma-builder-fonts',
-                'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap',
+                'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap',
                 array(),
                 null
             );

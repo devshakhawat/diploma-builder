@@ -104,117 +104,88 @@ class DiplomaBuilder_Frontend {
                             <div class="step-card-header">
                                 <div class="step-header-content">
                                     <h3 class="step-title"><?php _e('Step 1: Select Your Country, Document Type, Size, and Paper Color', 'diploma-builder'); ?></h3>
+                                    <p class="step-intro-text"><?php _e('Choose the <strong>Country</strong> and <strong>Document Type</strong> that apply to your diploma. These selections determine the correct layout, language style, and emblem placement. Next, select your preferred <strong>Diploma Size</strong> and <strong>Paper Color</strong>. These options define the overall look and presentation of your document. Once selected, continue to <strong>Step 2</strong> to choose your diploma design.', 'diploma-builder'); ?></p>
                                 </div>
-                                <!-- <div class="step-status">
-                                    <span class="status-icon incomplete">○</span>
-                                    <span class="status-icon complete" style="display: none;">✓</span>
-                                </div> -->
                             </div>
 
                             <div class="step-card-body">
-                                <div class="step-1-two-column">
-                                    <!-- Left Column: Country, Document Type, Size -->
-                                    <div class="step-1-left">
-                                        <!-- Country Selection -->
-                                        <div class="subsection">
-                                            <div class="field-group">
-                                                <label for="country"><?php _e('Select Country *', 'diploma-builder'); ?></label>
-                                                <select id="country" name="country" class="form-select" required>
-                                                    <option value=""><?php _e('Choose a Country', 'diploma-builder'); ?></option>
-                                                    <option value="USA" selected><?php _e('USA', 'diploma-builder'); ?></option>
-                                                    <option value="UK"><?php _e('UK', 'diploma-builder'); ?></option>
-                                                    <option value="Canada"><?php _e('Canada', 'diploma-builder'); ?></option>
-                                                    <option value="International"><?php _e('International', 'diploma-builder'); ?></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- State / Province / Region Selection -->
-                                        <div class="subsection">
-                                            <div class="field-group">
-                                                <label for="state_province_region"><?php _e('State / Province / Region', 'diploma-builder'); ?></label>
-                                                <select id="state_province_region" name="state_province_region" class="form-select">
-                                                    <option value=""><?php _e('Select State / Province / Region', 'diploma-builder'); ?></option>
-
-                                                    <!-- USA States -->
-                                                    <?php
-                                                    $uk_regions = $this->get_uk_regions();
-                                                    $canada_provinces = $this->get_canada_provinces();
-                                                    $all_countries = $this->get_all_countries();
-
-                                                    foreach ($us_states as $code => $name): ?>
-                                                        <option value="<?php echo esc_attr($code); ?>" data-country="USA"><?php echo esc_html($name); ?></option>
-                                                    <?php endforeach; ?>
-
-                                                    <!-- UK Regions -->
-                                                    <?php foreach ($uk_regions as $code => $name): ?>
-                                                        <option value="<?php echo esc_attr($code); ?>" data-country="UK" style="display:none;"><?php echo esc_html($name); ?></option>
-                                                    <?php endforeach; ?>
-
-                                                    <!-- Canada Provinces -->
-                                                    <?php foreach ($canada_provinces as $code => $name): ?>
-                                                        <option value="<?php echo esc_attr($code); ?>" data-country="Canada" style="display:none;"><?php echo esc_html($name); ?></option>
-                                                    <?php endforeach; ?>
-
-                                                    <!-- International Countries (A-Z) -->
-                                                    <?php foreach ($all_countries as $code => $name): ?>
-                                                        <option value="<?php echo esc_attr($code); ?>" data-country="International" style="display:none;"><?php echo esc_html($name); ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Document Type Selection -->
-                                        <div class="subsection">
-                                            <div class="field-group">
-                                                <label for="document_type"><?php _e('Document Type *', 'diploma-builder'); ?></label>
-                                                <select id="document_type" name="document_type" class="form-select" required>
-                                                    <option value=""><?php _e('Choose a Document Type', 'diploma-builder'); ?></option>
-                                                    <option value="GED"><?php _e('GED', 'diploma-builder'); ?></option>
-                                                    <option value="High School" selected><?php _e('High School Diploma', 'diploma-builder'); ?></option>
-                                                    <option value="College"><?php _e('College Diploma', 'diploma-builder'); ?></option>
-                                                    <option value="University"><?php _e('University Diploma', 'diploma-builder'); ?></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Diploma Size Selection -->
-                                        <div class="subsection">
-                                            <div class="field-group">
-                                                <label for="diploma_size"><?php _e('Diploma Size *', 'diploma-builder'); ?></label>
-                                                <select id="diploma_size" name="diploma_size" class="form-select" required>
-                                                    <option value=""><?php _e('Choose a Size', 'diploma-builder'); ?></option>
-                                                    <option value="8.5x11" selected><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
-                                                    <option value="8.27x11.69"><?php _e('8.27" × 11.69" (A4)', 'diploma-builder'); ?></option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                <!-- Row 1: Country + State side by side -->
+                                <div class="step-1-field-row">
+                                    <div class="field-group">
+                                        <label for="country"><?php _e('Country', 'diploma-builder'); ?></label>
+                                        <select id="country" name="country" class="form-select" required>
+                                            <option value=""><?php _e('-- Select --', 'diploma-builder'); ?></option>
+                                            <option value="USA" selected><?php _e('USA', 'diploma-builder'); ?></option>
+                                            <option value="UK"><?php _e('UK', 'diploma-builder'); ?></option>
+                                            <option value="Canada"><?php _e('Canada', 'diploma-builder'); ?></option>
+                                            <option value="International"><?php _e('International', 'diploma-builder'); ?></option>
+                                        </select>
                                     </div>
-
-                                    <!-- Right Column: Paper Color Selection -->
-                                    <div class="step-1-right">
-                                        <div class="subsection">
-                                            <div class="field-group">
-                                                <label for="paper_color"><?php _e('Select Paper Color *', 'diploma-builder'); ?></label>
-                                                <div class="paper-color-grid">
-                                                    <?php
-                                                    $color_index = 0;
-                                                    foreach ($paper_colors as $key => $color):
-                                                    ?>
-                                                        <label class="paper-color-option" for="paper_color_<?php echo $key; ?>">
-                                                            <input type="radio" name="paper_color" value="<?php echo esc_attr($key); ?>" id="paper_color_<?php echo $key; ?>" data-image="<?php echo esc_url($color['image']); ?>" <?php echo $color_index === 0 ? 'checked' : ''; ?>>
-                                                            <div class="paper-color-preview" style="background-image: url('<?php echo esc_url($color['image']); ?>'); background-color: <?php echo esc_attr($color['hex']); ?>;"></div>
-                                                            <div class="paper-color-name"><?php echo esc_html($color['name']); ?></div>
-                                                        </label>
-                                                    <?php
-                                                    $color_index++;
-                                                    endforeach;
-                                                    ?>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                    <div class="field-group">
+                                        <label for="state_province_region"><?php _e('State / Province / Region', 'diploma-builder'); ?></label>
+                                        <select id="state_province_region" name="state_province_region" class="form-select">
+                                            <option value=""><?php _e('-- Select --', 'diploma-builder'); ?></option>
+                                            <?php
+                                            $uk_regions = $this->get_uk_regions();
+                                            $canada_provinces = $this->get_canada_provinces();
+                                            $all_countries = $this->get_all_countries();
+                                            foreach ($us_states as $code => $name): ?>
+                                                <option value="<?php echo esc_attr($code); ?>" data-country="USA"><?php echo esc_html($name); ?></option>
+                                            <?php endforeach; ?>
+                                            <?php foreach ($uk_regions as $code => $name): ?>
+                                                <option value="<?php echo esc_attr($code); ?>" data-country="UK" style="display:none;"><?php echo esc_html($name); ?></option>
+                                            <?php endforeach; ?>
+                                            <?php foreach ($canada_provinces as $code => $name): ?>
+                                                <option value="<?php echo esc_attr($code); ?>" data-country="Canada" style="display:none;"><?php echo esc_html($name); ?></option>
+                                            <?php endforeach; ?>
+                                            <?php foreach ($all_countries as $code => $name): ?>
+                                                <option value="<?php echo esc_attr($code); ?>" data-country="International" style="display:none;"><?php echo esc_html($name); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
+                                </div>
+
+                                <!-- Row 2: Document Type + Size side by side -->
+                                <div class="step-1-field-row">
+                                    <div class="field-group">
+                                        <label for="document_type"><?php _e('Document Type', 'diploma-builder'); ?></label>
+                                        <select id="document_type" name="document_type" class="form-select" required>
+                                            <option value=""><?php _e('-- Select --', 'diploma-builder'); ?></option>
+                                            <option value="GED"><?php _e('GED', 'diploma-builder'); ?></option>
+                                            <option value="High School" selected><?php _e('High School Diploma', 'diploma-builder'); ?></option>
+                                            <option value="College"><?php _e('College Diploma', 'diploma-builder'); ?></option>
+                                            <option value="University"><?php _e('University Diploma', 'diploma-builder'); ?></option>
+                                        </select>
+                                    </div>
+                                    <div class="field-group">
+                                        <label for="diploma_size"><?php _e('Size', 'diploma-builder'); ?></label>
+                                        <select id="diploma_size" name="diploma_size" class="form-select" required>
+                                            <option value=""><?php _e('-- Select --', 'diploma-builder'); ?></option>
+                                            <option value="8.5x11" selected><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
+                                            <option value="8.27x11.69"><?php _e('8.27" × 11.69" (A4)', 'diploma-builder'); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Paper Color -->
+                                <div class="step-1-paper-section">
+                                    <h4 class="paper-color-heading"><?php _e('Paper Color', 'diploma-builder'); ?></h4>
+                                    <div class="paper-color-grid">
+                                        <?php
+                                        $color_index = 0;
+                                        foreach ($paper_colors as $key => $color):
+                                        ?>
+                                            <label class="paper-color-option" for="paper_color_<?php echo $key; ?>">
+                                                <input type="radio" name="paper_color" value="<?php echo esc_attr($key); ?>" id="paper_color_<?php echo $key; ?>" data-image="<?php echo esc_url($color['image']); ?>" <?php echo $color_index === 0 ? 'checked' : ''; ?>>
+                                                <span class="paper-color-name"><?php echo esc_html($color['name']); ?></span>
+                                                <div class="paper-color-preview" style="background-image: url('<?php echo esc_url($color['image']); ?>'); background-color: <?php echo esc_attr($color['hex']); ?>;"></div>
+                                            </label>
+                                        <?php
+                                        $color_index++;
+                                        endforeach;
+                                        ?>
+                                    </div>
+                                    <p class="paper-color-note"><?php _e('You can change paper color later without losing your entries.', 'diploma-builder'); ?></p>
                                 </div>
                             </div>
                         </div>

@@ -1438,9 +1438,9 @@ jQuery(document).ready(function($) {
 
                 <!-- Authority Text -->
                 <div class="classic-authority-text">
-                    <p><em>By the authority vested in this institution<br>
+                    <p>By the authority vested in this institution<br>
                     and in recognition of the successful completion of the prescribed course of<br>
-                    study, has conferred upon</em></p>
+                    study, has conferred upon</p>
                 </div>
 
                 <!-- Student Name -->
@@ -1450,15 +1450,15 @@ jQuery(document).ready(function($) {
 
                 <!-- Degree Section -->
                 <div class="classic-degree-section">
-                    <p class="classic-degree-label"><em>the degree</em></p>
+                    <p class="classic-degree-label">the degree</p>
                     <h4 class="classic-degree-name">${degreeType}</h4>
                     <p class="classic-major-name">${major}</p>
                 </div>
 
                 <!-- Rights & Privileges Text -->
                 <div class="classic-rights-text">
-                    <p><em>Together with all rights, privileges, and honors customarily pertaining thereto.<br>
-                    In testimony whereof, this credential is conferred at and upon this date</em></p>
+                    <p>Together with all rights, privileges, and honors customarily pertaining thereto.<br>
+                    In testimony whereof, this credential is conferred at and upon this date</p>
                 </div>
 
                 <!-- City/Region and Graduation Date -->

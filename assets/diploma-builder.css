@@ -3465,11 +3465,13 @@ body {
 }
 
 .classic-authority-text p {
-    font-family: 'Times New Roman', 'Georgia', serif;
+    font-family: 'EngraversOldEnglish', cursive;
+    font-weight: 300;
     font-size: 0.95rem;
     color: #2c1810;
     line-height: 1.7;
     letter-spacing: 0.5px;
+    margin: 0;
 }
 
 .classic-authority-text em {
@@ -3483,15 +3485,15 @@ body {
 }
 
 .classic-student-name h3 {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 40px;
     color: #1a1a1a;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
     letter-spacing: 3px;
     margin: 0;
-    border-bottom: 1px solid rgba(44, 24, 16, 0.2);
     display: inline-block;
     padding-bottom: 5px;
+    font-weight: 500;
 }
 
 /* Degree Section */
@@ -3500,7 +3502,7 @@ body {
 }
 
 .classic-degree-label {
-    font-family: 'Times New Roman', 'Georgia', serif;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 0.95rem;
     color: #2c1810;
     margin: 0 0 5px 0;
@@ -3508,8 +3510,9 @@ body {
 }
 
 .classic-degree-name {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 40px;
+    font-weight: 500;
     color: #1a1a1a;
     margin: 5px 0;
     letter-spacing: 2px;
@@ -3517,11 +3520,10 @@ body {
 }
 
 .classic-major-name {
-    font-family: 'Times New Roman', 'Georgia', serif;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 30px;
     color: #2c1810;
-    margin: 5px 0 0 0;
-    font-style: italic;
+    margin: 0 !important;
     letter-spacing: 1px;
 }
 
@@ -3531,12 +3533,14 @@ body {
 }
 
 .classic-rights-text p {
-    font-family: 'Times New Roman', 'Georgia', serif;
+    font-family: 'EngraversOldEnglish', cursive;
+    font-weight: 300 !important;
     font-size: 0.9rem;
     color: #2c1810;
     line-height: 1.7;
     letter-spacing: 0.5px;
     font-weight: 600;
+    margin: 0 !important;
 }
 
 .classic-rights-text em {
@@ -3560,8 +3564,9 @@ body {
 
 .classic-location-value,
 .classic-date-value {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 24px;
+    font-weight: 500 !important;
     color: #1a1a1a;
     font-weight: bold;
     letter-spacing: 1px;

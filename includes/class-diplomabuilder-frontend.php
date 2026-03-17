@@ -250,6 +250,7 @@ class DiplomaBuilder_Frontend {
                             <div class="step-card-header">
                                 <div class="step-header-content">
                                     <h3 class="step-title"><?php _e('Step 3: Customize Your Diploma', 'diploma-builder'); ?></h3>
+                                    <p class="step-intro-text"><?php _e('Enter your school name, recipient name, degree or program, and graduation details. As you make changes, the preview updates so you can see how your diploma will look.', 'diploma-builder'); ?></p>
                                 </div>
                                 <!-- <div class="step-status">
                                     <span class="status-icon incomplete">○</span>
@@ -601,6 +602,7 @@ class DiplomaBuilder_Frontend {
                             <div class="step-card-header">
                                 <div class="step-header-content">
                                     <h3 class="step-title"><?php _e('Step 4: Preview Your Order', 'diploma-builder'); ?></h3>
+                                    <p class="step-intro-text"><?php _e('Take one last look before you place your order. This preview shows your selected layout and emblem so you can catch any typos or spacing issues now, not after it\'s printed.', 'diploma-builder'); ?></p>
                                 </div>
                             </div>
 
@@ -664,6 +666,7 @@ class DiplomaBuilder_Frontend {
                             <div class="step-card-header">
                                 <div class="step-header-content">
                                     <h3 class="step-title"><?php _e('Step 5: Place Your Order', 'diploma-builder'); ?></h3>
+                                    <p class="step-intro-text"><?php _e('Add your diploma to the cart and proceed to checkout to complete your order. Once submitted, we\'ll take care of the rest.', 'diploma-builder'); ?></p>
                                 </div>
                             </div>
 

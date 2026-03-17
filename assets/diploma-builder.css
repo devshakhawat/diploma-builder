@@ -3749,7 +3749,7 @@ body {
    ============================================================ */
 
 .style2-template {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
 }
 
 .style2-diploma {
@@ -3832,7 +3832,7 @@ body {
 }
 
 .s2-school-name {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 2.4rem;
     font-weight: 700;
     color: #1a1a1a;
@@ -3843,7 +3843,7 @@ body {
 }
 
 .s2-school-location {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.9rem;
     color: #555;
     letter-spacing: 0.5px;
@@ -3856,7 +3856,7 @@ body {
 }
 
 .s2-authority-text p {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.88rem;
     color: #333;
     line-height: 1.65;
@@ -3869,7 +3869,7 @@ body {
 }
 
 .s2-student-name h2 {
-    font-family: 'Dancing Script', 'Georgia', cursive;
+    font-family: 'Cinzel', serif;
     font-size: 2.8rem;
     font-weight: 700;
     color: #8b1a1a;
@@ -3884,7 +3884,7 @@ body {
 }
 
 .s2-certify-text p {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.85rem;
     color: #333;
     margin: 0;
@@ -3897,7 +3897,7 @@ body {
 }
 
 .s2-degree-name h3 {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 2rem;
     font-weight: 700;
     color: #8b1a1a;
@@ -3912,7 +3912,7 @@ body {
 }
 
 .s2-body-text p {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.85rem;
     color: #333;
     line-height: 1.6;
@@ -3925,13 +3925,12 @@ body {
 }
 
 .s2-major-name h4 {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 1.35rem;
     font-weight: 600;
     color: #8b1a1a;
     letter-spacing: 1px;
     margin: 0;
-    font-style: italic;
 }
 
 /* ---- Date Text ---- */
@@ -3940,7 +3939,7 @@ body {
 }
 
 .s2-date-text p {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.85rem;
     color: #333;
     margin: 0;
@@ -4020,7 +4019,7 @@ body {
 }
 
 .s2-sig-title {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.72rem;
     color: #1a1a1a;
     text-align: center;
@@ -4036,7 +4035,7 @@ body {
 }
 
 .s2-cert-number p {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Cinzel', serif;
     font-size: 0.72rem;
     color: #555;
     margin: 0;
@@ -4196,15 +4195,15 @@ body {
 }
 
 .hs3-student-name h3 {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
     font-size: 36px;
+    font-weight: 500;
     color: #1a1a1a;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.12);
     letter-spacing: 2px;
     margin: 0;
     display: inline-block;
     padding-bottom: 4px;
-    border-bottom: 1px solid rgba(44, 24, 16, 0.3);
 }
 
 /* ---- Body Text ---- */
@@ -4228,7 +4227,8 @@ body {
 }
 
 .hs3-diploma-title h4 {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'EngraversOldEnglish', cursive;
+    font-weight: 500;
     font-size: 36px;
     color: #1a1a1a;
     letter-spacing: 2px;

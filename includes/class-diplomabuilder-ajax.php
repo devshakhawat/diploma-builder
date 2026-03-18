@@ -244,7 +244,7 @@ class DiplomaBuilder_Ajax {
     }
     
     /**
-     * Load emblems filtered by country (mapped to emblem_category taxonomy slug).
+     * Load emblems filtered by country.
      */
     public function load_emblems_by_country() {
         try {

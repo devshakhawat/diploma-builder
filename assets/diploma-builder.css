@@ -4405,30 +4405,23 @@ body {
     gap: 0;
 }
 
-/* Outer thick gold/brown border */
+/* Single gold/brown border */
 .style4-diploma::before {
     content: '';
     position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
     border: 3px solid #9a8456;
+    border-radius: 0;
     pointer-events: none;
     z-index: 1;
 }
 
-/* Inner thin gold/brown border */
+/* No inner border for style 4 */
 .style4-diploma::after {
-    content: '';
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    border: 1.5px solid #9a8456;
-    pointer-events: none;
-    z-index: 1;
+    display: none;
 }
 
 .style4-diploma > * {

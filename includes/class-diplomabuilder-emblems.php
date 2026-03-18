@@ -11,12 +11,8 @@ class DiplomaBuilder_Emblems {
 
     const POST_TYPE = 'diploma_emblem';
 
-    const TAXONOMY = 'emblem_category';
-
     public function __construct() {
         add_action('init', array($this, 'register_post_type'));
-        add_action('init', array($this, 'register_taxonomy'));
-        add_action('after_setup_theme', array($this, 'add_thumbnail_support'));
         add_action('add_meta_boxes', array($this, 'add_gallery_meta_box'));
         add_action('save_post_' . self::POST_TYPE, array($this, 'save_gallery_meta'), 10, 2);
         add_action('admin_enqueue_scripts', array($this, 'enqueue_gallery_scripts'));
@@ -46,7 +42,7 @@ class DiplomaBuilder_Emblems {
             'capability_type'     => 'post',
             'has_archive'         => false,
             'hierarchical'        => false,
-            'supports'            => array('title', 'thumbnail'),
+            'supports'            => array('title'),
             'rewrite'             => false,
             'query_var'           => false,
         );
@@ -54,37 +50,8 @@ class DiplomaBuilder_Emblems {
         register_post_type(self::POST_TYPE, $args);
     }
 
-    public function register_taxonomy() {
-        $labels = array(
-            'name'              => __('Emblem Categories', 'diploma-builder'),
-            'singular_name'     => __('Emblem Category', 'diploma-builder'),
-            'search_items'      => __('Search Categories', 'diploma-builder'),
-            'all_items'         => __('All Categories', 'diploma-builder'),
-            'parent_item'       => __('Parent Category', 'diploma-builder'),
-            'parent_item_colon' => __('Parent Category:', 'diploma-builder'),
-            'edit_item'         => __('Edit Category', 'diploma-builder'),
-            'update_item'       => __('Update Category', 'diploma-builder'),
-            'add_new_item'      => __('Add New Category', 'diploma-builder'),
-            'new_item_name'     => __('New Category Name', 'diploma-builder'),
-            'menu_name'         => __('Categories', 'diploma-builder'),
-        );
-
-        $args = array(
-            'labels'            => $labels,
-            'hierarchical'      => true,
-            'public'            => false,
-            'show_ui'           => true,
-            'show_in_menu'      => true,
-            'show_admin_column' => true,
-            'query_var'         => false,
-            'rewrite'           => false,
-        );
-
-        register_taxonomy(self::TAXONOMY, self::POST_TYPE, $args);
-    }
-
     /**
-     * Get all published emblems with their featured image URLs.
+     * Get all published emblems with their first gallery image URL.
      *
      * @return array Keyed by post ID: ['name' => string, 'image_url' => string]
      */
@@ -102,11 +69,12 @@ class DiplomaBuilder_Emblems {
             while ($query->have_posts()) {
                 $query->the_post();
                 $post_id = get_the_ID();
-                $thumbnail_url = get_the_post_thumbnail_url($post_id, 'medium');
-                if ($thumbnail_url) {
+                $gallery = self::get_gallery($post_id, 'medium');
+                $image_url = !empty($gallery) ? $gallery[0]['url'] : '';
+                if ($image_url) {
                     $emblems[$post_id] = array(
                         'name'      => get_the_title(),
-                        'image_url' => $thumbnail_url,
+                        'image_url' => $image_url,
                     );
                 }
             }
@@ -114,65 +82,6 @@ class DiplomaBuilder_Emblems {
         }
 
         return $emblems;
-    }
-
-    /**
-     * Get published emblems filtered by emblem_category slug.
-     *
-     * @param string $category_slug The emblem_category taxonomy slug (e.g. 'usa', 'uk', 'canada', 'international').
-     * @return array Keyed by post ID: ['name' => string, 'image_url' => string]
-     */
-    public static function get_by_category($category_slug) {
-        $emblems = array();
-
-        if (empty($category_slug)) {
-            return $emblems;
-        }
-
-        $query = new WP_Query(array(
-            'post_type'      => self::POST_TYPE,
-            'posts_per_page' => -1,
-            'post_status'    => 'publish',
-            'orderby'        => 'date',
-            'order'          => 'ASC',
-            'tax_query'      => array(
-                array(
-                    'taxonomy' => self::TAXONOMY,
-                    'field'    => 'slug',
-                    'terms'    => $category_slug,
-                ),
-            ),
-        ));
-
-        if ($query->have_posts()) {
-            while ($query->have_posts()) {
-                $query->the_post();
-                $post_id = get_the_ID();
-                $thumbnail_url = get_the_post_thumbnail_url($post_id, 'medium');
-                if ($thumbnail_url) {
-                    $emblems[$post_id] = array(
-                        'name'      => get_the_title(),
-                        'image_url' => $thumbnail_url,
-                    );
-                }
-            }
-            wp_reset_postdata();
-        }
-
-        return $emblems;
-    }
-
-    public function add_thumbnail_support() {
-        $supported = get_theme_support('post-thumbnails');
-
-        if ($supported === false) {
-            add_theme_support('post-thumbnails', array(self::POST_TYPE));
-        } elseif (is_array($supported) && isset($supported[0]) && is_array($supported[0])) {
-            if (!in_array(self::POST_TYPE, $supported[0])) {
-                $supported[0][] = self::POST_TYPE;
-                add_theme_support('post-thumbnails', $supported[0]);
-            }
-        }
     }
 
     public function enqueue_gallery_scripts($hook) {

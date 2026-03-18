@@ -1221,12 +1221,12 @@ jQuery(document).ready(function($) {
         const paperColor = paperColors[currentConfig.paper_color] || '#f5f5f0';
         const paperImage = paperImages[currentConfig.paper_color] || '';
 
-        // Update the background of the diploma preview
+        // Reset the diploma preview container background (paper texture applied to inner elements only)
         $('#diploma-preview').css({
-            'background-color': paperColor,
-            'background-image': paperImage ? 'url(' + paperImage + ')' : 'none',
-            'background-size': 'cover',
-            'background-position': 'center'
+            'background-color': '',
+            'background-image': '',
+            'background-size': '',
+            'background-position': ''
         });
 
         // Paper color gradients for .classic-diploma background
@@ -2360,19 +2360,20 @@ jQuery(document).ready(function($) {
             $('#diploma-preview').append(watermark);
         }
 
-        // Get the actual rendered dimensions of the diploma preview
-        const canvasElement = document.getElementById('diploma-preview');
+        // Capture the inner diploma element directly (skips container gray background)
+        const previewEl = document.getElementById('diploma-preview');
+        const canvasElement = previewEl.querySelector('.classic-diploma, .style2-diploma, .style3-diploma, .style4-diploma, .diploma') || previewEl;
         const rect = canvasElement.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
-        
+
         // Calculate scale factor for higher resolution (300 DPI)
         const scaleFactor = 300 / 96; // 300 DPI / 96 DPI (standard screen)
-        
+
         // Use html2canvas to capture the diploma with exact dimensions
         html2canvas(canvasElement, {
             scale: scaleFactor,
-            backgroundColor: '#f5f5f5',
+            backgroundColor: null,
             useCORS: true,
             allowTaint: false,
             logging: false,
@@ -2406,7 +2407,7 @@ jQuery(document).ready(function($) {
             if (watermark) {
                 watermark.remove();
             }
-            
+
             hideLoading();
             console.error('Error generating diploma:', error);
             showMessage('Error generating diploma. Please try again.', 'error');

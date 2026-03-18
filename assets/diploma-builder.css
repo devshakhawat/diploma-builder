@@ -3336,32 +3336,21 @@ body {
         font-size: 0.9rem;
     }
 }
-#diploma-canvas {
-    width: 100%;
-    height: auto;
-    min-height: 850px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 2rem;
-}
-
 /* Diploma Size Classes */
-#diploma-canvas.size-8-5x11 {
+#diploma-preview.size-8-5x11 {
     aspect-ratio: 8.5 / 11;
     max-width: 850px;
-    min-height: 1100px;
     height: auto;
 }
 
-#diploma-canvas.size-7-5x9-5 {
+#diploma-preview.size-7-5x9-5 {
     aspect-ratio: 7.5 / 9.5;
     max-width: 750px;
     min-height: 950px;
     height: auto;
 }
 
-#diploma-canvas.size-11x14 {
+#diploma-preview.size-11x14 {
     aspect-ratio: 11 / 14;
     max-width: 900px;
     min-height: 1145px;
@@ -3370,17 +3359,17 @@ body {
 
 /* Responsive adjustments for different sizes */
 @media (max-width: 768px) {
-    #diploma-canvas.size-8-5x11 {
+    #diploma-preview.size-8-5x11 {
         max-width: 100%;
         min-height: auto;
     }
 
-    #diploma-canvas.size-7-5x9-5 {
+    #diploma-preview.size-7-5x9-5 {
         max-width: 100%;
         min-height: auto;
     }
 
-    #diploma-canvas.size-11x14 {
+    #diploma-preview.size-11x14 {
         max-width: 100%;
         min-height: auto;
     }

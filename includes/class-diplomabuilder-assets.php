@@ -92,10 +92,10 @@ class DiplomaBuilder_Assets {
                 }
             }
             
-            // Build emblem URL map from custom post type (default country: USA)
+            // Build emblem URL map from gallery images (must match frontend radio values)
             $emblem_urls = array();
             $default_country = 'USA';
-            $emblems = DiplomaBuilder_Emblems::get_by_category(sanitize_title($default_country));
+            $emblems = DiplomaBuilder_Emblems::get_gallery_by_country($default_country);
             if (empty($emblems)) {
                 $emblems = DiplomaBuilder_Emblems::get_all();
             }

@@ -161,8 +161,8 @@ class DiplomaBuilder_Frontend {
                                         <label for="diploma_size"><?php _e('Size', 'diploma-builder'); ?></label>
                                         <select id="diploma_size" name="diploma_size" class="form-select" required>
                                             <option value=""><?php _e('-- Select --', 'diploma-builder'); ?></option>
-                                            <option value="8.5x11" selected><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
-                                            <option value="8.27x11.69"><?php _e('8.27" × 11.69" (A4)', 'diploma-builder'); ?></option>
+                                            <option value="8.5x11"><?php _e('8.5" × 11" (Letter)', 'diploma-builder'); ?></option>
+                                            <option value="8.27x11.69" selected><?php _e('8.27" × 11.69" (A4)', 'diploma-builder'); ?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -538,9 +538,6 @@ class DiplomaBuilder_Frontend {
                                                                         <input type="radio" name="emblem_value" value="<?php echo $key; ?>" id="emblem_<?php echo $key; ?>" data-type="generic" <?php echo $emblem_index === 0 ? 'checked' : ''; ?>>
                                                                         <div class="emblem-carousel-preview">
                                                                             <img src="<?php echo esc_url($emblem['image_url']); ?>" alt="<?php echo esc_attr($emblem['name']); ?>" loading="lazy">
-                                                                        </div>
-                                                                        <div class="emblem-carousel-info">
-                                                                            <h6><?php echo esc_html($emblem['name']); ?></h6>
                                                                         </div>
                                                                     </label>
                                                                 </div>

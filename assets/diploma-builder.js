@@ -36,18 +36,22 @@ jQuery(document).ready(function($) {
     // Diploma size options based on document type
     const diplomaSizeOptions = {
         'GED': [
+            { value: '8.27x11.69', label: '8.27" × 11.69" (A4)' },
             { value: '8.5x11', label: '8.5" × 11" (Letter)' },
             { value: '7.5x9.5', label: '7.5" × 9.5"' }
         ],
         'High School': [
+            { value: '8.27x11.69', label: '8.27" × 11.69" (A4)' },
             { value: '8.5x11', label: '8.5" × 11" (Letter)' },
             { value: '7.5x9.5', label: '7.5" × 9.5"' }
         ],
         'College': [
+            { value: '8.27x11.69', label: '8.27" × 11.69" (A4)' },
             { value: '8.5x11', label: '8.5" × 11" (Letter)' },
             { value: '11x14', label: '11" × 14"' }
         ],
         'University': [
+            { value: '8.27x11.69', label: '8.27" × 11.69" (A4)' },
             { value: '8.5x11', label: '8.5" × 11" (Letter)' },
             { value: '11x14', label: '11" × 14"' }
         ]
@@ -1249,7 +1253,7 @@ jQuery(document).ready(function($) {
         const currentGradient = paperGradients[currentConfig.paper_color] || paperGradients.parchment;
 
         // Update diploma size class based on selected size
-        const diplomaSize = currentConfig.diploma_size || '8.5x11';
+        const diplomaSize = currentConfig.diploma_size || '8.27x11.69';
         const sizeClass = 'size-' + diplomaSize.replace(/\./g, '-').replace('x', 'x');
 
         // Remove all existing size classes
@@ -2526,7 +2530,7 @@ jQuery(document).ready(function($) {
             country: 'USA',
             state_province_region: '',
             document_type: 'High School',
-            diploma_size: '8.5x11',
+            diploma_size: '8.27x11.69',
             degree_type: '',
             major: '',
             concentration: '',
@@ -2549,7 +2553,7 @@ jQuery(document).ready(function($) {
         handleCountrySelection('USA'); // Reset region options for USA
         $('#document_type').val('High School');
         updateDiplomaSizeOptions('High School');
-        $('#diploma_size').val('8.5x11');
+        $('#diploma_size').val('8.27x11.69');
         $('#degree_type').val('');
         $('#major').val('');
         $('#concentration').val('');

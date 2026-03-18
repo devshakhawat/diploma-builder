@@ -275,7 +275,6 @@ class DiplomaBuilder_Ajax {
                 $html .= '<div class="emblem-carousel-preview">';
                 $html .= '<img src="' . esc_url($emblem['image_url']) . '" alt="' . esc_attr($emblem['name']) . '" loading="lazy">';
                 $html .= '</div>';
-                $html .= '<div class="emblem-carousel-info"><h6>' . esc_html($emblem['name']) . '</h6></div>';
                 $html .= '</label>';
                 $html .= '</div>';
                 $index++;

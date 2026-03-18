@@ -302,13 +302,6 @@
     border-radius: 50%;
 }
 
-.emblem-carousel-info h6 {
-    margin: 0;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #374151;
-    text-align: center;
-}
 
 /* Navigation Arrows - Enhanced specificity to prevent external CSS interference */
 .emblem-selection-section .emblem-carousel-wrapper .emblem-carousel-nav {
@@ -479,9 +472,7 @@ button.emblem-next {
         height: 100px;
     }
 
-    .emblem-carousel-info h6 {
-        font-size: 0.8rem;
-    }
+
 }
 
 /* Preview Wrapper */

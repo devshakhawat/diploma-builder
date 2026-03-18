@@ -843,13 +843,10 @@ class DiplomaBuilder_Frontend {
     
     private function get_generic_emblems($country = '') {
         if ($country) {
-            $slug = sanitize_title($country);
-            $emblems = DiplomaBuilder_Emblems::get_by_category($slug);
-            // Fall back to all emblems if no category match
-            if (empty($emblems)) {
-                return DiplomaBuilder_Emblems::get_all();
+            $emblems = DiplomaBuilder_Emblems::get_gallery_by_country($country);
+            if (!empty($emblems)) {
+                return $emblems;
             }
-            return $emblems;
         }
         return DiplomaBuilder_Emblems::get_all();
     }

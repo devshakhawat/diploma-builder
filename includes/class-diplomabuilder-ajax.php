@@ -257,10 +257,8 @@ class DiplomaBuilder_Ajax {
                 throw new Exception(__('Invalid country.', 'diploma-builder'));
             }
 
-            // Map country value to emblem_category slug
-            $slug = sanitize_title($country);
-
-            $emblems = DiplomaBuilder_Emblems::get_by_category($slug);
+            // Find diploma_emblem post whose title matches the country name and get its gallery images
+            $emblems = DiplomaBuilder_Emblems::get_gallery_by_country($country);
 
             // Build HTML for the carousel slides
             $html = '';

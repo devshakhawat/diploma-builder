@@ -859,6 +859,16 @@ jQuery(document).ready(function($) {
             currentConfig.state_province_region = $(this).val();
             validateField($(this));
             prefillStep3Location();
+
+            // When International is selected, the region dropdown contains country names
+            // so reload emblems based on the selected country name
+            if ($('#country').val() === 'International') {
+                const selectedText = $(this).find('option:selected').text().trim();
+                if (selectedText && selectedText !== '-- Select --') {
+                    loadEmblemsByCountry(selectedText);
+                }
+            }
+
             updatePreview();
             updateReviewSummary();
         });
@@ -1117,7 +1127,7 @@ jQuery(document).ready(function($) {
 
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[State]';
-        const country = currentConfig.country || 'USA';
+        const country = getDisplayCountry('USA');
         $('#review-location').text(`${city}, ${state}, ${country}`);
         
         // Update style and paper info
@@ -1511,6 +1521,18 @@ jQuery(document).ready(function($) {
         </div>`;
     }
 
+    // Get the display country name — when International, use the state/region field
+    function getDisplayCountry(fallback) {
+        const country = currentConfig.country || fallback || '';
+        if (country === 'International') {
+            const regionText = $('#state_province_region option:selected').text().trim();
+            if (regionText && regionText !== '-- Select --') {
+                return regionText;
+            }
+        }
+        return country;
+    }
+
     // Get the country emblem image URL for Style 2 (from diploma_country CPT feature images)
     function getCountryEmblemSrc() {
         const country = currentConfig.country || '';
@@ -1549,7 +1571,7 @@ jQuery(document).ready(function($) {
         const degreeType    = currentConfig.degree_type   || 'Your Degree Here';
         const major         = getMajorDisplayName()        || 'Your Major / Area of Study';
         const city          = currentConfig.city           || 'School City';
-        const country       = currentConfig.country        || 'School Country';
+        const country       = getDisplayCountry('School Country');
         const signature1Name = currentConfig.signature1_name || '';
         const signature2Name = currentConfig.signature2_name || '';
         const graduationDate = currentConfig.graduation_date || '';
@@ -1833,7 +1855,7 @@ jQuery(document).ready(function($) {
         const schoolName     = currentConfig.school_name    || 'Your Province';
         const studentName    = currentConfig.student_name   || 'Your Name Here';
         const city           = currentConfig.city           || 'Province';
-        const country        = currentConfig.country        || 'Canada';
+        const country        = getDisplayCountry('Canada');
         const signature1Name = currentConfig.signature1_name || '';
         const signature2Name = currentConfig.signature2_name || '';
         const graduationDate = currentConfig.graduation_date || '';
@@ -2007,7 +2029,7 @@ jQuery(document).ready(function($) {
         const graduationDate = currentConfig.graduation_date || '[Date of Graduation]';
         const city = currentConfig.city || '[City]';
         const state = currentConfig.state || '[State]';
-        const country = currentConfig.country || 'USA';
+        const country = getDisplayCountry('USA');
         const degreeType = currentConfig.degree_type || '';
         const major = getMajorDisplayName() || '';
         const concentration = currentConfig.concentration || '';

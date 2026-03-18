@@ -251,6 +251,49 @@ class DiplomaBuilder_Emblems {
     }
 
     /**
+     * Get gallery images for the diploma_emblem post whose title matches the given country name.
+     *
+     * @param string $country_name The country name to match against post titles.
+     * @param string $size         Image size (default 'medium').
+     * @return array Keyed by attachment ID: ['name' => filename, 'image_url' => url]
+     */
+    public static function get_gallery_by_country($country_name, $size = 'medium') {
+        $emblems = array();
+
+        if (empty($country_name)) {
+            return $emblems;
+        }
+
+        // Find the diploma_emblem post whose title matches the country name
+        $query = new WP_Query(array(
+            'post_type'      => self::POST_TYPE,
+            'posts_per_page' => 1,
+            'post_status'    => 'publish',
+            'title'          => $country_name,
+        ));
+
+        if (!$query->have_posts()) {
+            wp_reset_postdata();
+            return $emblems;
+        }
+
+        $query->the_post();
+        $post_id = get_the_ID();
+        wp_reset_postdata();
+
+        // Get gallery images from post meta
+        $gallery = self::get_gallery($post_id, $size);
+        foreach ($gallery as $image) {
+            $emblems[$image['id']] = array(
+                'name'      => get_the_title($post_id) . ' #' . $image['id'],
+                'image_url' => $image['url'],
+            );
+        }
+
+        return $emblems;
+    }
+
+    /**
      * Get gallery image URLs for a specific emblem post.
      *
      * @param int    $post_id The emblem post ID.

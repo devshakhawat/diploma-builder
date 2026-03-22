@@ -25,6 +25,9 @@ class DiplomaBuilder_Ajax {
 
         add_action('wp_ajax_load_emblems_by_country', array($this, 'load_emblems_by_country'));
         add_action('wp_ajax_nopriv_load_emblems_by_country', array($this, 'load_emblems_by_country'));
+
+        add_action('wp_ajax_load_state_gallery', array($this, 'load_state_gallery'));
+        add_action('wp_ajax_nopriv_load_state_gallery', array($this, 'load_state_gallery'));
         
         // Admin only actions
         add_action('wp_ajax_delete_diploma', array($this, 'delete_diploma'));
@@ -284,6 +287,52 @@ class DiplomaBuilder_Ajax {
                 'html'        => $html,
                 'emblem_urls' => $emblem_urls,
                 'count'       => count($emblems),
+            ));
+
+        } catch (Exception $e) {
+            wp_send_json_error($e->getMessage());
+        }
+    }
+
+    /**
+     * Load state gallery images for the emblem carousel.
+     */
+    public function load_state_gallery() {
+        try {
+            if (!wp_verify_nonce($_POST['nonce'] ?? '', 'diploma_builder_nonce')) {
+                throw new Exception(__('Security check failed.', 'diploma-builder'));
+            }
+
+            $state_name = sanitize_text_field($_POST['state_name'] ?? '');
+            if (!$state_name) {
+                throw new Exception(__('Invalid state.', 'diploma-builder'));
+            }
+
+            $gallery_images = DiplomaBuilder_States::get_gallery_by_name($state_name);
+
+            $html = '';
+            $emblem_urls = array();
+            $index = 0;
+            foreach ($gallery_images as $id => $image) {
+                $active_class = $index === 0 ? 'active' : '';
+                $checked = $index === 0 ? 'checked' : '';
+                $emblem_urls[$id] = $image['image_url'];
+
+                $html .= '<div class="emblem-carousel-slide ' . $active_class . '" data-emblem="' . esc_attr($id) . '">';
+                $html .= '<label class="emblem-carousel-option" for="emblem_' . esc_attr($id) . '">';
+                $html .= '<input type="radio" name="emblem_value" value="' . esc_attr($id) . '" id="emblem_' . esc_attr($id) . '" data-type="generic" ' . $checked . '>';
+                $html .= '<div class="emblem-carousel-preview">';
+                $html .= '<img src="' . esc_url($image['image_url']) . '" alt="' . esc_attr($image['name']) . '" loading="lazy">';
+                $html .= '</div>';
+                $html .= '</label>';
+                $html .= '</div>';
+                $index++;
+            }
+
+            wp_send_json_success(array(
+                'html'        => $html,
+                'emblem_urls' => $emblem_urls,
+                'count'       => count($gallery_images),
             ));
 
         } catch (Exception $e) {

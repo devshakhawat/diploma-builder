@@ -788,6 +788,66 @@ jQuery(document).ready(function($) {
             });
         }
 
+        /**
+         * Load state gallery images via AJAX and rebuild the emblem carousel.
+         */
+        function loadStateGallery(stateName) {
+            const $wrapper = $('.emblem-carousel-wrapper');
+            const $noData = $('#emblem-no-data');
+            const $loading = $('#emblem-loading');
+            const $indicators = $('#emblem-carousel-indicators');
+
+            $wrapper.hide();
+            $noData.hide();
+            $indicators.hide();
+            $loading.show();
+
+            $.ajax({
+                url: diploma_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'load_state_gallery',
+                    nonce: diploma_ajax.nonce,
+                    state_name: stateName
+                },
+                success: function(response) {
+                    $loading.hide();
+
+                    if (response.success && response.data.count > 0) {
+                        $emblemTrack.html(response.data.html);
+                        diploma_ajax.emblem_urls = response.data.emblem_urls;
+
+                        currentEmblemPage = 0;
+                        $wrapper.show();
+                        $indicators.show();
+                        $noData.hide();
+                        updateEmblemCarousel();
+
+                        const $firstRadio = $emblemTrack.find('input[name="emblem_value"]').first();
+                        if ($firstRadio.length) {
+                            $firstRadio.prop('checked', true);
+                            currentConfig.emblem_value = $firstRadio.val();
+                        }
+
+                        updatePreview();
+                    } else {
+                        $emblemTrack.html('');
+                        $wrapper.hide();
+                        $indicators.hide();
+                        $noData.show();
+                        currentConfig.emblem_value = '';
+                        diploma_ajax.emblem_urls = {};
+                        updatePreview();
+                    }
+                },
+                error: function() {
+                    $loading.hide();
+                    $wrapper.show();
+                    $indicators.show();
+                }
+            });
+        }
+
         // Emblem carousel navigation
         $('#emblem-prev').on('click', function() {
             navigateEmblemCarousel('prev');
@@ -864,12 +924,17 @@ jQuery(document).ready(function($) {
             validateField($(this));
             prefillStep3Location();
 
-            // When International is selected, the region dropdown contains country names
-            // so reload emblems based on the selected country name
-            if ($('#country').val() === 'International') {
-                const selectedText = $(this).find('option:selected').text().trim();
-                if (selectedText && selectedText !== '-- Select --') {
+            const selectedCountry = $('#country').val();
+            const selectedText = $(this).find('option:selected').text().trim();
+
+            if (selectedText && selectedText !== '-- Select --') {
+                if (selectedCountry === 'International') {
+                    // When International is selected, the region dropdown contains country names
+                    // so reload emblems based on the selected country name
                     loadEmblemsByCountry(selectedText);
+                } else {
+                    // For USA, UK, Canada etc., load state gallery images into the emblem carousel
+                    loadStateGallery(selectedText);
                 }
             }
 
